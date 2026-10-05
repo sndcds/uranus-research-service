@@ -1,0 +1,19 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "query_enabled": {
+      "const": false,
+      "default": false,
+      "title": "Query Enabled",
+      "type": "boolean"
+    },
+    "status": {
+      "const": "ready",
+      "default": "ready",
+      "title": "Status",
+      "type": "string"
+    }
+  },
+  "title": "ReadyResponse",
+  "type": "object"
+}

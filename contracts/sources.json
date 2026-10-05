@@ -1,0 +1,30 @@
+{
+  "repositories": {
+    "admin": "340df4684611dbc4b8ec73a7702f1fad2ae1973c",
+    "planner": "74c0fd44adb7df5c06941415dc444e6e8ae4e084",
+    "encoder": "1938c72caa6102452ae0afa18ef86d9a95ead878"
+  },
+  "snapshots": {
+    "planner/v9-response.json": "78d9d8ab251c34c17e333d16730272f82af67ae14948d0b4bc45173bc01028d3",
+    "planner/v10-response.json": "d1431dc4ae19048ce7efd5282cfd83df55f80b2cbe2aac2d2188203ce71c3faf",
+    "planner/v11-response.json": "cfd53bd5251593ac5bbafee7728c2622b0f84621a64003ea609db09661db3569",
+    "planner/v12-response.json": "cbe441d2c26f5e027c2d0d7225e2b77f91f433f9208dd8aee27144d332dc334b",
+    "planner/v13-response.json": "dce1eac1773bd23b713dab3ad14919d3fd107db2e584ab7763868c4fd8fd05a9",
+    "admin/planner-v9-response.json": "78d9d8ab251c34c17e333d16730272f82af67ae14948d0b4bc45173bc01028d3",
+    "admin/planner-v10-response.json": "d1431dc4ae19048ce7efd5282cfd83df55f80b2cbe2aac2d2188203ce71c3faf",
+    "admin/planner-v11-response.json": "cfd53bd5251593ac5bbafee7728c2622b0f84621a64003ea609db09661db3569",
+    "admin/planner-v12-response.json": "cbe441d2c26f5e027c2d0d7225e2b77f91f433f9208dd8aee27144d332dc334b",
+    "admin/planner-v13-response.json": "dce1eac1773bd23b713dab3ad14919d3fd107db2e584ab7763868c4fd8fd05a9",
+    "admin/query-request.json": "f4eaf4e46b274fa77eb64a5b90517fd4cee505d1685b08f50339bcb96f7b834c",
+    "admin/execution-response.json": "3287eb87b3bef54939b0f5ec4ec34779066fc5cc564e7c10f633bbd470596c7f",
+    "admin/conversation-response.json": "f833ef1eb71f728faab5ff286d7fbf2ec42914bd67e4ce0dc453e208435def62",
+    "encoder/expected-version.json": "b65cff02650de3b394a5a5e657dffa523b232a1f0d8301a2ea4c2e75f063d544",
+    "encoder/EvidenceContext.json": "09a5a47a5b9c565b7ec5a0b0b1174a15e2cf905d9d92f7058980fbc0e08047e8",
+    "encoder/Chunk.json": "26a6f9ab3b06d03dd970e076b264618cd44d60699c1b51107dfdefd7105079d5",
+    "encoder/Section.json": "0127db7739f9e3a45c17cb73899b497194d045a32e7f39b97677ce36df9b9d63",
+    "encoder/EmbedRequest.json": "a52eff93f8d92ecf1ee3b66c20b97aa74379181727607c3637e049c86a7c9dc4",
+    "encoder/EmbedResponse.json": "5f50a0d6e83a06cc385e92f58d1555f22124bb382d7bbe5ca8ac5e13493b4c68",
+    "encoder/ChunkRequest.json": "7e3a3779fc338ce5ebc18a03bbd653026f98b76a3b0debcd8d7c96f725955850",
+    "encoder/ChunkResponse.json": "5f0f68d85153cfd385ea68d03375580f0be67dcdd52426f66dbb1382d2a5f0c0"
+  }
+}

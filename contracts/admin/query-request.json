@@ -1,0 +1,737 @@
+{
+  "$defs": {
+    "ConversationArea": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "maxLength": 160,
+          "minLength": 1,
+          "title": "Name",
+          "type": "string"
+        },
+        "relation": {
+          "enum": [
+            "inside",
+            "outside"
+          ],
+          "title": "Relation",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "relation"
+      ],
+      "title": "ConversationArea",
+      "type": "object"
+    },
+    "ConversationAreaV12": {
+      "additionalProperties": false,
+      "properties": {
+        "expected_level": {
+          "anyOf": [
+            {
+              "enum": [
+                "country",
+                "district",
+                "municipality",
+                "region",
+                "state"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Expected Level"
+        },
+        "name": {
+          "maxLength": 160,
+          "minLength": 1,
+          "title": "Name",
+          "type": "string"
+        },
+        "relation": {
+          "enum": [
+            "inside",
+            "outside"
+          ],
+          "title": "Relation",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "relation",
+        "expected_level"
+      ],
+      "title": "ConversationAreaV12",
+      "type": "object"
+    },
+    "ConversationNames": {
+      "additionalProperties": false,
+      "properties": {
+        "categories": {
+          "items": {
+            "maxLength": 160,
+            "minLength": 1,
+            "type": "string"
+          },
+          "maxItems": 8,
+          "title": "Categories",
+          "type": "array"
+        },
+        "event_types": {
+          "items": {
+            "maxLength": 160,
+            "minLength": 1,
+            "type": "string"
+          },
+          "maxItems": 8,
+          "title": "Event Types",
+          "type": "array"
+        },
+        "genres": {
+          "items": {
+            "maxLength": 160,
+            "minLength": 1,
+            "type": "string"
+          },
+          "maxItems": 8,
+          "title": "Genres",
+          "type": "array"
+        },
+        "organization": {
+          "anyOf": [
+            {
+              "maxLength": 160,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Organization"
+        },
+        "venue": {
+          "anyOf": [
+            {
+              "maxLength": 160,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Venue"
+        }
+      },
+      "required": [
+        "venue",
+        "organization",
+        "event_types",
+        "categories",
+        "genres"
+      ],
+      "title": "ConversationNames",
+      "type": "object"
+    },
+    "ConversationTemporal": {
+      "additionalProperties": false,
+      "properties": {
+        "from_date": {
+          "anyOf": [
+            {
+              "format": "date",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "From Date"
+        },
+        "months": {
+          "items": {
+            "maximum": 12,
+            "minimum": 1,
+            "type": "integer"
+          },
+          "maxItems": 12,
+          "title": "Months",
+          "type": "array"
+        },
+        "period": {
+          "enum": [
+            "explicit_range",
+            "future",
+            "next_week",
+            "none",
+            "past",
+            "this_month",
+            "this_weekend",
+            "this_year",
+            "today",
+            "tomorrow"
+          ],
+          "title": "Period",
+          "type": "string"
+        },
+        "time_of_day": {
+          "enum": [
+            "afternoon",
+            "evening",
+            "morning",
+            "night",
+            "none"
+          ],
+          "title": "Time Of Day",
+          "type": "string"
+        },
+        "to_date": {
+          "anyOf": [
+            {
+              "format": "date",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "To Date"
+        },
+        "weekdays": {
+          "items": {
+            "maximum": 7,
+            "minimum": 1,
+            "type": "integer"
+          },
+          "maxItems": 7,
+          "title": "Weekdays",
+          "type": "array"
+        }
+      },
+      "required": [
+        "period",
+        "from_date",
+        "to_date",
+        "time_of_day",
+        "weekdays",
+        "months"
+      ],
+      "title": "ConversationTemporal",
+      "type": "object"
+    },
+    "LocationContext": {
+      "additionalProperties": false,
+      "properties": {
+        "display_name": {
+          "anyOf": [
+            {
+              "maxLength": 160,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Display Name"
+        },
+        "latitude": {
+          "anyOf": [
+            {
+              "maximum": 90,
+              "minimum": -90,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Latitude"
+        },
+        "longitude": {
+          "anyOf": [
+            {
+              "maximum": 180,
+              "minimum": -180,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Longitude"
+        },
+        "source": {
+          "enum": [
+            "browser_geolocation",
+            "manual",
+            "nominatim_reverse"
+          ],
+          "title": "Source",
+          "type": "string"
+        }
+      },
+      "required": [
+        "source"
+      ],
+      "title": "LocationContext",
+      "type": "object"
+    },
+    "ResearchConversationContext": {
+      "additionalProperties": false,
+      "properties": {
+        "previous_turns": {
+          "items": {
+            "$ref": "#/$defs/ResearchPlanSummary"
+          },
+          "maxItems": 4,
+          "minItems": 1,
+          "title": "Previous Turns",
+          "type": "array"
+        }
+      },
+      "required": [
+        "previous_turns"
+      ],
+      "title": "ResearchConversationContext",
+      "type": "object"
+    },
+    "ResearchConversationContextV12": {
+      "additionalProperties": false,
+      "properties": {
+        "previous_turns": {
+          "items": {
+            "$ref": "#/$defs/ResearchPlanSummaryV12"
+          },
+          "maxItems": 4,
+          "minItems": 1,
+          "title": "Previous Turns",
+          "type": "array"
+        }
+      },
+      "required": [
+        "previous_turns"
+      ],
+      "title": "ResearchConversationContextV12",
+      "type": "object"
+    },
+    "ResearchPlanSummary": {
+      "additionalProperties": false,
+      "properties": {
+        "areas": {
+          "items": {
+            "$ref": "#/$defs/ConversationArea"
+          },
+          "maxItems": 1,
+          "title": "Areas",
+          "type": "array"
+        },
+        "entity_type": {
+          "enum": [
+            "event",
+            "organization",
+            "venue"
+          ],
+          "title": "Entity Type",
+          "type": "string"
+        },
+        "filters": {
+          "$ref": "#/$defs/ConversationNames"
+        },
+        "groupings": {
+          "items": {
+            "enum": [
+              "category",
+              "country",
+              "district",
+              "event",
+              "event_type",
+              "genre",
+              "month",
+              "municipality",
+              "organization",
+              "region",
+              "state",
+              "venue",
+              "weekday"
+            ],
+            "type": "string"
+          },
+          "maxItems": 3,
+          "title": "Groupings",
+          "type": "array"
+        },
+        "intent": {
+          "enum": [
+            "aggregate",
+            "count",
+            "list",
+            "rank",
+            "recommend",
+            "search",
+            "spatial_rank",
+            "taxonomy"
+          ],
+          "title": "Intent",
+          "type": "string"
+        },
+        "limit": {
+          "anyOf": [
+            {
+              "maximum": 20,
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Limit"
+        },
+        "metric": {
+          "enum": [
+            "event_count",
+            "none",
+            "occurrence_count",
+            "organization_count",
+            "venue_count"
+          ],
+          "title": "Metric",
+          "type": "string"
+        },
+        "ordering": {
+          "anyOf": [
+            {
+              "enum": [
+                "asc",
+                "desc"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Ordering"
+        },
+        "semantic_focus": {
+          "anyOf": [
+            {
+              "maxLength": 160,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Semantic Focus"
+        },
+        "semantic_query": {
+          "anyOf": [
+            {
+              "maxLength": 160,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Semantic Query"
+        },
+        "spatial_metric": {
+          "anyOf": [
+            {
+              "enum": [
+                "latitude",
+                "longitude"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Spatial Metric"
+        },
+        "taxonomy": {
+          "anyOf": [
+            {
+              "enum": [
+                "category",
+                "event_type",
+                "genre"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Taxonomy"
+        },
+        "temporal": {
+          "$ref": "#/$defs/ConversationTemporal"
+        }
+      },
+      "required": [
+        "intent",
+        "entity_type",
+        "metric",
+        "groupings",
+        "ordering",
+        "limit",
+        "temporal",
+        "filters",
+        "areas",
+        "semantic_query",
+        "semantic_focus",
+        "taxonomy",
+        "spatial_metric"
+      ],
+      "title": "ResearchPlanSummary",
+      "type": "object"
+    },
+    "ResearchPlanSummaryV12": {
+      "additionalProperties": false,
+      "properties": {
+        "areas": {
+          "items": {
+            "$ref": "#/$defs/ConversationAreaV12"
+          },
+          "maxItems": 4,
+          "title": "Areas",
+          "type": "array"
+        },
+        "entity_type": {
+          "enum": [
+            "event",
+            "organization",
+            "venue"
+          ],
+          "title": "Entity Type",
+          "type": "string"
+        },
+        "filters": {
+          "$ref": "#/$defs/ConversationNames"
+        },
+        "groupings": {
+          "items": {
+            "enum": [
+              "category",
+              "country",
+              "district",
+              "event",
+              "event_type",
+              "genre",
+              "month",
+              "municipality",
+              "organization",
+              "region",
+              "state",
+              "venue",
+              "weekday"
+            ],
+            "type": "string"
+          },
+          "maxItems": 3,
+          "title": "Groupings",
+          "type": "array"
+        },
+        "intent": {
+          "enum": [
+            "aggregate",
+            "count",
+            "list",
+            "rank",
+            "recommend",
+            "search",
+            "spatial_rank",
+            "taxonomy"
+          ],
+          "title": "Intent",
+          "type": "string"
+        },
+        "limit": {
+          "anyOf": [
+            {
+              "maximum": 20,
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Limit"
+        },
+        "metric": {
+          "enum": [
+            "event_count",
+            "none",
+            "occurrence_count",
+            "organization_count",
+            "venue_count"
+          ],
+          "title": "Metric",
+          "type": "string"
+        },
+        "ordering": {
+          "anyOf": [
+            {
+              "enum": [
+                "asc",
+                "desc"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Ordering"
+        },
+        "semantic_focus": {
+          "anyOf": [
+            {
+              "maxLength": 160,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Semantic Focus"
+        },
+        "semantic_query": {
+          "anyOf": [
+            {
+              "maxLength": 160,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Semantic Query"
+        },
+        "spatial_metric": {
+          "anyOf": [
+            {
+              "enum": [
+                "latitude",
+                "longitude"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Spatial Metric"
+        },
+        "taxonomy": {
+          "anyOf": [
+            {
+              "enum": [
+                "category",
+                "event_type",
+                "genre"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Taxonomy"
+        },
+        "temporal": {
+          "$ref": "#/$defs/ConversationTemporal"
+        }
+      },
+      "required": [
+        "intent",
+        "entity_type",
+        "metric",
+        "groupings",
+        "ordering",
+        "limit",
+        "temporal",
+        "filters",
+        "areas",
+        "semantic_query",
+        "semantic_focus",
+        "taxonomy",
+        "spatial_metric"
+      ],
+      "title": "ResearchPlanSummaryV12",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "conversation_context": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/ResearchConversationContextV12"
+        },
+        {
+          "$ref": "#/$defs/ResearchConversationContext"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Conversation Context"
+    },
+    "conversation_id": {
+      "anyOf": [
+        {
+          "pattern": "^[A-Za-z0-9_-]{43}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Conversation Id"
+    },
+    "location_context": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/LocationContext"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "query": {
+      "maxLength": 2000,
+      "minLength": 1,
+      "title": "Query",
+      "type": "string"
+    }
+  },
+  "required": [
+    "query"
+  ],
+  "title": "ResearchQueryRequest",
+  "type": "object"
+}
