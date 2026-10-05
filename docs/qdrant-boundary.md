@@ -31,9 +31,12 @@ not a cryptographic defense against an administrator controlling Qdrant credenti
 
 Validation reads info plus a bounded full scroll (64 points/page, 100,001 total cap),
 rejects repeated IDs/offsets, verifies deterministic IDs and closed public payloads,
-and checks the complete hash/count. Query-time full validation favors correctness over
-scale in this internal phase; large corpora may exceed readiness timeout and fail
-closed. No unverified cache is used. Before creating a completion marker, persisted
+and checks the complete hash/count. Full validation publishes process-local immutable
+verified generation state for ten minutes. Queries use collection info and a direct
+manifest-point fetch; they never scroll or automatically revalidate. Mismatch or expiry
+invalidates semantic readiness and fails closed. Large full scans may still exceed the
+readiness deadline. See [generation validation](semantic-generation-validation.md).
+Before creating a completion marker, persisted
 payloads must equal desired payloads, with only the Admin one-ULP coordinate tolerance.
 The stored JSON is then hashed exactly, so later drift is detected.
 
@@ -46,7 +49,10 @@ manifest/version validation. Changed content changes the ID, triggers a new embe
 and stale deletion. Metadata changes preserve the vector; unchanged points are skipped.
 Foreign/v3 points cause failure even if their IDs or dimensions happen to match.
 
-Builds never target the stable active name. Aliased build collections refuse writes.
+Builds never target the stable active name. Aliased or sealed build collections refuse
+ordinary writes, including completion-marker deletion. New data needs a new generation.
+Unsealed interrupted builds can resume; only explicit disposable recovery tests may
+modify a sealed, unaliased test generation. No recovery override is exposed by the CLI.
 No automatic retry/reindex/fallback, production override, alias mutation or collection
 cleanup is implemented. Integration fixture teardown deletes only its generated local
 test collection; live data is never addressed by it.

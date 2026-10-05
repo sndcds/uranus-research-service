@@ -25,6 +25,8 @@ def save_report(path: Path, report):
 async def _build(source, encoder, qdrant, *, report_path, plan_only=False, now=None):
     if qdrant.entity != "event":
         raise ValueError("event_build_only_phase2b1")
+    if not plan_only:
+        await qdrant.writable()
     started, cpu = perf_counter(), process_time()
     timestamp = datetime.now(UTC)
     reference = now or timestamp
@@ -139,7 +141,9 @@ async def _build(source, encoder, qdrant, *, report_path, plan_only=False, now=N
                     {"returned_count": result.returned_count, "latency": result.latency}
                 )
         except Exception:
-            await qdrant.delete([MANIFEST_ID])
+            # Sealed generations are immutable, including on a later smoke failure.
+            # The failed report is retained; recovery requires an isolated test context.
+            qdrant.generation_verifier.invalidate()
             raise
     report.update(
         completed_at=datetime.now(UTC).isoformat(),

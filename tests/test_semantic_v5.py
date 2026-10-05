@@ -1,7 +1,7 @@
 import copy
 import json
 from datetime import UTC, datetime
-from unittest.mock import AsyncMock
+from unittest.mock import AsyncMock, Mock
 from uuid import UUID, uuid5
 
 import httpx
@@ -328,6 +328,7 @@ async def test_semantic_readiness_independent(settings, monkeypatch):
     encoder = AsyncMock()
     encoder.ready.side_effect = DependencyError("encoder", "incompatible")
     qdrant = AsyncMock()
+    qdrant.generation_verifier = Mock(is_verified=True, ready=AsyncMock())
     monkeypatch.setattr(module, "EncoderClient", lambda *a, **kw: encoder)
     monkeypatch.setattr(module, "QdrantClient", lambda *a, **kw: qdrant)
     runtime = module.ResearchRuntime(
@@ -345,7 +346,7 @@ async def test_semantic_readiness_independent(settings, monkeypatch):
         encoder.ready.side_effect = None
         await runtime.ready()
         assert runtime.capabilities().semantic_index_ready
-        qdrant.validate.side_effect = ValueError("missing_manifest")
+        qdrant.generation_verifier.ready.side_effect = ValueError("missing_manifest")
         await runtime.ready()
         assert (
             runtime.capabilities().structured_query

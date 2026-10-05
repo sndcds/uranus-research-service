@@ -6,6 +6,7 @@ import fcntl
 import os
 from datetime import datetime
 from pathlib import Path
+from time import perf_counter
 
 from uranus_research_service.benchmark import compare, load_cases, run_benchmark
 from uranus_research_service.config import Settings
@@ -41,7 +42,22 @@ async def run(args):
                 source, encoder, qdrant, report_path=args.output, plan_only=args.command == "plan"
             )
         elif args.command == "validate":
-            save_report(args.output, (await qdrant.validate()).model_dump())
+            started = perf_counter()
+            manifest = await qdrant.validate()
+            generation = qdrant.generation_verifier.generation
+            save_report(
+                args.output,
+                {
+                    "status": "validated",
+                    "collection": generation.collection_name,
+                    "build_id": generation.build_id,
+                    "manifest_digest": generation.manifest_digest,
+                    "documents": manifest.document_count,
+                    "chunks": manifest.chunk_count,
+                    "point_count": generation.point_count,
+                    "validation_duration": perf_counter() - started,
+                },
+            )
         elif args.command == "benchmark":
             if args.reference_time is None or args.build_report is None:
                 raise ValueError("benchmark_reference_and_build_report_required")
