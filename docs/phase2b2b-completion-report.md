@@ -1,6 +1,8 @@
 # Phase 2B.2b completion report — annotation-ready draft
 
 Date: 2026-10-05. Base: merged runtime refactor `5dbc99eb3e8f2925543eeba1914a30ff070bd658`.
+[PR #5](https://github.com/sndcds/uranus-research-service/pull/5) contains implementation
+`6d54a11d8d8cb2610cc59064efe9b10c605591ff`; both CI jobs passed. It remains unmerged.
 Tooling and public artifacts are prepared. **Human ground truth is not yet approved.**
 The distinction is intentional: the definition of done allows a reviewable draft with
 working pooling, human-maintained judgments, snapshot binding and coverage checks.
