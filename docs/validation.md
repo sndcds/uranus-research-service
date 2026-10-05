@@ -1,4 +1,95 @@
-# Phase-1 validation — 2026-10-05
+# Phase-2A validation — 2026-10-05
+
+Service 0.2.0, contract uranus-research-service-v1. Structured execution only;
+Admin remains unchanged. No production deployment, grants, Qdrant operations,
+Encoder inference or reindex. Historical Phase-1 results follow separately below.
+
+## Final local checks
+
+Python 3.13.15, uv 0.12.5, Linux x86_64, branch feat/phase2a-structured, based on
+service main dc59671. Source pins/hashes are in phase2-port-manifest.json and
+contracts/sources.json. The isolated test database was loopback-only, named
+research_phase2a_test, in an owned disposable PostGIS 17/3.5 container. Credentials
+and rows were synthetic. TEST_DATABASE_URL below was exported for that test database;
+it was not a production DSN.
+
+```sh
+UV_CACHE_DIR=/tmp/uv-research-service uv sync --locked --offline
+UV_CACHE_DIR=/tmp/uv-research-service uv run --no-sync ruff check .
+UV_CACHE_DIR=/tmp/uv-research-service uv run --no-sync ruff format --check .
+TEST_DATABASE_URL="$TEST_DATABASE_URL" \
+  ADMIN_PARITY_ROOT=/home/awendelk/git/uranus-admin .venv/bin/pytest -q
+UV_CACHE_DIR=/tmp/uv-research-service uv run --no-sync python scripts/verify_upstream_contracts.py \
+  --admin /home/awendelk/git/uranus-admin \
+  --planner /home/awendelk/git/uranus-research-planner \
+  --encoder /home/awendelk/git/uranus-research-encoder
+git diff --check
+```
+
+Final full suite: **273 passed in 19.84 seconds**, no skips. Lockfile sync, Ruff,
+format and upstream Admin/Planner/Encoder snapshot parity passed. Ordinary tests
+block socket connections; integration tests explicitly use the guarded disposable DB.
+Sandbox-denied loopback/cache attempts were rerun with the authorized local test
+connection and writable uv cache; no safety guards were relaxed.
+
+Coverage includes real PostgreSQL/PostGIS execution, enforced read-only transactions,
+privilege rejection (including NOINHERIT ownership and missing schema USAGE), closed
+v13/custom validators, semantic rejection before SQL, safe conversation routing/state,
+principal isolation/concurrency, AnswerFacts, SQL provenance, provider failures,
+request/response limits and log privacy.
+
+**31 Golden Cases** execute both the new service and untouched Admin commit
+340df4684611dbc4b8ec73a7702f1fad2ae1973c against identical synthetic rows, Planner
+fixtures, date/timezone and geographic inventory. Independent expected results and
+full differential responses pass, including counts, identities/order, resolved filters,
+SQL provenance, AnswerFacts, answer text, clarification and conversation state. Only
+random conversation IDs, observation timestamps and timings are excluded. The Admin
+test bridge adapts only its metadata connection to the separate test reader.
+
+The actual Planner HTTP client is exercised with controlled HTTP responses, including
+strict failure cases. These results do **not** measure a live Planner model's language
+quality, real deployed source DDL, retrieval quality or production capacity.
+
+## Final Docker checks
+
+```sh
+UV_CACHE_DIR=/tmp/uv-research-service uv run --no-sync python scripts/build_wheelhouse.py
+UV_CACHE_DIR=/tmp/uv-research-service uv build --wheel --out-dir wheelhouse
+docker build --network=none -f deploy/Dockerfile -t uranus-research-service:phase2a .
+python /tmp/phase2a-docker-smoke.py
+```
+
+The second command refreshed the service wheel after the final privilege-check change.
+Locked/hash-checked dependency wheels were unchanged. Build passed; final image:
+`sha256:a1873cfa60898782429218784ae7fb2a728327a9fea177aa8b37fbf51e978313`.
+
+The local smoke script created and removed its own container with network none,
+UID/GID 10001, read-only root, dropped capabilities, no-new-privileges, 16 MB tmpfs,
+256 MB memory, 1 CPU and 64 PID limit, using a mounted synthetic key. It checked:
+
+- /health: 200, exact liveness body; unauthenticated /version: 401.
+- Authenticated /version: 200, service 0.2.0, structured capability unverified and
+  semantic capability false without configured dependencies.
+- /ready: 503 without upstream configuration; /query: 422 without principal,
+  503 with principal but unavailable Planner. No invented results.
+- UID 10001, denied root write, inspected container restrictions, no key in logs.
+
+This smoke verifies packaging/security and fail-closed missing-dependency behavior.
+Successful structured execution is covered by the host PostGIS integration suite,
+not claimed as a live-upstream Docker test. GitHub workflow definitions add separate
+unit/build and disposable-PostGIS/Admin-parity jobs; local results are not CI results.
+
+## Remaining operational work / Phase 2B
+
+Provision reviewed reader roles and verify deployed DDL, configure live Planner and
+optional Geocoder/complete administrative inventory, then run live-language and
+capacity checks. No Admin adapter/cutover is activated. Semantic retrieval, Jina-v5
+inference, new Qdrant collections, reindex, evidence/threshold benchmarks and v3/v5
+comparison remain Phase 2B. ONNX-v5 and any v3 cleanup are separate work.
+
+---
+
+# Historical Phase-1 validation — 2026-10-05
 
 This is infrastructure/contract validation, not Research execution, a retrieval
 benchmark or production validation. The new service runs alongside unchanged Admin

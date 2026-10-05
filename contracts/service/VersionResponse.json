@@ -1,6 +1,49 @@
 {
+  "$defs": {
+    "RuntimeCapabilities": {
+      "additionalProperties": false,
+      "properties": {
+        "administrative_grouping": {
+          "default": false,
+          "title": "Administrative Grouping",
+          "type": "boolean"
+        },
+        "conversation": {
+          "default": false,
+          "title": "Conversation",
+          "type": "boolean"
+        },
+        "named_place_resolution": {
+          "default": false,
+          "title": "Named Place Resolution",
+          "type": "boolean"
+        },
+        "semantic_query": {
+          "const": false,
+          "default": false,
+          "title": "Semantic Query",
+          "type": "boolean"
+        },
+        "spatial": {
+          "default": false,
+          "title": "Spatial",
+          "type": "boolean"
+        },
+        "structured_query": {
+          "default": false,
+          "title": "Structured Query",
+          "type": "boolean"
+        }
+      },
+      "title": "RuntimeCapabilities",
+      "type": "object"
+    }
+  },
   "additionalProperties": false,
   "properties": {
+    "capabilities": {
+      "$ref": "#/$defs/RuntimeCapabilities"
+    },
     "chunk_version": {
       "default": "sections-480-overlap64-v2",
       "title": "Chunk Version",
@@ -48,13 +91,12 @@
       "type": "string"
     },
     "query_enabled": {
-      "const": false,
       "default": false,
       "title": "Query Enabled",
       "type": "boolean"
     },
     "service_version": {
-      "default": "0.1.0",
+      "default": "0.2.0",
       "title": "Service Version",
       "type": "string"
     }

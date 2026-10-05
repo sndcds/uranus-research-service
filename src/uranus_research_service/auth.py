@@ -2,6 +2,7 @@
 
 import asyncio
 import hmac
+import re
 from time import perf_counter
 from uuid import uuid4
 
@@ -59,6 +60,11 @@ class RequestBoundary:
                     k.lower() in {b"cookie", b"origin"} for k, v in headers
                 ):
                     await fail("invalid_request", 422)
+                    return
+            if scope["path"] == "/query":
+                principals = [v for k, v in headers if k.lower() == b"x-research-principal"]
+                if len(principals) != 1 or re.fullmatch(rb"[a-f0-9]{64}", principals[0]) is None:
+                    await fail("invalid_principal", 422)
                     return
             if scope["path"] == "/health":
                 await self.app(scope, receive, safe_send)

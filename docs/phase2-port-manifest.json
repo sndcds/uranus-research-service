@@ -1,0 +1,369 @@
+{
+  "source_commit": "340df4684611dbc4b8ec73a7702f1fad2ae1973c",
+  "modules": [
+    {
+      "source": "backend/app/services/research_plan_execution.py",
+      "target": "src/uranus_research_service/services/research_plan_execution.py",
+      "source_sha256": "d3de373257c07bc623283fdb48a9d4c3d77d595e1f918c86770828b93a4ee749"
+    },
+    {
+      "source": "backend/app/repositories/administrative_execution.py",
+      "target": "src/uranus_research_service/repositories/administrative_execution.py",
+      "source_sha256": "695014f6e706cc56b2b562a7a027fcb790ee9f7dd1110dbfa507e4f38aa045cb"
+    },
+    {
+      "source": "backend/app/repositories/research.py",
+      "target": "src/uranus_research_service/repositories/research.py",
+      "source_sha256": "55a41cffbcb4f3bd62e774a1055a330fb67e02683ca73b74eec16245387e00f7"
+    },
+    {
+      "source": "backend/app/repositories/location.py",
+      "target": "src/uranus_research_service/repositories/location.py",
+      "source_sha256": "34be04c8785a3728d9769411b82deebba3be1f16e3d4306d5bc898c6383e0d80"
+    },
+    {
+      "source": "backend/app/repositories/research_areas.py",
+      "target": "src/uranus_research_service/repositories/research_areas.py",
+      "source_sha256": "77b03d5aa13ab7fc2752efc981a1a3401ee41facfac1de9e7c8188d059b4e120"
+    },
+    {
+      "source": "backend/app/research/area_selection.py",
+      "target": "src/uranus_research_service/research/area_selection.py",
+      "source_sha256": "8697060cf82b4f7d41d2a20872861bb178a46da908cbca518a7e5b748556683e"
+    },
+    {
+      "source": "backend/app/schemas/research_areas.py",
+      "target": "src/uranus_research_service/schemas/research_areas.py",
+      "source_sha256": "3323191b56ef0b75babefc79a622cead1d0fc3b632b87c3c64b7c1d94b6ba308"
+    },
+    {
+      "source": "backend/app/schemas/research.py",
+      "target": "src/uranus_research_service/schemas/research.py",
+      "source_sha256": "8653b4ad06ec923d053015c5dbe518154626a8a08f5a1a5dac922f94a01a58eb"
+    },
+    {
+      "source": "backend/app/research/chunk_kinds.py",
+      "target": "src/uranus_research_service/research/chunk_kinds.py",
+      "source_sha256": "22163e9d9c8dc0763f9ef39355bf6dce85fd3e4a59e362b6bf1dea7bf7c4f4e8"
+    },
+    {
+      "source": "backend/app/schemas/genre.py",
+      "target": "src/uranus_research_service/schemas/genre.py",
+      "source_sha256": "17798751f40675750727ad69e5682262bf1d4c319ee263a0b27f33fd3561e613"
+    },
+    {
+      "source": "backend/app/repositories/research_place.py",
+      "target": "src/uranus_research_service/repositories/research_place.py",
+      "source_sha256": "d713ee928f9943edc2f0327329114b8cc4474979c53ac99c46be5b37fb590518"
+    },
+    {
+      "source": "backend/app/schemas/research_location.py",
+      "target": "src/uranus_research_service/schemas/research_location.py",
+      "source_sha256": "5fa1735e1ba32eceae78929683a43bd3ec1a65fb44b39b6d4166fad5e0a64886"
+    },
+    {
+      "source": "backend/app/schemas/research_conversation.py",
+      "target": "src/uranus_research_service/schemas/research_conversation.py",
+      "source_sha256": "fe71de8e85f4159945a11881f79b19cde68536105d761874753350d41945409c"
+    },
+    {
+      "source": "backend/app/schemas/research_conversation_v12.py",
+      "target": "src/uranus_research_service/schemas/research_conversation_v12.py",
+      "source_sha256": "a7495d30f5a45b7ff36de673f736c1f0f838a55b8e274f43ba5cb9cf546c8bcc"
+    },
+    {
+      "source": "backend/app/research/wire/research_v8_types.py",
+      "target": "src/uranus_research_service/research/wire/research_v8_types.py",
+      "source_sha256": "d82ca2166536d7e9f91410b2550d4b636218bd1b4599dc88880b11fb9b7969ec"
+    },
+    {
+      "source": "backend/app/schemas/research_planner.py",
+      "target": "src/uranus_research_service/schemas/research_planner.py",
+      "source_sha256": "f1bc3905eb706d813897eb59058e6d3e378f3d3b2847f8db6afaa6e981dd6cda"
+    },
+    {
+      "source": "backend/app/research/sql_provenance.py",
+      "target": "src/uranus_research_service/research/sql_provenance.py",
+      "source_sha256": "9b87fd8b9ebcf6c7228cd9cd95fb252366132138c82548b0ef602903b902e341"
+    },
+    {
+      "source": "backend/app/schemas/research_sql.py",
+      "target": "src/uranus_research_service/schemas/research_sql.py",
+      "source_sha256": "c70e6010f1ff0d2df01fed4964be0d47f8775c95e5307f995fa0a63a9c7824ae"
+    },
+    {
+      "source": "backend/app/schemas/research_values.py",
+      "target": "src/uranus_research_service/schemas/research_values.py",
+      "source_sha256": "facdb41c78e09cd27e02512c23e9b95f6984156fb5541562a42be73e59a27be9"
+    },
+    {
+      "source": "backend/app/services/quality/urls.py",
+      "target": "src/uranus_research_service/services/quality/urls.py",
+      "source_sha256": "bad09f8be98aba8125e20b94fc4d5f4ea7c9e71d64b9cfd6d75998a7cb0d6661"
+    },
+    {
+      "source": "backend/app/research/plan.py",
+      "target": "src/uranus_research_service/research/plan.py",
+      "source_sha256": "26fd9e13976414fbaf14cb0fad5b9c4abcc261f86fce464beeb02c11129d907e"
+    },
+    {
+      "source": "backend/app/research/geography.py",
+      "target": "src/uranus_research_service/research/geography.py",
+      "source_sha256": "2c4576c22f2518ea862371f31edabc6a8e6afa0a62408492d0488f1796a87bcf"
+    },
+    {
+      "source": "backend/app/schemas/research_execution.py",
+      "target": "src/uranus_research_service/schemas/research_execution.py",
+      "source_sha256": "0b86c54c8923eab86ad8753c264152da8352d66318a60b2253ca8c4e70bdcdfa"
+    },
+    {
+      "source": "backend/app/schemas/research_administrative_result.py",
+      "target": "src/uranus_research_service/schemas/research_administrative_result.py",
+      "source_sha256": "db28aa53ea420c806b9313ca48de53dd1bd07e6cdd351f42c74b944b798b3392"
+    },
+    {
+      "source": "backend/app/repositories/research_execution.py",
+      "target": "src/uranus_research_service/repositories/research_execution.py",
+      "source_sha256": "5954319cfca8f32c851dcad0dfed98f8fe0ef64a5e6659241c7bbb9d2b0263c3"
+    },
+    {
+      "source": "backend/app/repositories/research_resolution.py",
+      "target": "src/uranus_research_service/repositories/research_resolution.py",
+      "source_sha256": "67790bc274130e0e697f1b4577422d4f75f096902935e85b1f2a0fbd0636fe71"
+    },
+    {
+      "source": "backend/app/clients/research_geocoder.py",
+      "target": "src/uranus_research_service/geocoder.py",
+      "source_sha256": "a907204c46b7b3ae36322c6ba91df14d9660c4f3fa3a0b4648afdce9f3b6484e"
+    },
+    {
+      "source": "backend/app/schemas/research_administrative.py",
+      "target": "src/uranus_research_service/schemas/research_administrative.py",
+      "source_sha256": "0ccf2fe19a8d9a3254db78f2dc6f111b7fec1c6a9ac59c27ae9388a705c862ce"
+    },
+    {
+      "source": "backend/app/repositories/research_administrative.py",
+      "target": "src/uranus_research_service/repositories/research_administrative.py",
+      "source_sha256": "19ab3b9c645a8256cff4c88a680f6b87c24d886cdee1af205f01e087eece3799"
+    },
+    {
+      "source": "backend/app/repositories/research_administrative_metadata.py",
+      "target": "src/uranus_research_service/repositories/research_administrative_metadata.py",
+      "source_sha256": "6394799d35f35747a48544c8461fc85340af7296d5042bf7d8110217c7b6d01a"
+    },
+    {
+      "source": "backend/app/research/catalog.py",
+      "target": "src/uranus_research_service/research/catalog.py",
+      "source_sha256": "7c77eec31b629d82057a60d30ba143a048d06593f223feb37b6ff244f5224f9b"
+    },
+    {
+      "source": "backend/app/repositories/research_taxonomy.py",
+      "target": "src/uranus_research_service/repositories/research_taxonomy.py",
+      "source_sha256": "d3f49db1b47aed2544c270067781fa2eb5e7673cc83d52e9e6a6ff917a70851e"
+    },
+    {
+      "source": "backend/app/research/administrative_catalog.py",
+      "target": "src/uranus_research_service/research/administrative_catalog.py",
+      "source_sha256": "e15bff62198bac1b7d9320764e450c17ecdda01f72721d856bbf01b842365883"
+    },
+    {
+      "source": "backend/app/research/administrative_resolver.py",
+      "target": "src/uranus_research_service/research/administrative_resolver.py",
+      "source_sha256": "1561128c7ae6da54fcb44b567047a03429ac5fb7db386e3e1004d80b948e6e52"
+    },
+    {
+      "source": "backend/app/research/capabilities.py",
+      "target": "src/uranus_research_service/research/capabilities.py",
+      "source_sha256": "b2f9ad7d9be65a7fe79a287a70ace260cf4d7232ced11dbacae8e9f2dbccf635"
+    },
+    {
+      "source": "backend/app/research/context.py",
+      "target": "src/uranus_research_service/research/context.py",
+      "source_sha256": "3f3673e7d22f369f91ffa2de38bf43705176e200e47bf267e054e48428ce8745"
+    },
+    {
+      "source": "backend/app/repositories/research_grouping.py",
+      "target": "src/uranus_research_service/repositories/research_grouping.py",
+      "source_sha256": "2ee96aa95b191e2163b8ede50d66a5a140f395937154dab377c0a49a554a3f58"
+    },
+    {
+      "source": "backend/app/research/outcome.py",
+      "target": "src/uranus_research_service/research/outcome.py",
+      "source_sha256": "5c09a07c8c0731751a84b6e971c009611d1be5f40601e1d6a8ff850ff7fe76d5"
+    },
+    {
+      "source": "backend/app/services/research_conversational.py",
+      "target": "src/uranus_research_service/services/research_conversational.py",
+      "source_sha256": "6b61c1ec163176efc362fa012b0467a7f5c0dd5e9bbf2279c1998f53786a4c02"
+    },
+    {
+      "source": "backend/app/research/answer_facts.py",
+      "target": "src/uranus_research_service/research/answer_facts.py",
+      "source_sha256": "be4d55a579abf1c724add705365578203d4499cd3dca4f0bd9cbed7f1e2ce53a"
+    },
+    {
+      "source": "backend/app/research/wire/research_v13_schema.py",
+      "target": "src/uranus_research_service/research/wire/research_v13_schema.py",
+      "source_sha256": "04fa336d83dd089c1c9b8412d487cd78bbc0a44eed035cf25a016e7ce201fb30"
+    },
+    {
+      "source": "backend/app/research/wire/research_v12_schema.py",
+      "target": "src/uranus_research_service/research/wire/research_v12_schema.py",
+      "source_sha256": "b0c08236c6178fba84d4a16ca5c250221e25dd4f1f9f63f91f0ce1c91f97d31a"
+    },
+    {
+      "source": "backend/app/research/wire/research_v10_schema.py",
+      "target": "src/uranus_research_service/research/wire/research_v10_schema.py",
+      "source_sha256": "5d3198ae36397db58ad6d23e01fe9ec1fb2394de4dbe7fcdb6c62fb935f77e69"
+    },
+    {
+      "source": "backend/app/research/wire/research_v9_constraints.py",
+      "target": "src/uranus_research_service/research/wire/research_v9_constraints.py",
+      "source_sha256": "f87d1695aa71510b864e7303a21257367874801af7d6db7cfd225408809a2562"
+    },
+    {
+      "source": "backend/app/research/wire/research_v9_types.py",
+      "target": "src/uranus_research_service/research/wire/research_v9_types.py",
+      "source_sha256": "ace2443b35e07bfec3fa0a32a44232a4ea9de0785c6129851f651b62306ac44a"
+    },
+    {
+      "source": "backend/app/research/wire/research_v9_schema.py",
+      "target": "src/uranus_research_service/research/wire/research_v9_schema.py",
+      "source_sha256": "5f9533596ad45436b6f99e2ae39f64ac89d74726cd051c3749e35034963fcb3b"
+    },
+    {
+      "source": "backend/app/research/wire/research_v12_spatial.py",
+      "target": "src/uranus_research_service/research/wire/research_v12_spatial.py",
+      "source_sha256": "cb43edae1e58f45bbef18f436cac75c89455e12e72a918fa32186608a85ca2d1"
+    },
+    {
+      "source": "backend/app/research/wire/research_v8_constraints.py",
+      "target": "src/uranus_research_service/research/wire/research_v8_constraints.py",
+      "source_sha256": "a51d9967a59f9a867c23e7d82332f2c73cc45b4b21fe6db37ac227f02eff6d3d"
+    },
+    {
+      "source": "backend/app/research/conversation.py",
+      "target": "src/uranus_research_service/research/conversation.py",
+      "source_sha256": "1067768ea3b14cecc37786c643c841c370ebf9c101a8cbb29d9bab37eec535b3"
+    },
+    {
+      "source": "backend/app/research/conversation_state.py",
+      "target": "src/uranus_research_service/research/conversation_state.py",
+      "source_sha256": "1fa194aef9b2619032624c8d27ffb549c18d998d85ce6e9e39b8668dcf477222"
+    },
+    {
+      "source": "backend/app/research/normalize_v12.py",
+      "target": "src/uranus_research_service/research/normalize_v12.py",
+      "source_sha256": "d455a25bb15f085386d43dc206399e0e4745a2f929abcaeb63994b59e6e679a9"
+    },
+    {
+      "source": "backend/app/research/normalize_v10.py",
+      "target": "src/uranus_research_service/research/normalize_v10.py",
+      "source_sha256": "bc1782875c8a766f7f306c34bb05ebd35aa2da6136b49193605dbbbfc0c1496e"
+    },
+    {
+      "source": "backend/app/research/normalize_v9.py",
+      "target": "src/uranus_research_service/research/normalize_v9.py",
+      "source_sha256": "acb113a30b89cfdea75ccfda682c10d8c520474068cc49a57c2cd910a5b1fd50"
+    },
+    {
+      "source": "backend/app/research/wire/research_v11_schema.py",
+      "target": "src/uranus_research_service/research/wire/research_v11_schema.py",
+      "source_sha256": "0ae644894ff6f1949c64f32a1b8539c200c4bcc2ffa3bd3aa9405ca3eeb4194f"
+    },
+    {
+      "source": "backend/app/research/wire/research_v8_schema.py",
+      "target": "src/uranus_research_service/research/wire/research_v8_schema.py",
+      "source_sha256": "a181d5570acebb6cc1bc508085c149b00d22826b7c57afafddca743e8051e94d"
+    },
+    {
+      "source": "backend/app/schemas/research_analytics.py",
+      "target": "src/uranus_research_service/schemas/research_analytics.py",
+      "source_sha256": "2480b3d28324c4fa0c15c4cdb4c4a44ae5cafcafc545c2232d6d4ccb64aa1708"
+    },
+    {
+      "source": "backend/app/schemas/research_analytics_guard.py",
+      "target": "src/uranus_research_service/schemas/research_analytics_guard.py",
+      "source_sha256": "4ee81361f9be0a0124b5c2ca261146ffa6cc4f091208a8721e5b4f96824cd318"
+    },
+    {
+      "source": "backend/app/schemas/research_geography.py",
+      "target": "src/uranus_research_service/schemas/research_geography.py",
+      "source_sha256": "8ddad8ff1eae40efbf9d225320793f6b96c94f31f245ff59378f48839c9e7d82"
+    },
+    {
+      "source": "backend/app/research/public_result.py",
+      "target": "src/uranus_research_service/research/public_result.py",
+      "source_sha256": "d469dd0f003071c49981f022928530fd618b866893584077d3becd2b38af66b1"
+    },
+    {
+      "source": "backend/app/schemas/research_response.py",
+      "target": "src/uranus_research_service/schemas/research_response.py",
+      "source_sha256": "e15ceb898981dedbb2d8d2df8526d1f6cd48f96f40a47675b1e6133247cfc659"
+    },
+    {
+      "source": "backend/app/research/answer.py",
+      "target": "src/uranus_research_service/research/answer.py",
+      "source_sha256": "e1fd5cf1901d244077698118a293f5566e5f5b566168f0f08a241630a5f21da3"
+    },
+    {
+      "source": "backend/app/research/normalize.py",
+      "target": "src/uranus_research_service/research/normalize.py",
+      "source_sha256": "a0ca0d68fe7818376ab05b6f5080af7740de574901063954f66de671a4ce0989",
+      "symbols": [
+        "unsupported"
+      ]
+    },
+    {
+      "source": "backend/app/repositories/entities.py",
+      "target": "src/uranus_research_service/repositories/public_helpers.py",
+      "source_sha256": "966d81603ad85385d9f1b3947e19c3bd207d7bc650fa916c75779ef48d30fc58",
+      "symbols": [
+        "pagination"
+      ]
+    },
+    {
+      "source": "backend/app/repositories/entity_search.py",
+      "target": "src/uranus_research_service/repositories/public_helpers.py",
+      "source_sha256": "e042f722c42583e65c0a5e044a99a42ccf291d4715fbd7727f6756eb2b5ec6c3",
+      "symbols": [
+        "escape_search",
+        "SearchDefinition",
+        "SEARCH_DEFINITIONS[event,venue,organization]"
+      ]
+    },
+    {
+      "source": "backend/app/repositories/activity_previews.py",
+      "target": "src/uranus_research_service/repositories/public_helpers.py",
+      "source_sha256": "0084af091f3cb82f54e6f825c2cb265c5d45c13326642d7bb73f38c12bfc3332",
+      "symbols": [
+        "image_url",
+        "location"
+      ]
+    },
+    {
+      "source": "backend/app/repositories/created_period.py",
+      "target": "src/uranus_research_service/repositories/public_helpers.py",
+      "source_sha256": "f18b2358c0aeff6378eefffc68be4f4f65fe986779a5686bc31b6adf9c92e009",
+      "symbols": [
+        "require_timezone"
+      ]
+    },
+    {
+      "source": "backend/app/schemas/finding.py",
+      "target": "src/uranus_research_service/repositories/public_helpers.py",
+      "source_sha256": "8cdf69812fcd04e8843046952ff3bec19a6c9946cc81ab3956635714948458a0",
+      "symbols": [
+        "Pagination"
+      ]
+    },
+    {
+      "source": "backend/app/repositories/vector_events.py",
+      "target": "src/uranus_research_service/repositories/research_taxonomy.py",
+      "source_sha256": "e33a2608812d6ceb4583590b11f20172614b7a239104225814cce0b1fac20c8f",
+      "symbols": [
+        "PUBLIC_EVENT (SQL constant only)"
+      ]
+    }
+  ]
+}

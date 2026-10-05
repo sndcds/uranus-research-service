@@ -14,6 +14,36 @@ jobs:
       - run: uv sync --locked
       - run: uv run --no-sync ruff check .
       - run: uv run --no-sync ruff format --check .
-      - run: uv run --no-sync pytest -q
+      - run: uv run --no-sync pytest -q -m "not integration"
       - run: uv run --no-sync python scripts/build_wheelhouse.py
       - run: docker build --network=none -f deploy/Dockerfile -t uranus-research-service:ci .
+
+  structured-postgis:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgis/postgis@sha256:8dfee83d8bd4c2873dc4a233c13ba2799a44f2edb16a0552d58715917fac32ba
+        env:
+          POSTGRES_DB: research_phase2a_test
+          POSTGRES_PASSWORD: synthetic-ci-database-password
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U postgres -d research_phase2a_test"
+          --health-interval 5s --health-timeout 3s --health-retries 10
+    env:
+      TEST_DATABASE_URL: postgresql+asyncpg://postgres:synthetic-ci-database-password@127.0.0.1:5432/research_phase2a_test
+      ADMIN_PARITY_ROOT: ${{ github.workspace }}/.reference-admin
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with:
+          repository: sndcds/uranus-admin
+          ref: 340df4684611dbc4b8ec73a7702f1fad2ae1973c
+          path: .reference-admin
+      - uses: astral-sh/setup-uv@v6
+        with:
+          version: "0.12.5"
+      - run: uv python install 3.13.15
+      - run: uv sync --locked
+      - run: uv sync --locked --project .reference-admin/backend
+      - run: uv run --no-sync pytest -q -m integration

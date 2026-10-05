@@ -1,56 +1,77 @@
-# Future database boundary
+# Read-only PostgreSQL/PostGIS boundary — Phase 2A
 
-Phase 1 creates no engines, accepts no database DSN, grants no privileges, and sends
-no SQL. This document specifies the later extraction from Admin commit recorded in
-`extraction-inventory.json`. PostgreSQL/PostGIS remains authoritative.
+Two explicitly injected SQLAlchemy async/asyncpg engines are used:
 
-## Reader contracts
+- `RESEARCH_DATABASE_URL[_FILE]`: dedicated source reader.
+- `RESEARCH_AREA_DATABASE_URL[_FILE]`: separate metadata reader limited to
+  `admin.research_area`. No Admin runtime/writer account is accepted.
 
-A dedicated source role will need SELECT on the public-research projection of:
+Files take precedence, contain a `postgresql+asyncpg://` URL, and must be absolute.
+No DDL, grants, migrations, writes or source schema discovery/ORM reflection run in
+production code. DSNs are SecretStr values and never returned or logged.
 
-- `uranus.event`, `event_date`, `organization`, `venue`, `space`;
-- `uranus.event_type_link`, `event_type`, `genre_type`, `event_category`;
-- public image references `uranus.pluto_image_link`, `pluto_image` for existing thumbnails.
+## Required SELECT contracts
 
-Prefer explicit views/column grants where operations need only public fields. Do
-not grant access to source users, password/token columns, private contacts or Admin
-workflow tables just because canonical shared search definitions mention them.
-Confirm the deployed DDL and the exact SQL projections before provisioning. Public
-release/date override gates, effective venue/space inheritance and temporal joins
-must remain identical to the extracted repositories.
+Source reader needs schema USAGE and SELECT on:
+`uranus.event`, `event_date`, `venue`, `organization`, `space`, `event_type`,
+`event_type_link`, `genre_type`, `event_category`, `pluto_image`, `pluto_image_link`.
+Queries retain explicit public projections, release/date override eligibility,
+venue/space inheritance, taxonomy identity and temporal semantics from pinned Admin.
+No source user, password, account or workflow table is queried. A future narrower
+column/view projection requires a separately reviewed privilege-contract change.
 
-Administrative geography currently lives in **`admin.research_area`**. Research
-needs its ID/type/country/region/OSM classification, municipality key, name/display
-name, geometry/centroid, retrieval/update provenance and population value/date/source/
-name/file hash/import timestamp. It does not need account or workflow state.
-Either provide a read-only projection/view with those fields or a separate metadata
-reader limited to SELECT on this single table. Keep imports, geometry validation,
-population updates and migrations in Admin/operator tooling. No broad Admin runtime
-account may be reused by the service.
+Metadata reader needs only schema USAGE and SELECT on **admin.research_area**. The
+existing projection supplies administrative classification, names, OSM identity,
+geometry/centroid/bounds, municipality key and population/provenance metadata. It
+supplies no account/session/workflow fields. Geometry import/enrichment and population
+updates remain Admin/operator responsibilities.
 
-## Transactions and privilege checks
+Chosen Phase-2A option: separate narrow reader, preserving existing SQL. A new
+projection view would require unprovisioned DDL and is not invented silently. The
+service checks required relation/SELECT availability; source column compatibility is
+also exercised by real SQL integration tests. Deployed DDL still requires operator
+verification before any later rollout.
 
-Reuse async SQLAlchemy/asyncpg only when execution is actually extracted. Set UTC,
-`default_transaction_read_only=on`, `hide_parameters=True`, finite connection/pool/
-command deadlines and a statement timeout (Admin baseline 10 seconds). Each coherent
-source read uses `REPEATABLE READ, READ ONLY`. Bound counts/pages/eligibility probes
-and reject overflow instead of silently truncating an authoritative candidate set.
+## Effective privilege preflight
 
-Verify effective inherited privileges, schema CREATE, role ownership, superuser,
-role-creation and table/column DML, not merely the account name. Source writes,
-TRUNCATE, trigger creation, source DDL, extension creation and runtime grants are
-forbidden. Transactions alone do not compensate for excessive role privileges.
-The metadata reader must also lack access to unrelated Admin tables.
+On /ready, before structured resolution, and inside every read snapshot:
 
-Resolution/eligibility snapshots end before external embedding or vector calls;
-final authoritative rehydration obtains a fresh bounded snapshot. SQL and identifiers
-remain code-owned and allowlisted; all user-derived values are bound parameters.
-No model-generated SQL, model-chosen tables, runtime ORM reflection or auto-migrations.
+- Reject effective or SET ROLE-accessible superuser, createrole, createdb, replication
+  and bypass-RLS roles.
+- Reject database CREATE/TEMP and application-schema CREATE or ownership.
+- Reject INSERT/UPDATE/DELETE/TRUNCATE/TRIGGER/REFERENCES, including column grants,
+  application relation ownership and inherited/NOINHERIT owner membership.
+- Reject writable sequence rights/ownership.
+- Reject SELECT/column SELECT on any other relation in uranus/admin for that reader.
+- Require schema USAGE (public and the reader's relation schema), all role-specific
+  tables, SELECT grants, PostGIS and transaction_read_only=on.
 
-## Validation before phase-2 rollout
+Checks use PostgreSQL catalogs/effective privileges, not role names. This is stricter
+than a transaction-only safeguard: operators must also remove inherited/PUBLIC
+CREATE/TEMP where applicable. The runtime never repairs grants. Admin's DML-oriented
+`assert_admin_boundary` is intentionally not reused for this narrow metadata reader.
 
-Use a disposable PostgreSQL/PostGIS database ending `_test`, following Admin's
-empty-schema guard. Check count/records/grouped/aggregate/comparison/spatial/temporal
-semantics, readonly enforcement, timeout/overflow and denied write privileges.
-Never use a production reader as a test fixture setup/teardown account. No database
-integration test or live schema verification is claimed by phase 1.
+## Transaction model
+
+Connections set default_transaction_read_only=on, UTC, finite connect/pool/statement/
+lock/idle-transaction deadlines and hide_parameters=True. Each coherent source/area
+read uses REPEATABLE READ, READ ONLY. Pools have bounded size and zero overflow.
+
+Planner inference and Geocoder calls run outside database transactions. Resolution
+snapshots close before final execution obtains its own snapshot, matching Admin's
+existing semantics. Only application-owned SQL/identifiers and bound user values are
+used. SQL provenance instruments explicit Research calls, not global SQLAlchemy hooks;
+privilege probes are not mixed into answer provenance.
+
+## Disposable testing
+
+Tests accept only a loopback database name matching `[a-z][a-z0-9_]*_test`, with neither
+uranus nor admin schemas already present. Fixture DDL copies the pinned schema-only
+Admin snapshot and adds a synthetic area table; all rows/reader credentials are test
+material. Fixtures create and remove their own roles/schemas. No production DSN is
+used, and no SQLite approximation replaces PostGIS.
+
+Tests verify actual execution plus denied writes, table/column grants, schema CREATE,
+superuser/createrole, inherited ownership (including a nonsuperuser NOINHERIT owner),
+unrelated workflow SELECT, missing schema USAGE and missing required relations. CI provisions its own
+PostGIS container. Role/schema setup here is test infrastructure, not deployment DDL.

@@ -1,0 +1,454 @@
+"""Deterministic execution of validated server-side plans. No inference or persistence."""
+
+import asyncio
+from calendar import monthrange
+from dataclasses import replace
+from datetime import UTC, date, datetime, timedelta
+from time import perf_counter
+from typing import Literal, cast
+from uuid import UUID
+from zoneinfo import ZoneInfo
+
+from sqlalchemy.exc import SQLAlchemyError
+
+from uranus_research_service.config import Settings
+from uranus_research_service.database import Database
+from uranus_research_service.errors import APIError
+from uranus_research_service.repositories.administrative_execution import administrative_selection
+from uranus_research_service.repositories.research import research_page
+from uranus_research_service.repositories.research_execution import (
+    aggregate_selection,
+    chronological_records,
+    count_selection,
+    spatial_records,
+    taxonomy_selection,
+)
+from uranus_research_service.repositories.research_grouping import grouped_selection
+from uranus_research_service.repositories.research_resolution import ResearchResolver, Resolution
+from uranus_research_service.research.capabilities import (
+    boundary_execution,
+    grouped_execution,
+    require_supported,
+)
+from uranus_research_service.research.context import ResearchExecutionContext
+from uranus_research_service.research.geography import (
+    ADMINISTRATIVE_LEVELS,
+    AdministrativeLevel,
+    ResolvedAdministrativeAreaRef,
+    ResolvedAdministrativeConstraint,
+    UnresolvedAdministrativeAreaRef,
+    administrative_constraints,
+    uses_user_location,
+)
+from uranus_research_service.research.outcome import ResearchExecutionOutcome
+from uranus_research_service.research.plan import InternalResearchPlan, ResolvedResearchPlan
+from uranus_research_service.research.sql_provenance import collect_research_sql
+from uranus_research_service.schemas.research_execution import (
+    AggregateItem,
+    AggregateResult,
+    ComparisonItem,
+    ComparisonResult,
+    CountResult,
+    ExecutionClarification,
+    ExecutionDiagnostics,
+    ExecutionFilters,
+    ExecutionGrouping,
+    ExecutionMetric,
+    ExecutionProvenance,
+    ExecutionResult,
+    GroupedResult,
+    RecordsResult,
+    SpatialResult,
+    TaxonomyResult,
+)
+
+
+def temporal_bounds(
+    plan: InternalResearchPlan,
+    context: ResearchExecutionContext,
+) -> tuple[date | None, date | None]:
+    # reference_date is already a local date in this validated zone. Calendar
+    # arithmetic deliberately avoids UTC offsets, including across DST changes.
+    ZoneInfo(context.timezone)
+    ref = context.reference_date
+    monday = ref - timedelta(days=ref.weekday())
+    match plan.temporal.period:
+        case "none":
+            return None, None
+        case "today":
+            return ref, ref
+        case "tomorrow":
+            tomorrow = ref + timedelta(days=1)
+            return tomorrow, tomorrow
+        case "this_weekend":
+            return monday + timedelta(days=5), monday + timedelta(days=6)
+        case "next_week":
+            return monday + timedelta(days=7), monday + timedelta(days=13)
+        case "this_month":
+            return ref.replace(day=1), ref.replace(day=monthrange(ref.year, ref.month)[1])
+        case "this_year":
+            return ref.replace(month=1, day=1), ref.replace(month=12, day=31)
+        case "past":
+            return None, ref - timedelta(days=1)
+        case "future":
+            return ref, None
+        case "explicit_range":
+            return plan.temporal.from_date, plan.temporal.to_date
+
+
+def execution_filters(
+    plan: InternalResearchPlan, context: ResearchExecutionContext, resolution: Resolution
+) -> ExecutionFilters:
+    # SQL receives only verified IDs/boundaries. A resolver omission must not drop
+    # an administrative constraint and turn a scoped query into a global query.
+    constraints = administrative_constraints(plan.spatial_constraints)
+    if constraints and boundary_execution(plan):
+        if len(constraints) != len(resolution.spatial_constraints):
+            raise APIError(502, "research_execution_invalid_plan", "Area resolution is incomplete.")
+        for expected_constraint, actual in zip(
+            constraints, resolution.spatial_constraints, strict=True
+        ):
+            expected = expected_constraint.reference
+            ref = actual.reference
+            if (
+                not isinstance(expected, UnresolvedAdministrativeAreaRef)
+                or not isinstance(ref, ResolvedAdministrativeAreaRef)
+                or (expected.expected_level is not None and expected.expected_level != ref.level)
+                or ref.resolved_id != ref.boundary.area_id
+                or ref.boundary.geometry_json is None
+                or actual.relation != expected_constraint.relation
+            ):
+                raise APIError(
+                    502, "research_execution_invalid_plan", "Area resolution is incomplete."
+                )
+    elif constraints:
+        resolved = administrative_constraints(resolution.spatial_constraints)
+        reference = resolved[0].reference if len(resolved) == 1 else None
+        expected = constraints[0].reference
+        if (
+            len(constraints) != 1
+            or not isinstance(expected, UnresolvedAdministrativeAreaRef)
+            or resolution.area is None
+            or not isinstance(reference, ResolvedAdministrativeAreaRef)
+            or (expected.expected_level is not None and reference.level != expected.expected_level)
+            or reference.resolved_id != resolution.area.area.id
+            or reference.boundary is None
+            or reference.boundary.area_id != reference.resolved_id
+            or resolved[0].relation != constraints[0].relation
+        ):
+            raise APIError(502, "research_execution_invalid_plan", "Area resolution is incomplete.")
+    start, end = temporal_bounds(plan, context)
+    filters = ExecutionFilters(
+        place=resolution.place,
+        entity_type=plan.entity_type,
+        from_date=start,
+        to_date=end,
+        weekdays=plan.temporal.weekdays,
+        months=plan.temporal.months,
+        time_from=plan.temporal.time_from,
+        time_of_day=plan.temporal.time_of_day,
+        area_relation=resolution.area_relation,
+        page_size=plan.limit or 20,
+        area_id=resolution.area.area.id if resolution.area else None,
+    )
+    for item in resolution.fields:
+        if item.field == "venue_query":
+            filters.venue_id = UUID(item.target.id)
+        elif item.field == "organization_query":
+            filters.organization_id = UUID(item.target.id)
+        elif item.field == "event_type_queries":
+            filters.event_type_ids.append(int(item.target.id))
+        elif item.field == "category_queries":
+            filters.category_ids.append(int(item.target.id))
+        elif item.field == "genre_queries":
+            filters.genre_keys.append(item.target.id)
+    filters.event_type_ids = sorted(set(filters.event_type_ids))
+    filters.category_ids = sorted(set(filters.category_ids))
+    filters.genre_keys = sorted(set(filters.genre_keys))
+    return filters
+
+
+class ResearchPlanExecutor:
+    def __init__(self, database: Database, resolver: ResearchResolver, settings: Settings):
+        self.database = database
+        self.resolver = resolver
+        self.settings = settings
+
+    async def execute(
+        self,
+        plan: InternalResearchPlan,
+        context: ResearchExecutionContext,
+        *,
+        planner_ms: float,
+    ) -> ResearchExecutionOutcome:
+        with collect_research_sql() as statements:
+            outcome = await self._execute(plan, context, planner_ms=planner_ms)
+        if outcome.administrative is not None:
+            outcome = replace(
+                outcome,
+                administrative=outcome.administrative.model_copy(
+                    update={"sql_provenance": statements}
+                ),
+            )
+        return replace(outcome, sql_provenance=statements)
+
+    async def _execute(
+        self,
+        plan: InternalResearchPlan,
+        context: ResearchExecutionContext,
+        *,
+        planner_ms: float,
+    ) -> ResearchExecutionOutcome:
+        settings = self.settings
+        if plan.semantic is not None:
+            raise APIError(422, "research_execution_unsupported", "Semantic retrieval is disabled.")
+        started = perf_counter()
+        resolution = Resolution()
+        administrative = None
+        provenance = ExecutionProvenance()
+        resolution_ms = execution_ms = 0.0
+        observed_at = datetime.now(UTC)
+        if plan.unsupported_reason is not None:
+            raise APIError(422, "research_plan_unsupported", "This research plan is unsupported.")
+        location_satisfied = (
+            uses_user_location(plan.spatial_constraints)
+            and context.location_context is not None
+            and plan.clarification == "needs_location"
+        )
+        if plan.clarification != "none" and not location_satisfied:
+            result: ExecutionResult = ExecutionClarification(
+                reason="planner", planner_state=plan.clarification
+            )
+        else:
+            if (
+                plan.clarification != "none" and not location_satisfied
+            ) or context.timezone != settings.event_timezone:
+                raise APIError(
+                    502, "research_execution_invalid_plan", "The research plan is invalid."
+                )
+            require_supported(plan)
+            try:
+                # Bound the complete resolution stage, in addition to DB statement limits.
+                resolution_timeout = 45 if boundary_execution(plan) else settings.db_timeout_seconds
+                async with asyncio.timeout(resolution_timeout):
+                    resolution = await self.resolver.resolve(plan, context)
+                resolution_ms = (perf_counter() - started) * 1000
+                if resolution.clarification is not None:
+                    result = resolution.clarification
+                else:
+                    filters = execution_filters(plan, context, resolution)
+                    resolved_plan = ResolvedResearchPlan(
+                        filters=filters,
+                        intent=plan.intent,
+                        administrative_constraints=tuple(
+                            ResolvedAdministrativeConstraint(
+                                cast(Literal["inside", "outside"], c.relation),
+                                cast(ResolvedAdministrativeAreaRef, c.reference),
+                            )
+                            for c in resolution.spatial_constraints
+                        ),
+                        grouping=(
+                            "municipality"
+                            if "municipality" in plan.groupings
+                            else cast(AdministrativeLevel, plan.group_by)
+                            if plan.group_by in ADMINISTRATIVE_LEVELS
+                            else None
+                        ),
+                        zero_only=plan.zero_only,
+                        ordering=plan.ordering or "desc",
+                        limit=filters.page_size,
+                        inventory=resolution.inventory,
+                        inventory_countries=resolution.inventory_countries,
+                    )
+                    provenance = ExecutionProvenance(
+                        from_date=filters.from_date,
+                        to_date=filters.to_date,
+                        time_from=filters.time_from,
+                        time_of_day=filters.time_of_day,
+                        area_relation=filters.area_relation,
+                        event_type_ids=filters.event_type_ids,
+                        category_ids=filters.category_ids,
+                        genre_keys=filters.genre_keys,
+                        structured=True,
+                        semantic=plan.semantic is not None,
+                    )
+                    before = perf_counter()
+                    # No planner/embedding/vector work holds this source snapshot.
+                    async with (
+                        asyncio.timeout(settings.db_timeout_seconds),
+                        self.database.connection() as connection,
+                    ):
+                        observed_at = datetime.now(UTC)
+                        if grouped_execution(plan):
+                            result = await grouped_selection(
+                                connection, settings, plan, resolved_plan, resolution.area
+                            )
+                        elif boundary_execution(plan):
+                            administrative = await administrative_selection(
+                                connection, settings, resolved_plan
+                            )
+                            if administrative.kind == "records":
+                                result = RecordsResult(
+                                    items=list(administrative.records),
+                                    total=administrative.count,
+                                )
+                            elif administrative.kind == "count":
+                                assert administrative.count is not None
+                                result = CountResult(
+                                    metric="event_count", value=administrative.count
+                                )
+                            else:
+                                # Public administrative metadata is carried alongside the
+                                # shared result; no version-specific execution model.
+                                result = AggregateResult(
+                                    metric="event_count",
+                                    group_by=cast(ExecutionGrouping, plan.group_by),
+                                    items=[
+                                        AggregateItem(
+                                            key=g.area_id, name=g.name, value=g.event_count
+                                        )
+                                        for g in administrative.groups
+                                    ],
+                                )
+                        elif plan.intent == "taxonomy":
+                            assert plan.taxonomy is not None
+                            result = await taxonomy_selection(
+                                connection,
+                                settings,
+                                filters,
+                                plan.taxonomy,
+                                resolution.area,
+                                filters.page_size,
+                                plan.ordering or "asc",
+                            )
+                        elif plan.intent == "spatial_rank":
+                            assert plan.spatial_metric is not None and plan.ordering is not None
+                            result = SpatialResult(
+                                spatial_metric=plan.spatial_metric,
+                                ordering=plan.ordering,
+                                items=await spatial_records(
+                                    connection,
+                                    settings,
+                                    filters,
+                                    resolution.area,
+                                    plan.spatial_metric,
+                                    plan.ordering,
+                                    filters.page_size,
+                                ),
+                            )
+                        elif plan.intent == "count":
+                            metric = cast(ExecutionMetric, plan.metric)
+                            result = CountResult(
+                                metric=metric,
+                                value=await count_selection(
+                                    connection, settings, filters, metric, resolution.area
+                                ),
+                            )
+                        elif plan.intent == "aggregate":
+                            metric = cast(ExecutionMetric, plan.metric)
+                            grouping = cast(ExecutionGrouping, plan.group_by)
+                            result = AggregateResult(
+                                metric=metric,
+                                group_by=grouping,
+                                items=await aggregate_selection(
+                                    connection,
+                                    settings,
+                                    filters,
+                                    metric,
+                                    grouping,
+                                    resolution.area,
+                                    ordering=plan.ordering or "desc",
+                                    limit=filters.page_size,
+                                ),
+                            )
+                        elif plan.intent == "compare":
+                            metric = cast(ExecutionMetric, plan.metric)
+                            comparisons = []
+                            for target in plan.comparison_targets:
+                                selected = next(
+                                    r.target
+                                    for r in resolution.fields
+                                    if r.field == "comparison_targets"
+                                    and r.query == target.query
+                                    and r.target.entity_type == target.kind
+                                )
+                                target_filters = filters.model_copy(deep=True)
+                                area = resolution.area
+                                if target.kind == "area":
+                                    area = resolution.target_areas[selected.id]
+                                    target_filters.area_id = area.area.id
+                                elif target.kind == "venue":
+                                    target_filters.venue_id = UUID(selected.id)
+                                else:
+                                    target_filters.organization_id = UUID(selected.id)
+                                comparisons.append(
+                                    ComparisonItem(
+                                        target=selected,
+                                        value=await count_selection(
+                                            connection,
+                                            settings,
+                                            target_filters,
+                                            metric,
+                                            area,
+                                            label=f"Vergleich: {selected.label}",
+                                            kind="comparison",
+                                        ),
+                                    )
+                                )
+                            result = ComparisonResult(metric=metric, items=comparisons)
+                        elif plan.entity_type == "event":
+                            # Structured events always have explicit occurrence ordering.
+                            result = RecordsResult(
+                                items=await chronological_records(
+                                    connection,
+                                    settings,
+                                    filters,
+                                    resolution.area,
+                                    plan.ordering or "asc",
+                                    filters.page_size,
+                                )
+                            )
+                        else:
+                            records = await research_page(
+                                connection, settings, filters, observed_at, resolution.area
+                            )
+                            result = RecordsResult(
+                                items=list(records.items), total=records.pagination.total
+                            )
+                    execution_ms = (perf_counter() - before) * 1000
+            except (SQLAlchemyError, TimeoutError):
+                raise APIError(
+                    503,
+                    "research_execution_unavailable",
+                    "Research execution is temporarily unavailable.",
+                ) from None
+            except (ValueError, OverflowError):
+                raise APIError(
+                    502, "research_execution_invalid_plan", "The research plan is invalid."
+                ) from None
+        return ResearchExecutionOutcome(
+            resolution=resolution.fields,
+            administrative=administrative,
+            result=result,
+            execution=provenance,
+            observed_at=observed_at,
+            diagnostics=ExecutionDiagnostics(
+                planner_ms=planner_ms,
+                resolution_ms=resolution_ms,
+                execution_ms=execution_ms,
+                total_ms=planner_ms + (perf_counter() - started) * 1000,
+                returned_count=len(result.items)
+                if isinstance(
+                    result,
+                    (
+                        RecordsResult,
+                        AggregateResult,
+                        GroupedResult,
+                        ComparisonResult,
+                        TaxonomyResult,
+                        SpatialResult,
+                    ),
+                )
+                else 0,
+            ),
+        )

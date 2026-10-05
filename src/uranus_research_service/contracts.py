@@ -1,4 +1,4 @@
-"""Closed phase-1 request and metadata. Query execution has no successful response yet."""
+"""Closed internal requests and versioned structured execution responses."""
 
 from typing import Literal
 from zoneinfo import ZoneInfo, ZoneInfoNotFoundError
@@ -75,9 +75,19 @@ class HealthResponse(Closed):
     status: Literal["ok"] = "ok"
 
 
+class RuntimeCapabilities(Closed):
+    structured_query: bool = False
+    semantic_query: Literal[False] = False
+    conversation: bool = False
+    spatial: bool = False
+    named_place_resolution: bool = False
+    administrative_grouping: bool = False
+
+
 class ReadyResponse(Closed):
     status: Literal["ready"] = "ready"
-    query_enabled: Literal[False] = False
+    query_enabled: bool = False
+    capabilities: RuntimeCapabilities = Field(default_factory=lambda: RuntimeCapabilities())
 
 
 class VersionResponse(Closed):
@@ -90,4 +100,16 @@ class VersionResponse(Closed):
     embedding_version: str = EMBEDDING_VERSION
     dimensions: int = DIMENSIONS
     chunk_version: str = CHUNK_VERSION
-    query_enabled: Literal[False] = False
+    query_enabled: bool = False
+    capabilities: RuntimeCapabilities = Field(default_factory=lambda: RuntimeCapabilities())
+
+
+from uranus_research_service.schemas.research_response import (  # noqa: E402
+    ConversationResponse,
+    ResearchExecutionResponse,
+)
+
+
+class QueryResponse(Closed):
+    schema_version: Literal["uranus-research-service-v1"] = CONTRACT_VERSION
+    response: ConversationResponse | ResearchExecutionResponse

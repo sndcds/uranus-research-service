@@ -4,6 +4,13 @@ import json
 import logging
 
 FIELDS = {
+    "interaction_kind",
+    "planner_ms",
+    "resolution_ms",
+    "postgres_ms",
+    "execution_ms",
+    "total_ms",
+    "returned_count",
     "request_id",
     "status_code",
     "duration_ms",
@@ -11,7 +18,13 @@ FIELDS = {
     "error_type",
     "contract_version",
 }
-EVENTS = {"request_completed", "dependency_failed", "startup_failed"}
+EVENTS = {
+    "request_completed",
+    "dependency_failed",
+    "startup_failed",
+    "research_conversation_route",
+    "research_execution",
+}
 logger = logging.getLogger("uranus.research")
 
 
@@ -33,5 +46,15 @@ def configure_logging():
     logger.setLevel(logging.INFO)
     logger.propagate = False
     # Provider transports and ASGI access/error logs may include URLs or exception values.
-    for name in ("httpx", "httpcore", "uvicorn.access", "uvicorn.error"):
-        logging.getLogger(name).disabled = True
+    for name in (
+        "httpx",
+        "httpcore",
+        "uvicorn.access",
+        "uvicorn.error",
+        "sqlalchemy.engine",
+        "sqlalchemy.pool",
+    ):
+        blocked = logging.getLogger(name)
+        blocked.disabled = True
+        blocked.handlers = [logging.NullHandler()]
+        blocked.propagate = False  # suppress descendant Engine/Pool transport logs too
