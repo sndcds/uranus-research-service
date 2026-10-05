@@ -1,0 +1,86 @@
+{
+  "average_tokens": 25.4,
+  "build_id": "test_real_15d52723843e",
+  "chunk_count": 5,
+  "chunk_version": "sections-480-overlap64-v2",
+  "chunks": 5,
+  "chunks_per_second": 0.969812074376198,
+  "collection": "kulturbytes_events_jina_v5_build_test_real_15d52723843e",
+  "completed_at": "2026-10-05T15:09:11.411716+00:00",
+  "cpu_time": 0.33789629199999993,
+  "deleted": 0,
+  "document_count": 2,
+  "documents": [
+    {
+      "chunk_count": 3,
+      "chunk_hashes": [
+        "25d67b075221b21b86789b199eccd4c142307c3c16a4e31be5ef2e6149f51396",
+        "3d020a606c193f00339b32d9bba052af6f06a89ef784c9cadea554044b29fe87",
+        "303c14b6c7c0d3203cf176a7788676caf7f57015b677ab89b840c6958b3f246d"
+      ],
+      "document_hash": "b09c1ca3a761afdfb921bcd7bf9560d26bf78985dabccbcba69076660c57fe0b",
+      "entity_id": "00000000-0000-0000-0000-00000000001e"
+    },
+    {
+      "chunk_count": 2,
+      "chunk_hashes": [
+        "132db6911cf8a516381e2c075409e2c00bfaef95271c2a51ece223816d0efefb",
+        "c56b58c2a710cc3951327dbd303e659c09fc292d32446e364356ed0c224d7478"
+      ],
+      "document_hash": "7382b6157270c92a297434ab4da6f48c3fb5a575e139dfc7e6633f6669f8bdc6",
+      "entity_id": "00000000-0000-0000-0000-00000000001f"
+    }
+  ],
+  "embedding_time": 3.400128439992841,
+  "embedding_version": "dd76d535f5447ca3897a9c893fb1e612ead98192:native-qwen3-torch2.11.0-transformers5.17.0-peft0.21.1-cpu-eager-retrieval-query-document-last-token-l2-f32-d1024:sections-480-overlap64-v2",
+  "entity_type": "event",
+  "manifest": {
+    "build_id": "test_real_15d52723843e",
+    "chunk_count": 5,
+    "chunk_version": "sections-480-overlap64-v2",
+    "complete": true,
+    "corpus_hash": "279f5311e902ba88ec46de8945f47d622b10ebac07777f6a3ecf221d0689d606",
+    "created_at": "2026-10-05T15:09:06.256092+00:00",
+    "dimensions": 1024,
+    "distance": "Cosine",
+    "document_count": 2,
+    "document_schema_version": "event-public-v4",
+    "embedding_model": "jina-v5",
+    "embedding_version": "dd76d535f5447ca3897a9c893fb1e612ead98192:native-qwen3-torch2.11.0-transformers5.17.0-peft0.21.1-cpu-eager-retrieval-query-document-last-token-l2-f32-d1024:sections-480-overlap64-v2",
+    "entity_type": "event",
+    "index_owner": "kulturbytes-semantic-search-v1",
+    "manifest_owner": "uranus-research-service-manifest-v1",
+    "model_revision": "dd76d535f5447ca3897a9c893fb1e612ead98192",
+    "source_snapshot_hash": "d6cff585412f36489bde6e413ccf1d0b350ddb859975333a0ece2019f860d75f"
+  },
+  "max_tokens": 54,
+  "metadata_updated": 0,
+  "model": "jina-v5",
+  "new": 5,
+  "payload_bytes": 8710,
+  "peak_rss_bytes": 111304704,
+  "plan_only": false,
+  "qdrant_time": 0.12858369400782976,
+  "raw_vector_bytes": 20480,
+  "reference_time": "2026-10-05T00:00:00+00:00",
+  "revision": "dd76d535f5447ca3897a9c893fb1e612ead98192",
+  "smoke": [
+    {
+      "latency": 0.47624705100315623,
+      "returned_count": 2
+    },
+    {
+      "latency": 0.48605062199931126,
+      "returned_count": 2
+    },
+    {
+      "latency": 0.4494714419997763,
+      "returned_count": 2
+    }
+  ],
+  "source_snapshot_hash": "d6cff585412f36489bde6e413ccf1d0b350ddb859975333a0ece2019f860d75f",
+  "started_at": "2026-10-05T15:09:06.256092+00:00",
+  "unchanged": 0,
+  "updated": 0,
+  "wall_time": 5.155638017000456
+}

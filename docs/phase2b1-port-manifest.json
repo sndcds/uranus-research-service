@@ -1,0 +1,59 @@
+{
+  "admin_commit": "340df4684611dbc4b8ec73a7702f1fad2ae1973c",
+  "modules": {
+    "research/evidence_context.py": {
+      "source": "research/evidence_context.py",
+      "sha256": "d7568242c1120c247ac339ccdd4c4d204709d8b7bfabc1e3c68d690e0f401615"
+    },
+    "research/semantic_contracts.py": {
+      "source": "research/semantic_contracts.py",
+      "sha256": "4a11f8d0eb35338b2fd2d254b337fe195dbbe1516c5431bc170050b3e396c1dc"
+    },
+    "research/semantic_documents.py": {
+      "source": "research/semantic_documents.py",
+      "sha256": "d5ed315ae556b697ea38b21f38bf936847de1a84336dd48e6c86545bef75e12e"
+    },
+    "research/semantic_evidence.py": {
+      "source": "research/semantic_evidence.py",
+      "sha256": "ba5cd8d692d44cd03e631a7252325d4a4764ca54a8824c2dbddb093ec88bffd7"
+    },
+    "research/semantic_limits.py": {
+      "source": "research/semantic_limits.py",
+      "sha256": "e181d031e0eae3fa9989acd2a57c0adbcc07e38d3b99b0198a7e8dc808b35a44"
+    },
+    "research/semantic_explanations.py": {
+      "source": "research/semantic_explanations.py",
+      "sha256": "3ae9faa5925e80f7a5ebd6c682d4495b1c00a017a2b800b8bacee4eb2c0079dd"
+    },
+    "research/vector_documents.py": {
+      "source": "research/vector_documents.py",
+      "sha256": "d0cea569614556dcb1c619414f85880efaeace14f3e0e57bec263aabf1b3430a"
+    },
+    "research/vector_sync.py": {
+      "source": "research/vector_sync.py",
+      "sha256": "2f2756da937591980dc00f1905f00744b60afa0dabb7613c1ab8b6e78264ad22"
+    },
+    "repositories/vector_events.py": {
+      "source": "repositories/vector_events.py",
+      "sha256": "e33a2608812d6ceb4583590b11f20172614b7a239104225814cce0b1fac20c8f"
+    },
+    "repositories/temporal.py": {
+      "source": "repositories/temporal.py",
+      "sha256": "e00dedb4b22082465900b12541b54cc4b8060865acb6cebb380b745f4ff39660",
+      "selection": "is_upcoming_start only",
+      "target": "repositories/semantic_source.py"
+    },
+    "repositories/research_execution.py": {
+      "source": "repositories/research_execution.py",
+      "sha256": "5954319cfca8f32c851dcad0dfed98f8fe0ef64a5e6659241c7bbb9d2b0263c3",
+      "selection": "eligible_event_ids only",
+      "target": "repositories/research_execution.py"
+    }
+  },
+  "encoder": {
+    "commit": "1938c72caa6102452ae0afa18ef86d9a95ead878",
+    "source": "src/uranus_research_encoder/contracts.py",
+    "sha256": "767eb47a8cb94b4cdaa933e3dfa63d290d397170ef28ade21f1c439d846e3336",
+    "target": "src/uranus_research_service/encoder_contracts.py"
+  }
+}

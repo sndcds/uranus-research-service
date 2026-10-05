@@ -83,7 +83,7 @@ class ErrorResponse(BaseModel):
 class DependencyError(Exception):
     def __init__(
         self,
-        dependency: Literal["planner", "encoder"],
+        dependency: Literal["planner", "encoder", "qdrant"],
         category: Literal[
             "unconfigured",
             "unavailable",

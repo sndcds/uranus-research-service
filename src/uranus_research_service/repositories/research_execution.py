@@ -1,19 +1,24 @@
 """Exact, bounded SQL metrics using the shared eligible Research population."""
 
 from typing import Literal
+from uuid import UUID
 
 from sqlalchemy import text
 from sqlalchemy.ext.asyncio import AsyncConnection
 
 from uranus_research_service.config import Settings
+from uranus_research_service.errors import APIError
 from uranus_research_service.repositories.research import (
+    eligible_event_ctes,
     images,
     parameters,
     record,
     research_sql,
+    search_sql,
 )
 from uranus_research_service.repositories.research_areas import ResolvedResearchArea
 from uranus_research_service.repositories.research_resolution import EVENT_TYPES_SQL, GENRES_SQL
+from uranus_research_service.research.semantic_limits import MAX_ELIGIBLE_EVENTS
 from uranus_research_service.research.sql_provenance import execute_research_sql
 from uranus_research_service.schemas.research import ResearchRecord
 from uranus_research_service.schemas.research_execution import (
@@ -26,6 +31,33 @@ from uranus_research_service.schemas.research_execution import (
     TaxonomyResult,
 )
 from uranus_research_service.schemas.research_sql import ResearchSqlKind
+
+
+async def eligible_event_ids(
+    connection: AsyncConnection,
+    settings: Settings,
+    filters: ExecutionFilters,
+    area: ResolvedResearchArea | None,
+) -> list[UUID]:
+    """Complete hard-eligible population or an explicit error; never a truncated sample."""
+    rows = await execute_research_sql(
+        connection,
+        text(f"""{eligible_event_ctes(ids_only=True)}
+        SELECT DISTINCT entity_key FROM matched_events
+        WHERE (:q='%%' OR entity_key::text IN ({search_sql("event")}))
+        ORDER BY entity_key LIMIT :eligibility_probe_limit"""),
+        {**parameters(filters, settings, area), "eligibility_probe_limit": MAX_ELIGIBLE_EVENTS + 1},
+        label="SQL-Vorauswahl",
+        kind="eligibility",
+    )
+    identifiers = list(rows.scalars())
+    if len(identifiers) > MAX_ELIGIBLE_EVENTS:
+        raise APIError(
+            422,
+            "research_execution_too_broad",
+            "Narrow the research request before semantic ranking.",
+        )
+    return identifiers
 
 
 async def count_selection(

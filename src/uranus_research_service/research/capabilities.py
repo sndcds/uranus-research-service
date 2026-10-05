@@ -28,8 +28,8 @@ def unsupported(message: str) -> APIError:
     return APIError(422, "research_execution_unsupported", message)
 
 
-def require_supported(plan: InternalResearchPlan) -> None:
-    if plan.semantic is not None:
+def require_supported(plan: InternalResearchPlan, *, allow_semantic: bool = False) -> None:
+    if plan.semantic is not None and not allow_semantic:
         raise unsupported("Semantic retrieval is disabled.")
     if plan.unsupported_reason is not None:
         raise APIError(422, "research_plan_unsupported", "This research plan is unsupported.")

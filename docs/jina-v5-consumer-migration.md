@@ -1,8 +1,10 @@
-# Jina v5 consumer migration plan
+# Jina v5 consumer migration — Phase 2B.1
 
-The encoder migration is already complete. This phase-1 repository only consumes
-its metadata contract and never loads weights, tokenizes, embeds, chunks, indexes
-or changes a running encoder. Service-code licensing is independent of model licensing.
+The v5 consumer, isolated event build pipeline and internal retrieval are implemented.
+The service calls Encoder HTTP only: no local weights, tokenizer, Torch or ONNX dependency.
+Public semantic `/query`, Admin cutover and production reindex remain disabled.
+See [implementation](phase2b1-semantic-index.md) and [live inventory](live-semantic-preflight.md).
+The inspected live Admin embedding endpoint still reports v3 and is rejected by this client.
 
 ## Exact expected encoder space
 
@@ -22,9 +24,9 @@ repository/chunk fields, so those are verified at `/version`; common fields are
 checked again in `/ready`. Unexpected types (including boolean dimensions) fail.
 No ONNX-v5 dependency or inference is included.
 
-## Concrete Admin consumer changes for later extraction
+## Original extraction map (status superseded by Phase 2B.1 report)
 
-| Existing location | Required later change |
+| Existing location | Migration responsibility |
 | --- | --- |
 | research/vector_models.py | replace active v3 registry/repository/revision/embedding-version with exact v5 metadata; do not relabel old vectors |
 | research/vector_transport.py | switch model requests and entity guard; validate encoder version/readiness; add full collection manifest validation |

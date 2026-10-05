@@ -78,6 +78,7 @@ class HealthResponse(Closed):
 class RuntimeCapabilities(Closed):
     structured_query: bool = False
     semantic_query: Literal[False] = False
+    semantic_index_ready: bool = False
     conversation: bool = False
     spatial: bool = False
     named_place_resolution: bool = False
@@ -94,6 +95,13 @@ class VersionResponse(Closed):
     service_version: str = SERVICE_VERSION
     contract_version: str = CONTRACT_VERSION
     planner_contract: PlannerContract
+    semantic_embedding_model: str = MODEL
+    semantic_embedding_revision: str = MODEL_REVISION
+    semantic_embedding_version: str = EMBEDDING_VERSION
+    semantic_dimensions: int = DIMENSIONS
+    semantic_chunk_version: str = CHUNK_VERSION
+    semantic_collection_names: list[str] = Field(default_factory=list)
+    semantic_query_enabled: Literal[False] = False
     encoder_contract: str = ENCODER_CONTRACT
     embedding_model: str = MODEL
     embedding_revision: str = MODEL_REVISION

@@ -1,0 +1,169 @@
+{
+  "average_tokens": 25.4,
+  "collection": "kulturbytes_events_jina_v5_build_test_real_15d52723843e",
+  "documents": [
+    {
+      "chunk_count": 3,
+      "chunk_hashes": [
+        "25d67b075221b21b86789b199eccd4c142307c3c16a4e31be5ef2e6149f51396",
+        "3d020a606c193f00339b32d9bba052af6f06a89ef784c9cadea554044b29fe87",
+        "303c14b6c7c0d3203cf176a7788676caf7f57015b677ab89b840c6958b3f246d"
+      ],
+      "document_hash": "b09c1ca3a761afdfb921bcd7bf9560d26bf78985dabccbcba69076660c57fe0b",
+      "entity_id": "00000000-0000-0000-0000-00000000001e"
+    },
+    {
+      "chunk_count": 2,
+      "chunk_hashes": [
+        "132db6911cf8a516381e2c075409e2c00bfaef95271c2a51ece223816d0efefb",
+        "c56b58c2a710cc3951327dbd303e659c09fc292d32446e364356ed0c224d7478"
+      ],
+      "document_hash": "7382b6157270c92a297434ab4da6f48c3fb5a575e139dfc7e6633f6669f8bdc6",
+      "entity_id": "00000000-0000-0000-0000-00000000001f"
+    }
+  ],
+  "embedding_version": "dd76d535f5447ca3897a9c893fb1e612ead98192:native-qwen3-torch2.11.0-transformers5.17.0-peft0.21.1-cpu-eager-retrieval-query-document-last-token-l2-f32-d1024:sections-480-overlap64-v2",
+  "gates": {
+    "MRR@10": 0.03,
+    "Recall@10": 0.02,
+    "language_recall_drop": 0.05,
+    "nDCG@10": 0.03
+  },
+  "max_tokens": 54,
+  "metrics": {
+    "HitRate@10": 1.0,
+    "HitRate@5": 1.0,
+    "MRR@10": 1.0,
+    "Recall@10": 1.0,
+    "Recall@5": 1.0,
+    "nDCG@10": 1.0
+  },
+  "model": "jina-v5",
+  "query_set_hash": "bfbeb6085cd7026534b83dcd166f5b87c007e15440310bfc7d8e803a44cb6ff4",
+  "reference_time": "2026-10-05T00:00:00+00:00",
+  "revision": "dd76d535f5447ca3897a9c893fb1e612ead98192",
+  "runs": {
+    "da-accessibility": {
+      "best_score": 0.34918088,
+      "candidate_count": 2,
+      "eligibility_hash": "895edf165bc2d32a6949405150039a8841838e4f6bd72b415aba0daec8e3c05a",
+      "embedding_latency": 0.49754674800351495,
+      "latency": 0.5690167119973921,
+      "qdrant_latency": 0.01773148000211222,
+      "ranked_ids": [
+        "00000000-0000-0000-0000-00000000001e"
+      ],
+      "rehydration_latency": 0.034663325001019984,
+      "returned_count": 1
+    },
+    "da-descriptive": {
+      "best_score": 0.59210324,
+      "candidate_count": 2,
+      "eligibility_hash": "895edf165bc2d32a6949405150039a8841838e4f6bd72b415aba0daec8e3c05a",
+      "embedding_latency": 0.5804755779972766,
+      "latency": 0.6731186270044418,
+      "qdrant_latency": 0.019466464000288397,
+      "ranked_ids": [
+        "00000000-0000-0000-0000-00000000001e"
+      ],
+      "rehydration_latency": 0.048145246000785846,
+      "returned_count": 1
+    },
+    "da-location": {
+      "best_score": 0.3637222,
+      "candidate_count": 2,
+      "eligibility_hash": "895edf165bc2d32a6949405150039a8841838e4f6bd72b415aba0daec8e3c05a",
+      "embedding_latency": 0.4883464379963698,
+      "latency": 0.5553529099997832,
+      "qdrant_latency": 0.012291963997995481,
+      "ranked_ids": [
+        "00000000-0000-0000-0000-00000000001e",
+        "00000000-0000-0000-0000-00000000001f"
+      ],
+      "rehydration_latency": 0.03715729300165549,
+      "returned_count": 2
+    },
+    "de-accessibility": {
+      "best_score": 0.52150095,
+      "candidate_count": 2,
+      "eligibility_hash": "895edf165bc2d32a6949405150039a8841838e4f6bd72b415aba0daec8e3c05a",
+      "embedding_latency": 0.4299108210034319,
+      "latency": 0.48974427500070306,
+      "qdrant_latency": 0.010107479996804614,
+      "ranked_ids": [
+        "00000000-0000-0000-0000-00000000001e",
+        "00000000-0000-0000-0000-00000000001f"
+      ],
+      "rehydration_latency": 0.03152310499717714,
+      "returned_count": 2
+    },
+    "de-descriptive": {
+      "best_score": 0.6554675,
+      "candidate_count": 2,
+      "eligibility_hash": "895edf165bc2d32a6949405150039a8841838e4f6bd72b415aba0daec8e3c05a",
+      "embedding_latency": 0.4988180829968769,
+      "latency": 0.5665319059989997,
+      "qdrant_latency": 0.010708759997214656,
+      "ranked_ids": [
+        "00000000-0000-0000-0000-00000000001e"
+      ],
+      "rehydration_latency": 0.034608827001648024,
+      "returned_count": 1
+    },
+    "de-location": {
+      "best_score": 0.4890976,
+      "candidate_count": 2,
+      "eligibility_hash": "895edf165bc2d32a6949405150039a8841838e4f6bd72b415aba0daec8e3c05a",
+      "embedding_latency": 0.3984160440013511,
+      "latency": 0.4786944180013961,
+      "qdrant_latency": 0.012036582003929652,
+      "ranked_ids": [
+        "00000000-0000-0000-0000-00000000001e",
+        "00000000-0000-0000-0000-00000000001f"
+      ],
+      "rehydration_latency": 0.039111035999667365,
+      "returned_count": 2
+    },
+    "en-accessibility": {
+      "best_score": 0.5058377,
+      "candidate_count": 2,
+      "eligibility_hash": "895edf165bc2d32a6949405150039a8841838e4f6bd72b415aba0daec8e3c05a",
+      "embedding_latency": 0.395461049003643,
+      "latency": 0.4627056520039332,
+      "qdrant_latency": 0.010694465003325604,
+      "ranked_ids": [
+        "00000000-0000-0000-0000-00000000001e"
+      ],
+      "rehydration_latency": 0.03413338500104146,
+      "returned_count": 1
+    },
+    "en-descriptive": {
+      "best_score": 0.62364745,
+      "candidate_count": 2,
+      "eligibility_hash": "895edf165bc2d32a6949405150039a8841838e4f6bd72b415aba0daec8e3c05a",
+      "embedding_latency": 0.4639624859992182,
+      "latency": 0.5320535200007726,
+      "qdrant_latency": 0.012646975999814458,
+      "ranked_ids": [
+        "00000000-0000-0000-0000-00000000001e"
+      ],
+      "rehydration_latency": 0.029077450999466237,
+      "returned_count": 1
+    },
+    "en-location": {
+      "best_score": 0.48019344,
+      "candidate_count": 2,
+      "eligibility_hash": "895edf165bc2d32a6949405150039a8841838e4f6bd72b415aba0daec8e3c05a",
+      "embedding_latency": 0.366592092999781,
+      "latency": 0.441672919994744,
+      "qdrant_latency": 0.012011124999844469,
+      "ranked_ids": [
+        "00000000-0000-0000-0000-00000000001e",
+        "00000000-0000-0000-0000-00000000001f"
+      ],
+      "rehydration_latency": 0.040172139000787865,
+      "returned_count": 2
+    }
+  },
+  "source_snapshot_hash": "d6cff585412f36489bde6e413ccf1d0b350ddb859975333a0ece2019f860d75f"
+}

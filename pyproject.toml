@@ -23,7 +23,7 @@ dev = ["pytest>=8.3,<10", "pytest-asyncio>=0.25,<2", "ruff>=0.12,<1", "jsonschem
 [tool.pytest.ini_options]
 asyncio_mode = "auto"
 testpaths = ["tests"]
-markers = ["integration: guarded disposable PostgreSQL/PostGIS tests", "parity: differential execution against pinned Admin checkout"]
+markers = ["real_encoder: optional local Jina-v5 weights via HTTP", "integration: guarded disposable PostgreSQL/PostGIS tests", "parity: differential execution against pinned Admin checkout"]
 [tool.ruff]
 target-version = "py313"
 line-length = 100

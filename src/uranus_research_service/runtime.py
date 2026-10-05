@@ -4,10 +4,12 @@ import asyncio
 
 from uranus_research_service.contracts import QueryResponse, RuntimeCapabilities
 from uranus_research_service.database import ResearchDatabase
-from uranus_research_service.errors import APIError
+from uranus_research_service.encoder import EncoderClient
+from uranus_research_service.errors import APIError, DependencyError
 from uranus_research_service.geocoder import ResearchGeocoderClient
 from uranus_research_service.logging import logger
 from uranus_research_service.planner import PlannerClient
+from uranus_research_service.qdrant import QdrantClient
 from uranus_research_service.repositories.research_resolution import ResearchResolver
 from uranus_research_service.research.administrative_catalog import read_catalogs
 from uranus_research_service.research.conversation_state import ConversationStore
@@ -44,6 +46,13 @@ class ResearchRuntime:
             if executor is not None
             else ResearchPlanExecutor(self.database, self.resolver, settings)
         )
+        self.semantic_encoder = EncoderClient(settings) if settings.semantic_build_id else None
+        self.semantic_qdrant = (
+            QdrantClient(settings, build_id=settings.semantic_build_id)
+            if settings.semantic_build_id
+            else None
+        )
+        self.semantic_verified = False
         self.verified = False
         self.geocoder_verified = False
         self.inventory_verified = False
@@ -51,6 +60,7 @@ class ResearchRuntime:
     def capabilities(self):
         return RuntimeCapabilities(
             structured_query=self.verified,
+            semantic_index_ready=self.semantic_verified,
             conversation=self.verified,
             spatial=self.verified,
             named_place_resolution=self.verified and self.geocoder_verified,
@@ -77,8 +87,20 @@ class ResearchRuntime:
             except (OSError, ValueError):
                 pass  # optional capability stays disabled; query still fails closed
         self.verified = True
+        self.semantic_verified = False
+        if self.semantic_encoder is not None:
+            try:
+                async with asyncio.timeout(self.settings.dependency_timeout_seconds):
+                    await self.semantic_encoder.ready()
+                    await self.semantic_qdrant.validate()
+                self.semantic_verified = True
+            except (DependencyError, ValueError, KeyError, TypeError, TimeoutError):
+                pass  # Separate semantic capability cannot block structured readiness.
 
     async def close(self):
+        if self.semantic_encoder is not None:
+            await self.semantic_encoder.close()
+            await self.semantic_qdrant.close()
         # All dependencies are app-owned, including injected transports.
         try:
             await self.planner.close()
