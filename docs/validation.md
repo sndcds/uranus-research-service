@@ -1,3 +1,22 @@
+# Phase-2B.2a-runtime validation — 2026-10-05
+
+Runtime refactor only; no benchmark/ground-truth work or live access. Final local
+suite: **379 passed, 2 optional real-Encoder tests skipped (13.16 s)**, comprising
+357 unit and 22 actual disposable PostGIS/Qdrant/Admin parity tests. Locked sync,
+Ruff, format, diff checks and upstream contract parity passed. Local Docker build
+and networkless non-root import/gate smoke passed.
+
+The operation-count regression performs 100 internal retrieves with a failing
+`Qdrant.points()` spy after initial full validation: zero additional scans. Real
+Qdrant integration verifies direct manifest retrieval, manifest-inclusive counts,
+sealed-write rejection, and no scan during an internal retrieve. TTL, concurrent
+readiness, restart, cancellation, identity/count/manifest changes and strict hit
+validation have dedicated tests. SQL freshness and public semantic rejection remain.
+
+Full details and remote CI evidence: [completion report](phase2b2a-runtime-completion-report.md).
+The historical Phase-2B.1 measurements below are unchanged and are not measurements
+of the new request path. No production performance or quality claim is made.
+
 # Phase-2B.1 validation — 2026-10-05
 
 **338 passed** in the combined final local run: 314 unit/contract tests and 24

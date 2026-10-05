@@ -108,3 +108,13 @@ and `VersionResponse.semantic_query_enabled` remain literal false. `/version` ad
 semantic_embedding_model/revision/version, semantic_dimensions, semantic_chunk_version
 and semantic_collection_names. No secrets/origins are returned. Internal retrieval
 contracts are pinned in `contracts/semantic`; they are not additional public routes.
+
+## Internal generation validation (Phase 2B.2a-runtime)
+
+No new public route or semantic activation is introduced. Internal semantic search
+requires a generation established by full validation, then checks collection info and
+the reserved manifest by ID per query. Expiry or mismatch fails closed without a scan
+or recovery inside the query. Semantic readiness uses a ten-minute cache with
+serialized full validation at initialization/expiry/invalidation; structured readiness
+remains independent. Hit checks and authoritative PostgreSQL freshness remain required.
+See [trust and invalidation rules](semantic-generation-validation.md).

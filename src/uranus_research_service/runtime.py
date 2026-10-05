@@ -57,10 +57,22 @@ class ResearchRuntime:
         self.geocoder_verified = False
         self.inventory_verified = False
 
+    @property
+    def semantic_generation(self):
+        return (
+            self.semantic_qdrant.generation_verifier.generation
+            if self.semantic_qdrant is not None
+            else None
+        )
+
     def capabilities(self):
         return RuntimeCapabilities(
             structured_query=self.verified,
-            semantic_index_ready=self.semantic_verified,
+            semantic_index_ready=bool(
+                self.semantic_verified
+                and self.semantic_qdrant is not None
+                and self.semantic_qdrant.generation_verifier.is_verified
+            ),
             conversation=self.verified,
             spatial=self.verified,
             named_place_resolution=self.verified and self.geocoder_verified,
@@ -92,10 +104,11 @@ class ResearchRuntime:
             try:
                 async with asyncio.timeout(self.settings.dependency_timeout_seconds):
                     await self.semantic_encoder.ready()
-                    await self.semantic_qdrant.validate()
+                    await self.semantic_qdrant.generation_verifier.ready()
                 self.semantic_verified = True
             except (DependencyError, ValueError, KeyError, TypeError, TimeoutError):
-                pass  # Separate semantic capability cannot block structured readiness.
+                self.semantic_qdrant.generation_verifier.invalidate()
+                # Separate semantic capability cannot block structured readiness.
 
     async def close(self):
         if self.semantic_encoder is not None:

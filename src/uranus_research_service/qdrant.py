@@ -1,6 +1,7 @@
 """Fixed-role Qdrant transport. Maintenance exists only on an isolated operator client."""
 
 import json
+import math
 from urllib.parse import urlsplit
 from uuid import UUID, uuid5
 
@@ -11,6 +12,7 @@ from uranus_research_service.encoder import validate_vectors
 from uranus_research_service.errors import DependencyError
 from uranus_research_service.research.semantic_contracts import COLLECTIONS, OWNER, Payload
 from uranus_research_service.research.vector_documents import POINT_NAMESPACE, Chunk, content_hash
+from uranus_research_service.semantic_generation import SemanticGenerationVerifier
 from uranus_research_service.semantic_manifest import MANIFEST_ID, Manifest, collection_name
 from uranus_research_service.version import EMBEDDING_VERSION, MODEL
 
@@ -22,6 +24,7 @@ class QdrantClient(InternalClient):
         self.collection = collection_name(entity, build_id)
         self.path = "/collections/" + self.collection
         self.max_bytes = 16 * 1024 * 1024
+        self.generation_verifier = SemanticGenerationVerifier(self)
 
     async def call(self, method, suffix, body=None, *, missing_ok=False):
         result = await self._request(method, self.path + suffix, body, missing_ok=missing_ok)
@@ -93,6 +96,7 @@ class QdrantClient(InternalClient):
             or payload.get("embedding_model") != MODEL
             or payload.get("embedding_version") != EMBEDDING_VERSION
             or payload.get("document_schema_version") != COLLECTIONS[self.entity].document_version
+            or type(payload.get("chunk_index")) is not int
             or not isinstance(payload.get("chunk_text"), str)
             or content_hash(payload["chunk_text"]) != payload.get("content_hash")
         ):
@@ -133,7 +137,26 @@ class QdrantClient(InternalClient):
         if identity != expected:
             raise ValueError("point_identity_mismatch")
 
+    async def get_manifest(self):
+        result = await self.call(
+            "POST",
+            "/points",
+            {"ids": [MANIFEST_ID], "with_payload": True, "with_vector": False},
+        )
+        if not isinstance(result, list) or len(result) != 1:
+            raise ValueError("missing_or_invalid_manifest")
+        point = result[0]
+        if not isinstance(point, dict) or point.get("id") != MANIFEST_ID:
+            raise ValueError("manifest_point_identity")
+        manifest = Manifest.model_validate(point.get("payload"))
+        if manifest.entity_type != self.entity or manifest.build_id != self.build_id:
+            raise ValueError("manifest_collection_identity")
+        return manifest
+
     async def validate(self):
+        return await self.generation_verifier.validate()
+
+    async def _validate_full(self):
         info = await self.info()
         if info is None:
             raise ValueError("missing_collection")
@@ -156,7 +179,7 @@ class QdrantClient(InternalClient):
             raise ValueError("invalid_search_limit")
         ids = sorted({str(UUID(str(i))) for i in entity_ids})
         validate_vectors([vector], 1)
-        await self.validate()
+        await self.generation_verifier.verify_generation_current()
         result = await self.call(
             "POST",
             "/points/query",
@@ -181,12 +204,28 @@ class QdrantClient(InternalClient):
             or not isinstance(result.get("points"), list)
             or len(result["points"]) > limit
         ):
+            self.generation_verifier.invalidate()
             raise DependencyError("qdrant", "invalid_response")
+        try:
+            seen = set()
+            for point in result["points"]:
+                identity = point["id"]
+                UUID(identity)
+                self.validate_point(identity, point["payload"])
+                if identity in seen or point["payload"]["entity_id"] not in ids:
+                    raise ValueError("invalid_hit_identity")
+                seen.add(identity)
+                score = point["score"]
+                if type(score) not in (int, float) or not math.isfinite(score):
+                    raise ValueError("invalid_hit_score")
+        except (ValueError, KeyError, TypeError, AttributeError):
+            self.generation_verifier.invalidate()
+            raise ValueError("invalid_search_hit") from None
         return result["points"]
 
 
 class QdrantMaintenance(QdrantClient):
-    def __init__(self, settings, *, build_id, isolated=False, **kwargs):
+    def __init__(self, settings, *, build_id, isolated=False, test_recovery=False, **kwargs):
         parts = urlsplit(settings.qdrant_url)
         # No live override in Phase 2B.1. Also reject the usual local production port.
         if (
@@ -197,19 +236,33 @@ class QdrantMaintenance(QdrantClient):
         ):
             raise ValueError("isolated_build_target_required")
         super().__init__(settings, build_id=build_id, **kwargs)
+        self.test_recovery = test_recovery
 
     async def inactive(self):
         if any(a.get("collection_name") == self.collection for a in await self.aliases()):
             raise ValueError("active_collection_write_forbidden")
 
-    async def create(self):
+    async def writable(self):
         await self.inactive()
+        if not self.test_recovery and await self.info() is not None:
+            # Even a malformed completion marker is not a license to overwrite it.
+            points = await self.call(
+                "POST",
+                "/points",
+                {"ids": [MANIFEST_ID], "with_payload": True, "with_vector": False},
+            )
+            if not isinstance(points, list) or points:
+                raise ValueError("sealed_generation_write_forbidden")
+        self.generation_verifier.invalidate()
+
+    async def create(self):
+        await self.writable()
         if await self.info() is not None:
             raise ValueError("collection_already_exists")
         await self.call("PUT", "", {"vectors": {"size": 1024, "distance": "Cosine"}})
 
     async def upsert(self, points):
-        await self.inactive()
+        await self.writable()
         if not 1 <= len(points) <= 2:
             raise ValueError("write_batch_limit")
         for point in points:
@@ -221,7 +274,7 @@ class QdrantMaintenance(QdrantClient):
         await self.call("PUT", "/points?wait=true", {"points": points})
 
     async def payload(self, identity, payload):
-        await self.inactive()
+        await self.writable()
         if str(UUID(identity)) == MANIFEST_ID:
             raise ValueError("reserved_point")
         self.validate_point(identity, payload)
@@ -230,13 +283,13 @@ class QdrantMaintenance(QdrantClient):
         )
 
     async def delete(self, identities):
-        await self.inactive()
+        await self.writable()
         for offset in range(0, len(identities), 64):
             batch = [str(UUID(i)) for i in identities[offset : offset + 64]]
             await self.call("POST", "/points/delete?wait=true", {"points": batch})
 
     async def write_manifest(self, manifest):
-        await self.inactive()
+        await self.writable()
         points = await self.points()
         points.pop(MANIFEST_ID, None)
         manifest.verify(entity=self.entity, build_id=self.build_id, points=points)

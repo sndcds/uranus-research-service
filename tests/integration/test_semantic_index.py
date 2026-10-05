@@ -2,6 +2,7 @@
 
 import os
 from datetime import UTC, datetime
+from unittest.mock import AsyncMock, patch
 from uuid import UUID, uuid4
 
 import httpx
@@ -34,7 +35,9 @@ async def qdrant(settings):
             "qdrant_api_key": SecretStr("synthetic-service-key-for-tests-0123456789"),
         }
     )
-    client = QdrantMaintenance(configured, build_id="test_" + uuid4().hex, isolated=True)
+    client = QdrantMaintenance(
+        configured, build_id="test_" + uuid4().hex, isolated=True, test_recovery=True
+    )
     try:
         yield client
     finally:
@@ -72,7 +75,12 @@ async def test_full_build_reuse_evidence_rehydration(
         )
         assert repeated["unchanged"] == report["chunk_count"]
         filters = ExecutionSemanticFilters(q="Musik", venue_id=UUID(int=20))
-        result = await retrieve(source, encoder, qdrant, filters, now=NOW)
+        assert (await qdrant.get_manifest()).chunk_count == repeated["chunk_count"]
+        assert (await qdrant.info())["points_count"] == repeated["chunk_count"] + 1
+        with patch.object(
+            qdrant, "points", AsyncMock(side_effect=AssertionError("full scan in query path"))
+        ):
+            result = await retrieve(source, encoder, qdrant, filters, now=NOW)
         assert [i.entity_key for i in result.items] == [UUID(int=30)]
         # Modify authoritative public source; self-consistent old payload must not win.
         await root_connection.execute(
@@ -138,6 +146,10 @@ async def test_manifest_detects_tampering(db_settings, qdrant, tmp_path):
     )
     await qdrant.write_manifest(m)
     await qdrant.validate()
+    qdrant.test_recovery = False
+    with pytest.raises(ValueError, match="sealed_generation"):
+        await qdrant.delete([MANIFEST_ID])
+    qdrant.test_recovery = True  # Explicit fixture-only tampering/recovery below.
     for key, value in [
         ("index_owner", "foreign"),
         ("entity_type", "venue"),

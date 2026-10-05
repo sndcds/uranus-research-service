@@ -6,7 +6,11 @@ The public `/query` semantic gate remains closed. `semantic_query` and
 build passes Encoder metadata/readiness, collection dimensions/distance, manifest,
 point ownership/identity, payload hash and full corpus/count verification. Structured
 readiness remains independent of Encoder/Qdrant. `/version` reports expected v5 pins,
-configured event collection name and the last semantic readiness result.
+configured event collection name and semantic readiness. The subsequent runtime refactor
+uses a ten-minute verified-generation cache: queries/readiness check collection info
+and the reserved manifest directly; only initial/expired/invalidated readiness or an
+explicit operator validation performs a full scan. See
+[generation validation](semantic-generation-validation.md).
 
 ## Reviewed extraction
 
@@ -85,13 +89,16 @@ Never direct these commands at live endpoints or production readers.
 Builds extract a complete public snapshot, close DB connections, call Encoder `/chunks`,
 inspect existing owned v5 points, plan new/changed/metadata/unchanged/stale changes,
 embed two passages per batch, upsert, replace metadata and delete stale chunks.
-Before mutation the completion manifest is removed. Interrupted builds lack readiness;
-rerun with the same build ID and a fresh report path. Only the planner supports partial
+Sealed generations now reject writes; changed data requires a new build ID. Interrupted
+unsealed builds lack readiness and may resume with the same build ID and a fresh report
+path. Completion-marker removal/reconciliation of sealed generations is restricted to
+explicit disposable recovery tests, with no CLI override. Only the planner supports partial
 snapshots; production-facing build orchestration requires complete snapshots.
 
 After payload verification, write the manifest, validate the collection, execute fixed
 DE/DA/EN smoke retrieval, and exclusively create an immutable JSON report. Failures
-produce a safe failure report when its destination is not already occupied. Reports
+produce a safe failure report when its destination is not already occupied. A failure
+after sealing invalidates local trust but never deletes the sealed marker. Reports
 contain hashes/counts/timings, not prose, vectors, credentials, coordinates or SQL binds.
 No alias switch is exposed; the maintenance method explicitly rejects it. A future
 reviewed blue/green operator command may implement it under separate authorization.
