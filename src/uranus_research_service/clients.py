@@ -1,6 +1,7 @@
 """Bounded fixed-origin metadata transport. No inference, retries, redirects or cookie jar."""
 
 import asyncio
+import json
 from typing import Literal
 
 import httpx
@@ -12,7 +13,11 @@ from uranus_research_service.json_codec import decode
 
 class InternalClient:
     def __init__(
-        self, settings: Settings, dependency: Literal["planner", "encoder"], *, transport=None
+        self,
+        settings: Settings,
+        dependency: Literal["planner", "encoder", "qdrant"],
+        *,
+        transport=None,
     ):
         self.dependency = dependency
         self.origin = getattr(settings, dependency + "_url")
@@ -36,22 +41,35 @@ class InternalClient:
             raise ValueError("fixed_planner_route_required")
         await self._request("OPTIONS", "/" + contract + "/plan")
 
-    async def _request(self, method, path):
+    async def _request(self, method, path, body=None, *, missing_ok=False, response_limit=None):
         if self.key is None:
             raise DependencyError(self.dependency, "unconfigured")
+        max_bytes = response_limit or self.max_bytes
+        content = None if body is None else json.dumps(body, allow_nan=False).encode()
+        if content is not None and len(content) > 4 * 1024 * 1024:
+            raise DependencyError(self.dependency, "invalid_response")
+        auth = (
+            {"api-key": self.key.get_secret_value()}
+            if self.dependency == "qdrant"
+            else {"Authorization": "Bearer " + self.key.get_secret_value()}
+        )
         request = httpx.Request(
             method,
             self.origin + path,
             headers={
-                "Authorization": "Bearer " + self.key.get_secret_value(),
+                **auth,
+                "Content-Type": "application/json",
                 "Accept": "application/json",
                 "Accept-Encoding": "identity",
             },
+            content=content,
         )
         try:
             async with asyncio.timeout(self.timeout):
                 response = await self.http.send(request, stream=True)
                 try:
+                    if missing_ok and response.status_code == 404:
+                        return None
                     expected_status = 405 if method == "OPTIONS" else 200
                     if response.status_code != expected_status:
                         category = (
@@ -71,8 +89,8 @@ class InternalClient:
                     } != {"POST"}:
                         raise DependencyError(self.dependency, "incompatible")
                     body = bytearray()
-                    async for part in response.aiter_bytes(chunk_size=self.max_bytes + 1):
-                        if len(body) + len(part) > self.max_bytes:
+                    async for part in response.aiter_bytes(chunk_size=max_bytes + 1):
+                        if len(body) + len(part) > max_bytes:
                             raise DependencyError(self.dependency, "invalid_response")
                         body.extend(part)
                     result = decode(bytes(body))

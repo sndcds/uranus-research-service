@@ -14,6 +14,8 @@ from uranus_research_service.contracts import (
     VersionResponse,
 )
 from uranus_research_service.errors import ErrorResponse
+from uranus_research_service.semantic import RetrievalResult
+from uranus_research_service.semantic_manifest import Manifest
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -43,6 +45,12 @@ async def generate():
         ErrorResponse,
     ):
         (target / (model.__name__ + ".json")).write_text(
+            json.dumps(canonical(model.model_json_schema()), indent=2, sort_keys=True) + "\n"
+        )
+    semantic = ROOT / "contracts/semantic"
+    semantic.mkdir(exist_ok=True)
+    for model in (Manifest, RetrievalResult):
+        (semantic / (model.__name__ + ".json")).write_text(
             json.dumps(canonical(model.model_json_schema()), indent=2, sort_keys=True) + "\n"
         )
     app = create_app(

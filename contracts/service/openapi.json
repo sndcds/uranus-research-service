@@ -6754,6 +6754,11 @@
             "title": "Named Place Resolution",
             "type": "boolean"
           },
+          "semantic_index_ready": {
+            "default": false,
+            "title": "Semantic Index Ready",
+            "type": "boolean"
+          },
           "semantic_query": {
             "const": false,
             "default": false,
@@ -8067,6 +8072,44 @@
           "query_enabled": {
             "default": false,
             "title": "Query Enabled",
+            "type": "boolean"
+          },
+          "semantic_chunk_version": {
+            "default": "sections-480-overlap64-v2",
+            "title": "Semantic Chunk Version",
+            "type": "string"
+          },
+          "semantic_collection_names": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Semantic Collection Names",
+            "type": "array"
+          },
+          "semantic_dimensions": {
+            "default": 1024,
+            "title": "Semantic Dimensions",
+            "type": "integer"
+          },
+          "semantic_embedding_model": {
+            "default": "jina-v5",
+            "title": "Semantic Embedding Model",
+            "type": "string"
+          },
+          "semantic_embedding_revision": {
+            "default": "dd76d535f5447ca3897a9c893fb1e612ead98192",
+            "title": "Semantic Embedding Revision",
+            "type": "string"
+          },
+          "semantic_embedding_version": {
+            "default": "dd76d535f5447ca3897a9c893fb1e612ead98192:native-qwen3-torch2.11.0-transformers5.17.0-peft0.21.1-cpu-eager-retrieval-query-document-last-token-l2-f32-d1024:sections-480-overlap64-v2",
+            "title": "Semantic Embedding Version",
+            "type": "string"
+          },
+          "semantic_query_enabled": {
+            "const": false,
+            "default": false,
+            "title": "Semantic Query Enabled",
             "type": "boolean"
           },
           "service_version": {

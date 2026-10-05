@@ -131,7 +131,9 @@ def normalize_v9_comparison(wire: ResearchQueryPlanV9) -> tuple[ComparisonTarget
     return tuple(targets)
 
 
-def normalize_v9(wire: ResearchQueryPlanV9) -> InternalResearchPlan:
+def normalize_v9(
+    wire: ResearchQueryPlanV9, *, allow_semantic: bool = False
+) -> InternalResearchPlan:
     wire = ResearchQueryPlanV9.model_validate_json(wire.model_dump_json())
     if (
         wire.unsupported_reason is not None
@@ -210,7 +212,7 @@ def normalize_v9(wire: ResearchQueryPlanV9) -> InternalResearchPlan:
             raise unsupported()
     else:
         plan = normalize_v9_counts(wire, plan)
-    require_supported(plan)
+    require_supported(plan, allow_semantic=allow_semantic)
     return plan
 
 

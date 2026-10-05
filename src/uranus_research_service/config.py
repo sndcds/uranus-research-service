@@ -51,6 +51,9 @@ class Settings(BaseModel):
     research_geocoder_api_key: SecretStr | None = None
     research_geocoder_timeout_seconds: float = Field(default=5, gt=0, le=10)
     research_administrative_catalog_path: Path | None = None
+    qdrant_url: str = "http://127.0.0.1:6333"
+    qdrant_api_key: SecretStr | None = None
+    semantic_build_id: str | None = Field(default=None, pattern=r"^[a-z0-9][a-z0-9_]{0,47}$")
     encoder_url: str = "http://127.0.0.1:6335"
     encoder_api_key: SecretStr | None = None
     dependency_timeout_seconds: float = Field(default=5, gt=0, le=30)
@@ -59,7 +62,13 @@ class Settings(BaseModel):
     body_timeout_seconds: float = Field(default=5, gt=0, le=10)
     request_timeout_seconds: float = Field(default=25, gt=0, le=120)
 
-    @field_validator("api_key", "planner_api_key", "encoder_api_key", "research_geocoder_api_key")
+    @field_validator(
+        "api_key",
+        "planner_api_key",
+        "encoder_api_key",
+        "research_geocoder_api_key",
+        "qdrant_api_key",
+    )
     @classmethod
     def valid_key(cls, value: SecretStr | None) -> SecretStr | None:
         if value is not None:
@@ -68,7 +77,7 @@ class Settings(BaseModel):
                 raise ValueError("invalid_service_key")
         return value
 
-    @field_validator("planner_url", "encoder_url", "research_geocoder_url")
+    @field_validator("planner_url", "encoder_url", "research_geocoder_url", "qdrant_url")
     @classmethod
     def fixed_origin(cls, value: str) -> str:
         try:
@@ -145,6 +154,9 @@ class Settings(BaseModel):
             planner_api_key=read_secret("PLANNER_API_KEY"),
             encoder_api_key=read_secret("ENCODER_API_KEY"),
             planner_url=os.environ.get("PLANNER_URL", "http://127.0.0.1:6334"),
+            qdrant_url=os.environ.get("QDRANT_URL", "http://127.0.0.1:6333"),
+            qdrant_api_key=read_secret("QDRANT_API_KEY"),
+            semantic_build_id=os.environ.get("SEMANTIC_BUILD_ID"),
             encoder_url=os.environ.get("ENCODER_URL", "http://127.0.0.1:6335"),
             planner_contract=os.environ.get("PLANNER_CONTRACT", "v13"),
             dependency_timeout_seconds=os.environ.get("DEPENDENCY_TIMEOUT_SECONDS", "5"),

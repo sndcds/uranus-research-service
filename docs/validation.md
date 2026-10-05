@@ -1,3 +1,83 @@
+# Phase-2B.1 validation — 2026-10-05
+
+**338 passed** in the combined final local run: 314 unit/contract tests and 24
+integration tests, including two optional real Encoder tests. No skipped tests in
+that run. Python 3.13, locked dependencies, disposable PostGIS 16/3.5 and Qdrant 1.19.0.
+Admin reference commit remains `340df4684611dbc4b8ec73a7702f1fad2ae1973c`.
+
+Commands completed successfully:
+
+```sh
+uv sync --locked
+uv run --no-sync ruff check .
+uv run --no-sync ruff format --check .
+# TEST_DATABASE_URL: empty disposable loopback research_phase2b1_test
+# TEST_QDRANT_URL: disposable loopback port 16333
+# TEST_ENCODER_URL: optional local v5 container on loopback port 16335
+# ADMIN_PARITY_ROOT: untouched pinned local Admin checkout
+uv run --no-sync pytest -q
+git diff --check
+uv run --no-sync python scripts/build_wheelhouse.py
+uv build --wheel --out-dir wheelhouse
+docker build --network=none -f deploy/Dockerfile -t uranus-research-service:phase2b1 .
+```
+
+Local image build succeeded, image prefix `d12dc3aa55c9`, non-root runtime unchanged.
+No deployment or service restart. CI now includes disposable Qdrant with its image
+digest pinned; optional real-weight tests skip unless explicitly configured. Hosted
+CI status is recorded in the PR; local success is not a claim about a remote run.
+
+## Evidence boundaries
+
+- Unit: bounded Encoder/Qdrant transports, strict v5 version/backend/vector validation,
+  required manifest fields/types, missing/wrong manifests, deterministic IDs, foreign
+  owners/versions/entities, hashes/context checks, reconciliation/partial-snapshot
+  safety, threshold and independently computed metric examples. Semantic readiness
+  cannot block structured readiness. Public semantic `/query` remains rejected.
+- Real PostGIS/Qdrant + synthetic Encoder: full build, unchanged repeat, source text
+  change/reembedding/stale deletion, missing-manifest recovery, SQL-eligible filtering,
+  authoritative public-status recheck, stale evidence, tampered payloads and dimensions,
+  immutable reports and fixture teardown. Encoder calls assert zero checked-out DB
+  connections. Existing structured SQL/Planner-fixture/Admin parity also passed.
+- Differential semantic parity: untouched pinned Admin and this service independently
+  extract the same synthetic PostGIS source and area documents; complete JSON matches.
+- Real Jina-v5: local existing Encoder image, read-only offline model cache, exact
+  repository/revision/version/backend, normalized 1024 query and passage vectors,
+  exact repeated-query determinism, actual chunking and full test build/benchmark.
+  Encoder code was not changed and weights were not loaded in this service.
+- Live: read-only inventory only, separately documented in
+  [live-semantic-preflight.md](live-semantic-preflight.md). No live inference.
+
+## Actual local real-weight measurements
+
+Artifacts (immutable JSON):
+[index build](../validation/index-build-test_real_15d52723843e.json),
+[retrieval benchmark](../validation/benchmark-test_real_15d52723843e.json).
+Two public events / five chunks / nine synthetic goldens. Three language smoke queries
+also completed with validated evidence. All six reported retrieval quality metrics
+are 1.0 on this tiny fixture. **No representative quality or superiority claim.**
+No controlled same-corpus v3 baseline was run; there is no measured v3/v5 result.
+
+| Measurement | Local observed value |
+| --- | ---: |
+| Full build including smoke | 5.156 s |
+| Passage embedding time | 3.400 s |
+| Build Qdrant time | 0.129 s |
+| Build throughput (whole job) | 0.970 chunks/s |
+| Consumer/test-runner CPU time | 0.338 s |
+| Consumer/test-runner peak RSS | 111,304,704 bytes |
+| Mean semantic retrieval | 0.530 s |
+| Mean query embedding | 0.458 s |
+| Mean Qdrant including validation | 0.013 s |
+| Mean rehydration + context selection | 0.037 s |
+
+CPU/RSS describe the service/test-runner process, not Encoder process usage. Values are
+single local runs on synthetic data, not production capacity/latency estimates.
+No warm/cold distribution, independently judged corpus, controlled v3 baseline or
+Encoder peak-RSS instrumentation was completed; those remain explicit validation gaps.
+
+---
+
 # Phase-2A validation — 2026-10-05
 
 Service 0.2.0, contract uranus-research-service-v1. Structured execution only;

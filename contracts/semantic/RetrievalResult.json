@@ -1,0 +1,509 @@
+{
+  "$defs": {
+    "ResearchCategory": {
+      "properties": {
+        "id": {
+          "title": "Id",
+          "type": "integer"
+        },
+        "name": {
+          "title": "Name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "name"
+      ],
+      "title": "ResearchCategory",
+      "type": "object"
+    },
+    "ResearchLocation": {
+      "properties": {
+        "latitude": {
+          "title": "Latitude",
+          "type": "number"
+        },
+        "longitude": {
+          "title": "Longitude",
+          "type": "number"
+        }
+      },
+      "required": [
+        "latitude",
+        "longitude"
+      ],
+      "title": "ResearchLocation",
+      "type": "object"
+    },
+    "SemanticEvidence": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "enum": [
+            "accessibility",
+            "activities",
+            "additional",
+            "categories",
+            "content",
+            "facilities",
+            "location_context",
+            "participation",
+            "tickets"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "label": {
+          "title": "Label",
+          "type": "string"
+        },
+        "text": {
+          "maxLength": 200000,
+          "minLength": 1,
+          "title": "Text",
+          "type": "string"
+        }
+      },
+      "required": [
+        "kind",
+        "label",
+        "text"
+      ],
+      "title": "SemanticEvidence",
+      "type": "object"
+    },
+    "SemanticExplanation": {
+      "additionalProperties": false,
+      "properties": {
+        "evidence": {
+          "$ref": "#/$defs/SemanticEvidence"
+        },
+        "matched_aspect": {
+          "enum": [
+            "accessibility",
+            "activities",
+            "additional",
+            "categories",
+            "content",
+            "facilities",
+            "location_context",
+            "participation",
+            "tickets"
+          ],
+          "title": "Matched Aspect",
+          "type": "string"
+        },
+        "matched_aspect_label": {
+          "title": "Matched Aspect Label",
+          "type": "string"
+        },
+        "reason": {
+          "title": "Reason",
+          "type": "string"
+        },
+        "score": {
+          "title": "Score",
+          "type": "number"
+        },
+        "supporting_evidence": {
+          "items": {
+            "$ref": "#/$defs/SemanticEvidence"
+          },
+          "maxItems": 3,
+          "title": "Supporting Evidence",
+          "type": "array"
+        }
+      },
+      "required": [
+        "score",
+        "matched_aspect",
+        "matched_aspect_label",
+        "reason",
+        "evidence",
+        "supporting_evidence"
+      ],
+      "title": "SemanticExplanation",
+      "type": "object"
+    },
+    "SemanticResearchRecord": {
+      "additionalProperties": false,
+      "properties": {
+        "address": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Address"
+        },
+        "all_day": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "All Day"
+        },
+        "categories": {
+          "items": {
+            "$ref": "#/$defs/ResearchCategory"
+          },
+          "title": "Categories",
+          "type": "array"
+        },
+        "city": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "City"
+        },
+        "created_at": {
+          "anyOf": [
+            {
+              "format": "date-time",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Created At"
+        },
+        "description": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Description"
+        },
+        "end_date": {
+          "anyOf": [
+            {
+              "format": "date",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "End Date"
+        },
+        "end_time": {
+          "anyOf": [
+            {
+              "format": "time",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "End Time"
+        },
+        "entity_key": {
+          "format": "uuid",
+          "title": "Entity Key",
+          "type": "string"
+        },
+        "entity_type": {
+          "enum": [
+            "event",
+            "organization",
+            "venue"
+          ],
+          "title": "Entity Type",
+          "type": "string"
+        },
+        "event_count": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Event Count"
+        },
+        "image_url": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Image Url"
+        },
+        "language": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Language"
+        },
+        "location": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ResearchLocation"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "modified_at": {
+          "anyOf": [
+            {
+              "format": "date-time",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Modified At"
+        },
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "organization_id": {
+          "anyOf": [
+            {
+              "format": "uuid",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Organization Id"
+        },
+        "organization_name": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Organization Name"
+        },
+        "semantic": {
+          "$ref": "#/$defs/SemanticExplanation"
+        },
+        "source_url": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Url"
+        },
+        "space_id": {
+          "anyOf": [
+            {
+              "format": "uuid",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Space Id"
+        },
+        "space_name": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Space Name"
+        },
+        "start_date": {
+          "anyOf": [
+            {
+              "format": "date",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Start Date"
+        },
+        "start_time": {
+          "anyOf": [
+            {
+              "format": "time",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Start Time"
+        },
+        "status": {
+          "anyOf": [
+            {
+              "enum": [
+                "cancelled",
+                "deferred",
+                "released",
+                "rescheduled"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Status"
+        },
+        "venue_id": {
+          "anyOf": [
+            {
+              "format": "uuid",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Venue Id"
+        },
+        "venue_name": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Venue Name"
+        }
+      },
+      "required": [
+        "entity_type",
+        "entity_key",
+        "name",
+        "semantic"
+      ],
+      "title": "SemanticResearchRecord",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "best_score": {
+      "anyOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Best Score"
+    },
+    "candidate_count": {
+      "default": 0,
+      "title": "Candidate Count",
+      "type": "integer"
+    },
+    "eligibility_hash": {
+      "default": "",
+      "title": "Eligibility Hash",
+      "type": "string"
+    },
+    "embedding_latency": {
+      "default": 0,
+      "title": "Embedding Latency",
+      "type": "number"
+    },
+    "items": {
+      "items": {
+        "$ref": "#/$defs/SemanticResearchRecord"
+      },
+      "maxItems": 50,
+      "title": "Items",
+      "type": "array"
+    },
+    "latency": {
+      "default": 0,
+      "title": "Latency",
+      "type": "number"
+    },
+    "qdrant_latency": {
+      "default": 0,
+      "title": "Qdrant Latency",
+      "type": "number"
+    },
+    "rehydration_latency": {
+      "default": 0,
+      "title": "Rehydration Latency",
+      "type": "number"
+    },
+    "returned_count": {
+      "default": 0,
+      "title": "Returned Count",
+      "type": "integer"
+    }
+  },
+  "title": "RetrievalResult",
+  "type": "object"
+}

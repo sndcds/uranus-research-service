@@ -10,7 +10,9 @@ from uranus_research_service.research.wire.research_v9_schema import ResearchQue
 from uranus_research_service.research.wire.research_v10_schema import ResearchQueryPlanV10
 
 
-def normalize_v10(wire: ResearchQueryPlanV10) -> InternalResearchPlan:
+def normalize_v10(
+    wire: ResearchQueryPlanV10, *, allow_semantic: bool = False
+) -> InternalResearchPlan:
     wire = ResearchQueryPlanV10.model_validate_json(wire.model_dump_json())
     data = wire.model_dump(mode="json")
     weekdays: tuple[int, ...] = ()
@@ -31,10 +33,12 @@ def normalize_v10(wire: ResearchQueryPlanV10) -> InternalResearchPlan:
         }
         if all(v == neutral.get(k) for k, v in temporal.items()):
             data["temporal"] = None
-    base = normalize_v9(ResearchQueryPlanV9.model_validate_json(json.dumps(data)))
+    base = normalize_v9(
+        ResearchQueryPlanV9.model_validate_json(json.dumps(data)), allow_semantic=allow_semantic
+    )
     plan = replace(
         base,
         temporal=replace(base.temporal, weekdays=weekdays or base.temporal.weekdays, months=months),
     )
-    require_supported(plan)
+    require_supported(plan, allow_semantic=allow_semantic)
     return plan

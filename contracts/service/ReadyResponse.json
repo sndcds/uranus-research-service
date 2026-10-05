@@ -18,6 +18,11 @@
           "title": "Named Place Resolution",
           "type": "boolean"
         },
+        "semantic_index_ready": {
+          "default": false,
+          "title": "Semantic Index Ready",
+          "type": "boolean"
+        },
         "semantic_query": {
           "const": false,
           "default": false,

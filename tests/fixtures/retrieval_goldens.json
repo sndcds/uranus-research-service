@@ -1,0 +1,83 @@
+[
+  {
+    "id": "de-descriptive",
+    "query": "Jazzmusik in entspannter Atmosphäre",
+    "language": "de",
+    "category": "descriptive",
+    "expected_event_ids": [
+      "00000000-0000-0000-0000-00000000001e"
+    ]
+  },
+  {
+    "id": "de-accessibility",
+    "query": "Veranstaltung mit stufenlosem Zugang",
+    "language": "de",
+    "category": "accessibility",
+    "expected_event_ids": [
+      "00000000-0000-0000-0000-00000000001e"
+    ]
+  },
+  {
+    "id": "de-location",
+    "query": "Kultur in Flensburg",
+    "language": "de",
+    "category": "location",
+    "expected_event_ids": [
+      "00000000-0000-0000-0000-00000000001e"
+    ]
+  },
+  {
+    "id": "da-descriptive",
+    "query": "Jazzmusik i en afslappet atmosfære",
+    "language": "da",
+    "category": "descriptive",
+    "expected_event_ids": [
+      "00000000-0000-0000-0000-00000000001e"
+    ]
+  },
+  {
+    "id": "da-accessibility",
+    "query": "Arrangement med trinløs adgang",
+    "language": "da",
+    "category": "accessibility",
+    "expected_event_ids": [
+      "00000000-0000-0000-0000-00000000001e"
+    ]
+  },
+  {
+    "id": "da-location",
+    "query": "Kultur i Flensborg",
+    "language": "da",
+    "category": "location",
+    "expected_event_ids": [
+      "00000000-0000-0000-0000-00000000001e"
+    ]
+  },
+  {
+    "id": "en-descriptive",
+    "query": "Jazz music in a relaxed atmosphere",
+    "language": "en",
+    "category": "descriptive",
+    "expected_event_ids": [
+      "00000000-0000-0000-0000-00000000001e"
+    ]
+  },
+  {
+    "id": "en-accessibility",
+    "query": "Event with step free access",
+    "language": "en",
+    "category": "accessibility",
+    "expected_event_ids": [
+      "00000000-0000-0000-0000-00000000001e"
+    ]
+  },
+  {
+    "id": "en-location",
+    "query": "Culture in Flensburg",
+    "language": "en",
+    "category": "location",
+    "expected_event_ids": [
+      "00000000-0000-0000-0000-00000000001e"
+    ]
+  }
+]

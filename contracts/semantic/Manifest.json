@@ -1,0 +1,115 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "build_id": {
+      "pattern": "^[a-z0-9][a-z0-9_]{0,47}$",
+      "title": "Build Id",
+      "type": "string"
+    },
+    "chunk_count": {
+      "maximum": 100000,
+      "minimum": 0,
+      "title": "Chunk Count",
+      "type": "integer"
+    },
+    "chunk_version": {
+      "const": "sections-480-overlap64-v2",
+      "title": "Chunk Version",
+      "type": "string"
+    },
+    "complete": {
+      "const": true,
+      "title": "Complete",
+      "type": "boolean"
+    },
+    "corpus_hash": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Corpus Hash",
+      "type": "string"
+    },
+    "created_at": {
+      "title": "Created At",
+      "type": "string"
+    },
+    "dimensions": {
+      "const": 1024,
+      "title": "Dimensions",
+      "type": "integer"
+    },
+    "distance": {
+      "const": "Cosine",
+      "title": "Distance",
+      "type": "string"
+    },
+    "document_count": {
+      "maximum": 10000,
+      "minimum": 0,
+      "title": "Document Count",
+      "type": "integer"
+    },
+    "document_schema_version": {
+      "title": "Document Schema Version",
+      "type": "string"
+    },
+    "embedding_model": {
+      "const": "jina-v5",
+      "title": "Embedding Model",
+      "type": "string"
+    },
+    "embedding_version": {
+      "const": "dd76d535f5447ca3897a9c893fb1e612ead98192:native-qwen3-torch2.11.0-transformers5.17.0-peft0.21.1-cpu-eager-retrieval-query-document-last-token-l2-f32-d1024:sections-480-overlap64-v2",
+      "title": "Embedding Version",
+      "type": "string"
+    },
+    "entity_type": {
+      "enum": [
+        "event",
+        "organization",
+        "venue"
+      ],
+      "title": "Entity Type",
+      "type": "string"
+    },
+    "index_owner": {
+      "const": "kulturbytes-semantic-search-v1",
+      "title": "Index Owner",
+      "type": "string"
+    },
+    "manifest_owner": {
+      "const": "uranus-research-service-manifest-v1",
+      "title": "Manifest Owner",
+      "type": "string"
+    },
+    "model_revision": {
+      "const": "dd76d535f5447ca3897a9c893fb1e612ead98192",
+      "title": "Model Revision",
+      "type": "string"
+    },
+    "source_snapshot_hash": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Source Snapshot Hash",
+      "type": "string"
+    }
+  },
+  "required": [
+    "manifest_owner",
+    "index_owner",
+    "entity_type",
+    "document_schema_version",
+    "embedding_model",
+    "embedding_version",
+    "model_revision",
+    "dimensions",
+    "distance",
+    "chunk_version",
+    "build_id",
+    "created_at",
+    "source_snapshot_hash",
+    "corpus_hash",
+    "document_count",
+    "chunk_count",
+    "complete"
+  ],
+  "title": "Manifest",
+  "type": "object"
+}

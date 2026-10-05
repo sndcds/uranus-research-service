@@ -1,6 +1,6 @@
 # Uranus Research Service
 
-Internal deterministic Research execution for Kulturbytes/Uranus. **Phase 2A** supports
+Internal deterministic Research execution for Kulturbytes/Uranus. **Phase 2B.1** retains
 structured Planner-v13 queries and grounded conversation responses. Admin still runs
 its existing Research path; this repository does not switch any consumer or deployment.
 
@@ -16,7 +16,7 @@ Admin identity → internal Bearer + opaque principal → Research Service
     └─ bounded conversation state → safe AnswerFacts → deterministic answer
 
 Semantic plans → unsupported_constraint, before resolution or SQL
-Encoder / Qdrant / indexing: outside the Phase-2A query and readiness paths
+Encoder / Qdrant: isolated internal semantic path; optional separate readiness capability
 ```
 
 This service owns execution, not Admin identity/workflows, language inference, model
@@ -75,8 +75,24 @@ Capabilities distinguish structured execution, conversation, SQL spatial operati
 optional named-place resolution, complete administrative grouping and disabled semantic
 retrieval. Missing optional Geocoder/inventory does not block basic SQL readiness; its
 capability is false and affected requests fail explicitly. Encoder/Qdrant availability
-never blocks structured readiness. Encoder metadata in /version remains an **expected
-future consumer pin**, not a claim of current encoder connectivity or inference.
+never blocks structured readiness. Encoder metadata in /version remains an **expected consumer pin**; the separate
+semantic_index_ready capability reports the last configured compatibility check.
+
+## Isolated semantic indexing
+
+The Jina-v5 HTTP consumer, fixed-role Qdrant client, manifest verification, operator-only
+complete event builds and internal SQL → evidence → rehydration path are implemented.
+`POST /query` still rejects semantic plans before resolution/SQL. No live writes or
+Admin/Planner/Encoder code changes accompany this phase.
+
+Use `uranus-research-service index plan|build|validate|benchmark|compare` with explicit
+build IDs and immutable report destinations. Writes require a disposable loopback
+Qdrant on a nondefault port, `test_` build ID and `--isolated`; no live override exists.
+See [operator guide](docs/phase2b1-semantic-index.md), [reindex plan](docs/v5-reindex-plan.md),
+[benchmark](docs/retrieval-benchmark.md), and [live read-only inventory](docs/live-semantic-preflight.md).
+
+Set `SEMANTIC_BUILD_ID` to probe a configured event build separately during `/ready`.
+`semantic_index_ready` can become true; `semantic_query` stays false.
 
 ## Validation
 
@@ -114,8 +130,8 @@ without package networking and runs as UID 10001 with read-only root support. Se
 [extraction audit](docs/extraction-audit.md),
 [per-module source/target manifest](docs/phase2-port-manifest.json),
 [database boundary](docs/database-boundary.md),
-[future Qdrant boundary](docs/qdrant-boundary.md), and
-[future v5 migration](docs/jina-v5-consumer-migration.md).
+[Qdrant boundary](docs/qdrant-boundary.md), and
+[v5 consumer migration](docs/jina-v5-consumer-migration.md).
 
 Code was selectively ported from the pinned AGPL Uranus Admin reference. Contracts
 are local JSON snapshots and validators, not runtime imports from sibling repositories.

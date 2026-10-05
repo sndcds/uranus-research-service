@@ -98,3 +98,13 @@ Geocoder readiness and inventory validation update named_place_resolution and
 administrative_grouping. `/version` has no dependency calls. No Encoder or Qdrant calls
 occur in readiness/query. Source/area preflights repeat before structured resolution
 and SQL reads even if no prior /ready request occurred.
+
+
+## Phase 2B.1 additive metadata
+
+`RuntimeCapabilities.semantic_index_ready` reports an optional separately checked v5
+index. Encoder/Qdrant failures do not change structured readiness. `semantic_query`
+and `VersionResponse.semantic_query_enabled` remain literal false. `/version` adds
+semantic_embedding_model/revision/version, semantic_dimensions, semantic_chunk_version
+and semantic_collection_names. No secrets/origins are returned. Internal retrieval
+contracts are pinned in `contracts/semantic`; they are not additional public routes.

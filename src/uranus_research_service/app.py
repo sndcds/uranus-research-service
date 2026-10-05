@@ -25,6 +25,7 @@ from uranus_research_service.errors import (
 )
 from uranus_research_service.logging import configure_logging, logger
 from uranus_research_service.runtime import ResearchRuntime
+from uranus_research_service.semantic_manifest import collection_name
 from uranus_research_service.version import SERVICE_VERSION
 
 
@@ -92,6 +93,9 @@ def create_app(
     async def version():
         return VersionResponse(
             planner_contract=settings.planner_contract,
+            semantic_collection_names=[collection_name("event", settings.semantic_build_id)]
+            if settings.semantic_build_id
+            else [],
             query_enabled=runtime.verified,
             capabilities=runtime.capabilities(),
         )

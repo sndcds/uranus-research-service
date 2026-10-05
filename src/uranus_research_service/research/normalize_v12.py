@@ -20,7 +20,9 @@ from uranus_research_service.research.wire.research_v10_schema import ResearchQu
 from uranus_research_service.research.wire.research_v12_schema import ResearchQueryPlanV12
 
 
-def normalize_v12(wire: ResearchQueryPlanV12) -> InternalResearchPlan:
+def normalize_v12(
+    wire: ResearchQueryPlanV12, *, allow_semantic: bool = False
+) -> InternalResearchPlan:
     wire = ResearchQueryPlanV12.model_validate_json(wire.model_dump_json())
     if wire.clarification == "needs_context" and wire.unsupported_reason is None:
         return InternalResearchPlan(
@@ -49,9 +51,12 @@ def normalize_v12(wire: ResearchQueryPlanV12) -> InternalResearchPlan:
     data = wire.model_dump(mode="json")
     data["spatial"] = None
     try:
-        base = normalize_v10(ResearchQueryPlanV10.model_validate_json(json.dumps(data)))
+        base = normalize_v10(
+            ResearchQueryPlanV10.model_validate_json(json.dumps(data)),
+            allow_semantic=allow_semantic,
+        )
     except ValidationError:
         raise unsupported() from None
     plan = replace(base, spatial_constraints=tuple(spatial))
-    require_supported(plan)
+    require_supported(plan, allow_semantic=allow_semantic)
     return plan
