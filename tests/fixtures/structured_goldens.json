@@ -1,0 +1,1624 @@
+[
+  {
+    "id": "records",
+    "query": "Welche Veranstaltungen gibt es?",
+    "plan": {
+      "original_query": "Welche Veranstaltungen gibt es?",
+      "language": "de",
+      "interaction": {
+        "kind": "research",
+        "research_mode": "new",
+        "research_plan": {
+          "original_query": "Welche Veranstaltungen gibt es?",
+          "intent": "list",
+          "entity_type": "event",
+          "metric": null,
+          "group_by": [],
+          "ordering": null,
+          "limit": 20,
+          "filters": [],
+          "metric_filter": null,
+          "taxonomy": null,
+          "temporal": null,
+          "spatial": [],
+          "price": null,
+          "semantic": null,
+          "relation": null,
+          "trend": null,
+          "anomaly": null,
+          "explain": null,
+          "knowledge": null,
+          "comparison_targets": [],
+          "clarification": "none",
+          "unsupported_reason": null
+        }
+      }
+    },
+    "expected": {
+      "kind": "records",
+      "ids": [
+        30,
+        31
+      ]
+    }
+  },
+  {
+    "id": "organization-records",
+    "query": "Welche organization gibt es?",
+    "plan": {
+      "original_query": "Welche organization gibt es?",
+      "language": "de",
+      "interaction": {
+        "kind": "research",
+        "research_mode": "new",
+        "research_plan": {
+          "original_query": "Welche organization gibt es?",
+          "intent": "list",
+          "entity_type": "organization",
+          "metric": null,
+          "group_by": [],
+          "ordering": null,
+          "limit": 20,
+          "filters": [],
+          "metric_filter": null,
+          "taxonomy": null,
+          "temporal": null,
+          "spatial": [],
+          "price": null,
+          "semantic": null,
+          "relation": null,
+          "trend": null,
+          "anomaly": null,
+          "explain": null,
+          "knowledge": null,
+          "comparison_targets": [],
+          "clarification": "none",
+          "unsupported_reason": null
+        }
+      }
+    },
+    "expected": {
+      "kind": "records",
+      "ids": [
+        10,
+        11
+      ]
+    }
+  },
+  {
+    "id": "organization-comparison",
+    "query": "Vergleiche Alpha und Beta",
+    "plan": {
+      "original_query": "Vergleiche Alpha und Beta",
+      "language": "de",
+      "interaction": {
+        "kind": "research",
+        "research_mode": "new",
+        "research_plan": {
+          "original_query": "Vergleiche Alpha und Beta",
+          "intent": "compare",
+          "entity_type": "event",
+          "metric": {
+            "operation": "event_count",
+            "field": null,
+            "distinct_by": null,
+            "numerator": null,
+            "denominator": null,
+            "measure": null,
+            "window": null,
+            "currency": null
+          },
+          "group_by": [],
+          "ordering": null,
+          "limit": null,
+          "filters": [],
+          "metric_filter": null,
+          "taxonomy": null,
+          "temporal": null,
+          "spatial": [],
+          "price": null,
+          "semantic": null,
+          "relation": null,
+          "trend": null,
+          "anomaly": null,
+          "explain": null,
+          "knowledge": null,
+          "comparison_targets": [
+            {
+              "kind": "organization",
+              "query": "Alpha"
+            },
+            {
+              "kind": "organization",
+              "query": "Beta"
+            }
+          ],
+          "clarification": "none",
+          "unsupported_reason": null
+        }
+      }
+    },
+    "expected": {
+      "kind": "comparison",
+      "values": [
+        1,
+        1
+      ]
+    }
+  },
+  {
+    "id": "multiple-boundaries",
+    "query": "In Flensburg und außerhalb Glücksburgs",
+    "plan": {
+      "original_query": "In Flensburg und außerhalb Glücksburgs",
+      "language": "de",
+      "interaction": {
+        "kind": "research",
+        "research_mode": "new",
+        "research_plan": {
+          "original_query": "In Flensburg und außerhalb Glücksburgs",
+          "intent": "list",
+          "entity_type": "event",
+          "metric": null,
+          "group_by": [],
+          "ordering": null,
+          "limit": 20,
+          "filters": [],
+          "metric_filter": null,
+          "taxonomy": null,
+          "temporal": null,
+          "spatial": [
+            {
+              "relation": "inside",
+              "reference": "named",
+              "area_query": "Flensburg",
+              "area_level": "municipality",
+              "place_query": null,
+              "radius_m": null
+            },
+            {
+              "relation": "outside",
+              "reference": "named",
+              "area_query": "Glücksburg",
+              "area_level": "municipality",
+              "place_query": null,
+              "radius_m": null
+            }
+          ],
+          "price": null,
+          "semantic": null,
+          "relation": null,
+          "trend": null,
+          "anomaly": null,
+          "explain": null,
+          "knowledge": null,
+          "comparison_targets": [],
+          "clarification": "none",
+          "unsupported_reason": null
+        }
+      }
+    },
+    "expected": {
+      "kind": "records",
+      "ids": [
+        30
+      ]
+    }
+  },
+  {
+    "id": "venue-records",
+    "query": "Welche venue gibt es?",
+    "plan": {
+      "original_query": "Welche venue gibt es?",
+      "language": "de",
+      "interaction": {
+        "kind": "research",
+        "research_mode": "new",
+        "research_plan": {
+          "original_query": "Welche venue gibt es?",
+          "intent": "list",
+          "entity_type": "venue",
+          "metric": null,
+          "group_by": [],
+          "ordering": null,
+          "limit": 20,
+          "filters": [],
+          "metric_filter": null,
+          "taxonomy": null,
+          "temporal": null,
+          "spatial": [],
+          "price": null,
+          "semantic": null,
+          "relation": null,
+          "trend": null,
+          "anomaly": null,
+          "explain": null,
+          "knowledge": null,
+          "comparison_targets": [],
+          "clarification": "none",
+          "unsupported_reason": null
+        }
+      }
+    },
+    "expected": {
+      "kind": "records",
+      "ids": [
+        21,
+        20
+      ]
+    }
+  },
+  {
+    "id": "today",
+    "query": "Veranstaltungen today",
+    "plan": {
+      "original_query": "Veranstaltungen today",
+      "language": "de",
+      "interaction": {
+        "kind": "research",
+        "research_mode": "new",
+        "research_plan": {
+          "original_query": "Veranstaltungen today",
+          "intent": "list",
+          "entity_type": "event",
+          "metric": null,
+          "group_by": [],
+          "ordering": null,
+          "limit": 20,
+          "filters": [],
+          "metric_filter": null,
+          "taxonomy": null,
+          "temporal": {
+            "field": "start_date",
+            "period": "today",
+            "from_date": null,
+            "to_date": null,
+            "time_of_day": "none",
+            "before_time": null,
+            "after_time": null,
+            "weekday": null,
+            "calendar_relation": "none",
+            "calendar_area_query": null,
+            "overlap": false,
+            "multi_day": false,
+            "lookback": null,
+            "lookback_unit": null,
+            "recurring_weekdays": [],
+            "recurring_months": []
+          },
+          "spatial": [],
+          "price": null,
+          "semantic": null,
+          "relation": null,
+          "trend": null,
+          "anomaly": null,
+          "explain": null,
+          "knowledge": null,
+          "comparison_targets": [],
+          "clarification": "none",
+          "unsupported_reason": null
+        }
+      }
+    },
+    "expected": {
+      "kind": "records",
+      "ids": [
+        30,
+        31
+      ]
+    }
+  },
+  {
+    "id": "tomorrow",
+    "query": "Veranstaltungen tomorrow",
+    "plan": {
+      "original_query": "Veranstaltungen tomorrow",
+      "language": "de",
+      "interaction": {
+        "kind": "research",
+        "research_mode": "new",
+        "research_plan": {
+          "original_query": "Veranstaltungen tomorrow",
+          "intent": "list",
+          "entity_type": "event",
+          "metric": null,
+          "group_by": [],
+          "ordering": null,
+          "limit": 20,
+          "filters": [],
+          "metric_filter": null,
+          "taxonomy": null,
+          "temporal": {
+            "field": "start_date",
+            "period": "tomorrow",
+            "from_date": null,
+            "to_date": null,
+            "time_of_day": "none",
+            "before_time": null,
+            "after_time": null,
+            "weekday": null,
+            "calendar_relation": "none",
+            "calendar_area_query": null,
+            "overlap": false,
+            "multi_day": false,
+            "lookback": null,
+            "lookback_unit": null,
+            "recurring_weekdays": [],
+            "recurring_months": []
+          },
+          "spatial": [],
+          "price": null,
+          "semantic": null,
+          "relation": null,
+          "trend": null,
+          "anomaly": null,
+          "explain": null,
+          "knowledge": null,
+          "comparison_targets": [],
+          "clarification": "none",
+          "unsupported_reason": null
+        }
+      }
+    },
+    "expected": {
+      "kind": "records",
+      "ids": [
+        30
+      ]
+    }
+  },
+  {
+    "id": "this_weekend",
+    "query": "Veranstaltungen this_weekend",
+    "plan": {
+      "original_query": "Veranstaltungen this_weekend",
+      "language": "de",
+      "interaction": {
+        "kind": "research",
+        "research_mode": "new",
+        "research_plan": {
+          "original_query": "Veranstaltungen this_weekend",
+          "intent": "list",
+          "entity_type": "event",
+          "metric": null,
+          "group_by": [],
+          "ordering": null,
+          "limit": 20,
+          "filters": [],
+          "metric_filter": null,
+          "taxonomy": null,
+          "temporal": {
+            "field": "start_date",
+            "period": "this_weekend",
+            "from_date": null,
+            "to_date": null,
+            "time_of_day": "none",
+            "before_time": null,
+            "after_time": null,
+            "weekday": null,
+            "calendar_relation": "none",
+            "calendar_area_query": null,
+            "overlap": false,
+            "multi_day": false,
+            "lookback": null,
+            "lookback_unit": null,
+            "recurring_weekdays": [],
+            "recurring_months": []
+          },
+          "spatial": [],
+          "price": null,
+          "semantic": null,
+          "relation": null,
+          "trend": null,
+          "anomaly": null,
+          "explain": null,
+          "knowledge": null,
+          "comparison_targets": [],
+          "clarification": "none",
+          "unsupported_reason": null
+        }
+      }
+    },
+    "expected": {
+      "kind": "records",
+      "ids": [
+        30,
+        31
+      ]
+    }
+  },
+  {
+    "id": "this_month",
+    "query": "Veranstaltungen this_month",
+    "plan": {
+      "original_query": "Veranstaltungen this_month",
+      "language": "de",
+      "interaction": {
+        "kind": "research",
+        "research_mode": "new",
+        "research_plan": {
+          "original_query": "Veranstaltungen this_month",
+          "intent": "list",
+          "entity_type": "event",
+          "metric": null,
+          "group_by": [],
+          "ordering": null,
+          "limit": 20,
+          "filters": [],
+          "metric_filter": null,
+          "taxonomy": null,
+          "temporal": {
+            "field": "start_date",
+            "period": "this_month",
+            "from_date": null,
+            "to_date": null,
+            "time_of_day": "none",
+            "before_time": null,
+            "after_time": null,
+            "weekday": null,
+            "calendar_relation": "none",
+            "calendar_area_query": null,
+            "overlap": false,
+            "multi_day": false,
+            "lookback": null,
+            "lookback_unit": null,
+            "recurring_weekdays": [],
+            "recurring_months": []
+          },
+          "spatial": [],
+          "price": null,
+          "semantic": null,
+          "relation": null,
+          "trend": null,
+          "anomaly": null,
+          "explain": null,
+          "knowledge": null,
+          "comparison_targets": [],
+          "clarification": "none",
+          "unsupported_reason": null
+        }
+      }
+    },
+    "expected": {
+      "kind": "records",
+      "ids": [
+        30,
+        31
+      ]
+    }
+  },
+  {
+    "id": "weekday",
+    "query": "Veranstaltungen montags",
+    "plan": {
+      "original_query": "Veranstaltungen montags",
+      "language": "de",
+      "interaction": {
+        "kind": "research",
+        "research_mode": "new",
+        "research_plan": {
+          "original_query": "Veranstaltungen montags",
+          "intent": "list",
+          "entity_type": "event",
+          "metric": null,
+          "group_by": [],
+          "ordering": null,
+          "limit": 20,
+          "filters": [],
+          "metric_filter": null,
+          "taxonomy": null,
+          "temporal": {
+            "field": "start_date",
+            "period": "none",
+            "from_date": null,
+            "to_date": null,
+            "time_of_day": "none",
+            "before_time": null,
+            "after_time": null,
+            "weekday": null,
+            "calendar_relation": "none",
+            "calendar_area_query": null,
+            "overlap": false,
+            "multi_day": false,
+            "lookback": null,
+            "lookback_unit": null,
+            "recurring_weekdays": [
+              1
+            ],
+            "recurring_months": []
+          },
+          "spatial": [],
+          "price": null,
+          "semantic": null,
+          "relation": null,
+          "trend": null,
+          "anomaly": null,
+          "explain": null,
+          "knowledge": null,
+          "comparison_targets": [],
+          "clarification": "none",
+          "unsupported_reason": null
+        }
+      }
+    },
+    "expected": {
+      "kind": "records",
+      "ids": [
+        30
+      ]
+    }
+  },
+  {
+    "id": "event_count",
+    "query": "Wie viele event_count?",
+    "plan": {
+      "original_query": "Wie viele event_count?",
+      "language": "de",
+      "interaction": {
+        "kind": "research",
+        "research_mode": "new",
+        "research_plan": {
+          "original_query": "Wie viele event_count?",
+          "intent": "count",
+          "entity_type": "event",
+          "metric": {
+            "operation": "event_count",
+            "field": null,
+            "distinct_by": null,
+            "numerator": null,
+            "denominator": null,
+            "measure": null,
+            "window": null,
+            "currency": null
+          },
+          "group_by": [],
+          "ordering": null,
+          "limit": null,
+          "filters": [],
+          "metric_filter": null,
+          "taxonomy": null,
+          "temporal": null,
+          "spatial": [],
+          "price": null,
+          "semantic": null,
+          "relation": null,
+          "trend": null,
+          "anomaly": null,
+          "explain": null,
+          "knowledge": null,
+          "comparison_targets": [],
+          "clarification": "none",
+          "unsupported_reason": null
+        }
+      }
+    },
+    "expected": {
+      "kind": "count",
+      "value": 2
+    }
+  },
+  {
+    "id": "occurrence_count",
+    "query": "Wie viele occurrence_count?",
+    "plan": {
+      "original_query": "Wie viele occurrence_count?",
+      "language": "de",
+      "interaction": {
+        "kind": "research",
+        "research_mode": "new",
+        "research_plan": {
+          "original_query": "Wie viele occurrence_count?",
+          "intent": "count",
+          "entity_type": "occurrence",
+          "metric": {
+            "operation": "occurrence_count",
+            "field": null,
+            "distinct_by": null,
+            "numerator": null,
+            "denominator": null,
+            "measure": null,
+            "window": null,
+            "currency": null
+          },
+          "group_by": [],
+          "ordering": null,
+          "limit": null,
+          "filters": [],
+          "metric_filter": null,
+          "taxonomy": null,
+          "temporal": null,
+          "spatial": [],
+          "price": null,
+          "semantic": null,
+          "relation": null,
+          "trend": null,
+          "anomaly": null,
+          "explain": null,
+          "knowledge": null,
+          "comparison_targets": [],
+          "clarification": "none",
+          "unsupported_reason": null
+        }
+      }
+    },
+    "expected": {
+      "kind": "count",
+      "value": 4
+    }
+  },
+  {
+    "id": "venue-aggregate",
+    "query": "Termine je venue",
+    "plan": {
+      "original_query": "Termine je venue",
+      "language": "de",
+      "interaction": {
+        "kind": "research",
+        "research_mode": "new",
+        "research_plan": {
+          "original_query": "Termine je venue",
+          "intent": "aggregate",
+          "entity_type": "event",
+          "metric": {
+            "operation": "occurrence_count",
+            "field": null,
+            "distinct_by": null,
+            "numerator": null,
+            "denominator": null,
+            "measure": null,
+            "window": null,
+            "currency": null
+          },
+          "group_by": [
+            "venue"
+          ],
+          "ordering": "desc",
+          "limit": 20,
+          "filters": [],
+          "metric_filter": null,
+          "taxonomy": null,
+          "temporal": null,
+          "spatial": [],
+          "price": null,
+          "semantic": null,
+          "relation": null,
+          "trend": null,
+          "anomaly": null,
+          "explain": null,
+          "knowledge": null,
+          "comparison_targets": [],
+          "clarification": "none",
+          "unsupported_reason": null
+        }
+      }
+    },
+    "expected": {
+      "kind": "aggregate",
+      "values": [
+        2,
+        2
+      ]
+    }
+  },
+  {
+    "id": "organization-aggregate",
+    "query": "Termine je organization",
+    "plan": {
+      "original_query": "Termine je organization",
+      "language": "de",
+      "interaction": {
+        "kind": "research",
+        "research_mode": "new",
+        "research_plan": {
+          "original_query": "Termine je organization",
+          "intent": "aggregate",
+          "entity_type": "event",
+          "metric": {
+            "operation": "occurrence_count",
+            "field": null,
+            "distinct_by": null,
+            "numerator": null,
+            "denominator": null,
+            "measure": null,
+            "window": null,
+            "currency": null
+          },
+          "group_by": [
+            "organization"
+          ],
+          "ordering": "desc",
+          "limit": 20,
+          "filters": [],
+          "metric_filter": null,
+          "taxonomy": null,
+          "temporal": null,
+          "spatial": [],
+          "price": null,
+          "semantic": null,
+          "relation": null,
+          "trend": null,
+          "anomaly": null,
+          "explain": null,
+          "knowledge": null,
+          "comparison_targets": [],
+          "clarification": "none",
+          "unsupported_reason": null
+        }
+      }
+    },
+    "expected": {
+      "kind": "aggregate",
+      "values": [
+        2,
+        2
+      ]
+    }
+  },
+  {
+    "id": "event-aggregate",
+    "query": "Termine je event",
+    "plan": {
+      "original_query": "Termine je event",
+      "language": "de",
+      "interaction": {
+        "kind": "research",
+        "research_mode": "new",
+        "research_plan": {
+          "original_query": "Termine je event",
+          "intent": "aggregate",
+          "entity_type": "event",
+          "metric": {
+            "operation": "occurrence_count",
+            "field": null,
+            "distinct_by": null,
+            "numerator": null,
+            "denominator": null,
+            "measure": null,
+            "window": null,
+            "currency": null
+          },
+          "group_by": [
+            "event"
+          ],
+          "ordering": "desc",
+          "limit": 20,
+          "filters": [],
+          "metric_filter": null,
+          "taxonomy": null,
+          "temporal": null,
+          "spatial": [],
+          "price": null,
+          "semantic": null,
+          "relation": null,
+          "trend": null,
+          "anomaly": null,
+          "explain": null,
+          "knowledge": null,
+          "comparison_targets": [],
+          "clarification": "none",
+          "unsupported_reason": null
+        }
+      }
+    },
+    "expected": {
+      "kind": "aggregate",
+      "values": [
+        2,
+        2
+      ]
+    }
+  },
+  {
+    "id": "grouped",
+    "query": "Termine nach Typ und Monat",
+    "plan": {
+      "original_query": "Termine nach Typ und Monat",
+      "language": "de",
+      "interaction": {
+        "kind": "research",
+        "research_mode": "new",
+        "research_plan": {
+          "original_query": "Termine nach Typ und Monat",
+          "intent": "aggregate",
+          "entity_type": "event",
+          "metric": {
+            "operation": "occurrence_count",
+            "field": null,
+            "distinct_by": null,
+            "numerator": null,
+            "denominator": null,
+            "measure": null,
+            "window": null,
+            "currency": null
+          },
+          "group_by": [
+            "event_type",
+            "month"
+          ],
+          "ordering": "desc",
+          "limit": 20,
+          "filters": [],
+          "metric_filter": null,
+          "taxonomy": null,
+          "temporal": null,
+          "spatial": [],
+          "price": null,
+          "semantic": null,
+          "relation": null,
+          "trend": null,
+          "anomaly": null,
+          "explain": null,
+          "knowledge": null,
+          "comparison_targets": [],
+          "clarification": "none",
+          "unsupported_reason": null
+        }
+      }
+    },
+    "expected": {
+      "kind": "grouped",
+      "values": [
+        2,
+        2
+      ]
+    }
+  },
+  {
+    "id": "taxonomy",
+    "query": "Welche Veranstaltungsarten gibt es?",
+    "plan": {
+      "original_query": "Welche Veranstaltungsarten gibt es?",
+      "language": "de",
+      "interaction": {
+        "kind": "research",
+        "research_mode": "new",
+        "research_plan": {
+          "original_query": "Welche Veranstaltungsarten gibt es?",
+          "intent": "taxonomy",
+          "entity_type": "event",
+          "metric": null,
+          "group_by": [],
+          "ordering": "asc",
+          "limit": 20,
+          "filters": [],
+          "metric_filter": null,
+          "taxonomy": "event_type",
+          "temporal": null,
+          "spatial": [],
+          "price": null,
+          "semantic": null,
+          "relation": null,
+          "trend": null,
+          "anomaly": null,
+          "explain": null,
+          "knowledge": null,
+          "comparison_targets": [],
+          "clarification": "none",
+          "unsupported_reason": null
+        }
+      }
+    },
+    "expected": {
+      "kind": "taxonomy",
+      "names": [
+        "Konzert",
+        "Theater"
+      ]
+    }
+  },
+  {
+    "id": "comparison",
+    "query": "Wie viele Veranstaltungen im Haus und am Dock?",
+    "plan": {
+      "original_query": "Wie viele Veranstaltungen im Haus und am Dock?",
+      "language": "de",
+      "interaction": {
+        "kind": "research",
+        "research_mode": "new",
+        "research_plan": {
+          "original_query": "Wie viele Veranstaltungen im Haus und am Dock?",
+          "intent": "compare",
+          "entity_type": "event",
+          "metric": {
+            "operation": "event_count",
+            "field": null,
+            "distinct_by": null,
+            "numerator": null,
+            "denominator": null,
+            "measure": null,
+            "window": null,
+            "currency": null
+          },
+          "group_by": [],
+          "ordering": null,
+          "limit": null,
+          "filters": [],
+          "metric_filter": null,
+          "taxonomy": null,
+          "temporal": null,
+          "spatial": [],
+          "price": null,
+          "semantic": null,
+          "relation": null,
+          "trend": null,
+          "anomaly": null,
+          "explain": null,
+          "knowledge": null,
+          "comparison_targets": [
+            {
+              "kind": "venue",
+              "query": "Haus"
+            },
+            {
+              "kind": "venue",
+              "query": "Dock"
+            }
+          ],
+          "clarification": "none",
+          "unsupported_reason": null
+        }
+      }
+    },
+    "expected": {
+      "kind": "comparison",
+      "values": [
+        1,
+        1
+      ]
+    }
+  },
+  {
+    "id": "spatial",
+    "query": "Welche Veranstaltungen liegen am weitesten östlich?",
+    "plan": {
+      "original_query": "Welche Veranstaltungen liegen am weitesten östlich?",
+      "language": "de",
+      "interaction": {
+        "kind": "research",
+        "research_mode": "new",
+        "research_plan": {
+          "original_query": "Welche Veranstaltungen liegen am weitesten östlich?",
+          "intent": "rank",
+          "entity_type": "event",
+          "metric": {
+            "operation": "value",
+            "field": "longitude",
+            "distinct_by": null,
+            "numerator": null,
+            "denominator": null,
+            "measure": null,
+            "window": null,
+            "currency": null
+          },
+          "group_by": [],
+          "ordering": "desc",
+          "limit": 20,
+          "filters": [],
+          "metric_filter": null,
+          "taxonomy": null,
+          "temporal": null,
+          "spatial": [],
+          "price": null,
+          "semantic": null,
+          "relation": null,
+          "trend": null,
+          "anomaly": null,
+          "explain": null,
+          "knowledge": null,
+          "comparison_targets": [],
+          "clarification": "none",
+          "unsupported_reason": null
+        }
+      }
+    },
+    "expected": {
+      "kind": "spatial",
+      "ids": [
+        31,
+        30
+      ]
+    }
+  },
+  {
+    "id": "inside-area",
+    "query": "Veranstaltungen inside Flensburg",
+    "plan": {
+      "original_query": "Veranstaltungen inside Flensburg",
+      "language": "de",
+      "interaction": {
+        "kind": "research",
+        "research_mode": "new",
+        "research_plan": {
+          "original_query": "Veranstaltungen inside Flensburg",
+          "intent": "list",
+          "entity_type": "event",
+          "metric": null,
+          "group_by": [],
+          "ordering": null,
+          "limit": 20,
+          "filters": [],
+          "metric_filter": null,
+          "taxonomy": null,
+          "temporal": null,
+          "spatial": [
+            {
+              "relation": "inside",
+              "reference": "named",
+              "area_query": "Flensburg",
+              "area_level": "municipality",
+              "place_query": null,
+              "radius_m": null
+            }
+          ],
+          "price": null,
+          "semantic": null,
+          "relation": null,
+          "trend": null,
+          "anomaly": null,
+          "explain": null,
+          "knowledge": null,
+          "comparison_targets": [],
+          "clarification": "none",
+          "unsupported_reason": null
+        }
+      }
+    },
+    "expected": {
+      "kind": "records",
+      "ids": [
+        30
+      ]
+    }
+  },
+  {
+    "id": "outside-area",
+    "query": "Veranstaltungen outside Flensburg",
+    "plan": {
+      "original_query": "Veranstaltungen outside Flensburg",
+      "language": "de",
+      "interaction": {
+        "kind": "research",
+        "research_mode": "new",
+        "research_plan": {
+          "original_query": "Veranstaltungen outside Flensburg",
+          "intent": "list",
+          "entity_type": "event",
+          "metric": null,
+          "group_by": [],
+          "ordering": null,
+          "limit": 20,
+          "filters": [],
+          "metric_filter": null,
+          "taxonomy": null,
+          "temporal": null,
+          "spatial": [
+            {
+              "relation": "outside",
+              "reference": "named",
+              "area_query": "Flensburg",
+              "area_level": "municipality",
+              "place_query": null,
+              "radius_m": null
+            }
+          ],
+          "price": null,
+          "semantic": null,
+          "relation": null,
+          "trend": null,
+          "anomaly": null,
+          "explain": null,
+          "knowledge": null,
+          "comparison_targets": [],
+          "clarification": "none",
+          "unsupported_reason": null
+        }
+      }
+    },
+    "expected": {
+      "kind": "records",
+      "ids": [
+        31
+      ]
+    }
+  },
+  {
+    "id": "administrative-grouping",
+    "query": "Veranstaltungen je Gemeinde",
+    "plan": {
+      "original_query": "Veranstaltungen je Gemeinde",
+      "language": "de",
+      "interaction": {
+        "kind": "research",
+        "research_mode": "new",
+        "research_plan": {
+          "original_query": "Veranstaltungen je Gemeinde",
+          "intent": "aggregate",
+          "entity_type": "event",
+          "metric": {
+            "operation": "event_count",
+            "field": null,
+            "distinct_by": null,
+            "numerator": null,
+            "denominator": null,
+            "measure": null,
+            "window": null,
+            "currency": null
+          },
+          "group_by": [
+            "municipality"
+          ],
+          "ordering": "desc",
+          "limit": 20,
+          "filters": [],
+          "metric_filter": null,
+          "taxonomy": null,
+          "temporal": null,
+          "spatial": [],
+          "price": null,
+          "semantic": null,
+          "relation": null,
+          "trend": null,
+          "anomaly": null,
+          "explain": null,
+          "knowledge": null,
+          "comparison_targets": [],
+          "clarification": "none",
+          "unsupported_reason": null
+        }
+      }
+    },
+    "expected": {
+      "kind": "grouped",
+      "values": [
+        1,
+        1
+      ]
+    }
+  },
+  {
+    "id": "type-resolution",
+    "query": "Welche Konzerte gibt es?",
+    "plan": {
+      "original_query": "Welche Konzerte gibt es?",
+      "language": "de",
+      "interaction": {
+        "kind": "research",
+        "research_mode": "new",
+        "research_plan": {
+          "original_query": "Welche Konzerte gibt es?",
+          "intent": "list",
+          "entity_type": "event",
+          "metric": null,
+          "group_by": [],
+          "ordering": null,
+          "limit": 20,
+          "filters": [
+            {
+              "field": "event_type",
+              "operator": "eq",
+              "value": "Konzert"
+            }
+          ],
+          "metric_filter": null,
+          "taxonomy": null,
+          "temporal": null,
+          "spatial": [],
+          "price": null,
+          "semantic": null,
+          "relation": null,
+          "trend": null,
+          "anomaly": null,
+          "explain": null,
+          "knowledge": null,
+          "comparison_targets": [],
+          "clarification": "none",
+          "unsupported_reason": null
+        }
+      }
+    },
+    "expected": {
+      "kind": "records",
+      "ids": [
+        30
+      ]
+    }
+  },
+  {
+    "id": "genre-resolution",
+    "query": "Jazz-Konzerte",
+    "plan": {
+      "original_query": "Jazz-Konzerte",
+      "language": "de",
+      "interaction": {
+        "kind": "research",
+        "research_mode": "new",
+        "research_plan": {
+          "original_query": "Jazz-Konzerte",
+          "intent": "list",
+          "entity_type": "event",
+          "metric": null,
+          "group_by": [],
+          "ordering": null,
+          "limit": 20,
+          "filters": [
+            {
+              "field": "genre",
+              "operator": "eq",
+              "value": "Jazz"
+            }
+          ],
+          "metric_filter": null,
+          "taxonomy": null,
+          "temporal": null,
+          "spatial": [],
+          "price": null,
+          "semantic": null,
+          "relation": null,
+          "trend": null,
+          "anomaly": null,
+          "explain": null,
+          "knowledge": null,
+          "comparison_targets": [],
+          "clarification": "none",
+          "unsupported_reason": null
+        }
+      }
+    },
+    "expected": {
+      "kind": "records",
+      "ids": [
+        30
+      ]
+    }
+  },
+  {
+    "id": "category-resolution",
+    "query": "Kulturveranstaltungen",
+    "plan": {
+      "original_query": "Kulturveranstaltungen",
+      "language": "de",
+      "interaction": {
+        "kind": "research",
+        "research_mode": "new",
+        "research_plan": {
+          "original_query": "Kulturveranstaltungen",
+          "intent": "list",
+          "entity_type": "event",
+          "metric": null,
+          "group_by": [],
+          "ordering": null,
+          "limit": 20,
+          "filters": [
+            {
+              "field": "category",
+              "operator": "eq",
+              "value": "Kultur"
+            }
+          ],
+          "metric_filter": null,
+          "taxonomy": null,
+          "temporal": null,
+          "spatial": [],
+          "price": null,
+          "semantic": null,
+          "relation": null,
+          "trend": null,
+          "anomaly": null,
+          "explain": null,
+          "knowledge": null,
+          "comparison_targets": [],
+          "clarification": "none",
+          "unsupported_reason": null
+        }
+      }
+    },
+    "expected": {
+      "kind": "records",
+      "ids": [
+        30,
+        31
+      ]
+    }
+  },
+  {
+    "id": "organization-resolution",
+    "query": "Veranstaltungen von Alpha",
+    "plan": {
+      "original_query": "Veranstaltungen von Alpha",
+      "language": "de",
+      "interaction": {
+        "kind": "research",
+        "research_mode": "new",
+        "research_plan": {
+          "original_query": "Veranstaltungen von Alpha",
+          "intent": "list",
+          "entity_type": "event",
+          "metric": null,
+          "group_by": [],
+          "ordering": null,
+          "limit": 20,
+          "filters": [
+            {
+              "field": "organization",
+              "operator": "eq",
+              "value": "Alpha"
+            }
+          ],
+          "metric_filter": null,
+          "taxonomy": null,
+          "temporal": null,
+          "spatial": [],
+          "price": null,
+          "semantic": null,
+          "relation": null,
+          "trend": null,
+          "anomaly": null,
+          "explain": null,
+          "knowledge": null,
+          "comparison_targets": [],
+          "clarification": "none",
+          "unsupported_reason": null
+        }
+      }
+    },
+    "expected": {
+      "kind": "records",
+      "ids": [
+        30
+      ]
+    }
+  },
+  {
+    "id": "clarification",
+    "query": "Was ist am besten?",
+    "plan": {
+      "original_query": "Was ist am besten?",
+      "language": "de",
+      "interaction": {
+        "kind": "research",
+        "research_mode": "new",
+        "research_plan": {
+          "original_query": "Was ist am besten?",
+          "intent": "rank",
+          "entity_type": "event",
+          "metric": null,
+          "group_by": [],
+          "ordering": "desc",
+          "limit": 20,
+          "filters": [],
+          "metric_filter": null,
+          "taxonomy": null,
+          "temporal": null,
+          "spatial": [],
+          "price": null,
+          "semantic": null,
+          "relation": null,
+          "trend": null,
+          "anomaly": null,
+          "explain": null,
+          "knowledge": null,
+          "comparison_targets": [],
+          "clarification": "needs_criteria",
+          "unsupported_reason": null
+        }
+      }
+    },
+    "expected": {
+      "kind": "conversation"
+    }
+  },
+  {
+    "id": "unknown-venue",
+    "query": "Veranstaltungen in Unbekannt",
+    "plan": {
+      "original_query": "Veranstaltungen in Unbekannt",
+      "language": "de",
+      "interaction": {
+        "kind": "research",
+        "research_mode": "new",
+        "research_plan": {
+          "original_query": "Veranstaltungen in Unbekannt",
+          "intent": "list",
+          "entity_type": "event",
+          "metric": null,
+          "group_by": [],
+          "ordering": null,
+          "limit": 20,
+          "filters": [
+            {
+              "field": "venue",
+              "operator": "eq",
+              "value": "Unbekannt"
+            }
+          ],
+          "metric_filter": null,
+          "taxonomy": null,
+          "temporal": null,
+          "spatial": [],
+          "price": null,
+          "semantic": null,
+          "relation": null,
+          "trend": null,
+          "anomaly": null,
+          "explain": null,
+          "knowledge": null,
+          "comparison_targets": [],
+          "clarification": "none",
+          "unsupported_reason": null
+        }
+      }
+    },
+    "expected": {
+      "kind": "needs_clarification"
+    }
+  },
+  {
+    "id": "follow-up",
+    "query": "Und morgen?",
+    "plan": {
+      "original_query": "Und morgen?",
+      "language": "de",
+      "interaction": {
+        "kind": "research",
+        "research_mode": "follow_up",
+        "research_plan": {
+          "original_query": "Und morgen?",
+          "intent": "list",
+          "entity_type": "event",
+          "metric": null,
+          "group_by": [],
+          "ordering": null,
+          "limit": 20,
+          "filters": [],
+          "metric_filter": null,
+          "taxonomy": null,
+          "temporal": {
+            "field": "start_date",
+            "period": "tomorrow",
+            "from_date": null,
+            "to_date": null,
+            "time_of_day": "none",
+            "before_time": null,
+            "after_time": null,
+            "weekday": null,
+            "calendar_relation": "none",
+            "calendar_area_query": null,
+            "overlap": false,
+            "multi_day": false,
+            "lookback": null,
+            "lookback_unit": null,
+            "recurring_weekdays": [],
+            "recurring_months": []
+          },
+          "spatial": [],
+          "price": null,
+          "semantic": null,
+          "relation": null,
+          "trend": null,
+          "anomaly": null,
+          "explain": null,
+          "knowledge": null,
+          "comparison_targets": [],
+          "clarification": "none",
+          "unsupported_reason": null
+        }
+      }
+    },
+    "expected": {
+      "kind": "records",
+      "ids": [
+        30
+      ]
+    }
+  },
+  {
+    "id": "correction",
+    "query": "Nein, nur sonntags",
+    "plan": {
+      "original_query": "Nein, nur sonntags",
+      "language": "de",
+      "interaction": {
+        "kind": "correction",
+        "research_mode": "correction",
+        "research_plan": {
+          "original_query": "Nein, nur sonntags",
+          "intent": "list",
+          "entity_type": "event",
+          "metric": null,
+          "group_by": [],
+          "ordering": null,
+          "limit": 20,
+          "filters": [],
+          "metric_filter": null,
+          "taxonomy": null,
+          "temporal": {
+            "field": "start_date",
+            "period": "none",
+            "from_date": null,
+            "to_date": null,
+            "time_of_day": "none",
+            "before_time": null,
+            "after_time": null,
+            "weekday": null,
+            "calendar_relation": "none",
+            "calendar_area_query": null,
+            "overlap": false,
+            "multi_day": false,
+            "lookback": null,
+            "lookback_unit": null,
+            "recurring_weekdays": [
+              7
+            ],
+            "recurring_months": []
+          },
+          "spatial": [],
+          "price": null,
+          "semantic": null,
+          "relation": null,
+          "trend": null,
+          "anomaly": null,
+          "explain": null,
+          "knowledge": null,
+          "comparison_targets": [],
+          "clarification": "none",
+          "unsupported_reason": null
+        }
+      }
+    },
+    "expected": {
+      "kind": "records",
+      "ids": [
+        30,
+        31
+      ]
+    }
+  },
+  {
+    "id": "clarification-response",
+    "query": "Ich meine Haus",
+    "plan": {
+      "original_query": "Ich meine Haus",
+      "language": "de",
+      "interaction": {
+        "kind": "clarification_response",
+        "research_mode": "clarification_response",
+        "research_plan": {
+          "original_query": "Ich meine Haus",
+          "intent": "list",
+          "entity_type": "event",
+          "metric": null,
+          "group_by": [],
+          "ordering": null,
+          "limit": 20,
+          "filters": [
+            {
+              "field": "venue",
+              "operator": "eq",
+              "value": "Haus"
+            }
+          ],
+          "metric_filter": null,
+          "taxonomy": null,
+          "temporal": null,
+          "spatial": [],
+          "price": null,
+          "semantic": null,
+          "relation": null,
+          "trend": null,
+          "anomaly": null,
+          "explain": null,
+          "knowledge": null,
+          "comparison_targets": [],
+          "clarification": "none",
+          "unsupported_reason": null
+        }
+      }
+    },
+    "expected": {
+      "kind": "records",
+      "ids": [
+        30
+      ]
+    }
+  }
+]

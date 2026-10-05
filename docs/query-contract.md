@@ -1,80 +1,100 @@
-# Query and conversation contract
+# Structured query and conversation contract — Phase 2A
 
-Internal service contract: `uranus-research-service-v1`; service version `0.1.0`.
-Only `/health`, `/version`, `/ready`, and a **disabled** `/query` are exposed.
-No successful Research response is fabricated in phase 1. A valid authenticated
-POST `/query` returns HTTP 501 and `error.code=query_not_enabled`; malformed input
-returns 422, oversized bodies 413. Generated schemas are committed in `contracts/service`.
+Service 0.2.0, internal contract `uranus-research-service-v1`. The planned envelope
+from Phase 1 is now implemented; `/query` no longer returns the placeholder 501.
+This activates an internal feature without changing the existing Admin browser API.
+Generated schemas/OpenAPI are in `contracts/service`; Admin/Planner pins remain intact.
+
+## HTTP boundary
+
+Health is unauthenticated liveness only. All other endpoints require one internal
+Bearer key. `/query` additionally requires exactly one `X-Research-Principal`, 64
+lowercase hex characters. Cookies, Origin headers, duplicate authentication/principal
+headers and routing query strings are rejected. Principal format validation does not
+prove its derivation: the authenticated server caller is responsible for a dedicated
+service-scoped HMAC over its authenticated session context. Never accept the principal
+from a browser, or forward the underlying session, user ID or Admin credentials.
+
+Request fields: query (1–2000 nonblank characters), timezone (configured event zone),
+language (auto/de/da/en), optional opaque conversation_id, optional LocationContext.
+Extra SQL/model/collection/backend/provider/planner selectors and conversation_context
+are forbidden. The 32 KiB streaming body bound and timeouts apply before model parsing.
+A non-auto language sets the initial conversation language; later Planner language
+selection retains the existing v13 behavior. No query rewriting is performed.
 
 ```json
-{"query":"Welche Veranstaltungen gibt es am Wochenende in Flensburg?","timezone":"Europe/Berlin","language":"auto","conversation_id":null,"location_context":null}
+{"query":"Welche Veranstaltungen gibt es am Wochenende?","timezone":"Europe/Berlin","language":"auto","conversation_id":null,"location_context":null}
 ```
 
-The request forbids extra keys, nonfinite values, blank/overlong queries, invalid
-IANA zones and languages outside de/da/en/auto. Model, collection, SQL, backend,
-provider and planner version are not request selectors. LocationContext preserves
-Admin's coordinates/name/source shape and validates coordinate pairs. Query text
-is not normalized silently. Browser requests still go solely to Admin.
+## Response mapping
 
-## Future response mapping (not yet an implemented success endpoint)
-
-| Current Admin response | Future service response | Future Admin proxy response |
+| Current Admin response | Service response | Future Admin proxy |
 | --- | --- | --- |
-| ResearchExecutionResponse | versioned envelope: `schema_version`, `response` | unwrap `response` after validation |
-| answer_text, language | unchanged inside response | unchanged |
-| query, plan (original versioned planner envelope) | unchanged | unchanged |
-| resolution, result, execution | unchanged | unchanged |
-| sql_provenance | same allowlist/redaction | unchanged |
-| observed_at, timezone, diagnostics | unchanged semantics | unchanged |
-| conversation_id, conversation_summary | opaque ID; same version-specific exposure rules | unchanged |
-| ConversationResponse (kind=conversation) | same alternative in response envelope | unchanged |
-| SemanticResearchPage | separate future semantic endpoint | same existing browser shape |
+| ResearchExecutionResponse | `schema_version` + `response` containing unchanged inner schema | validate then unwrap |
+| answer_text, language, query, original planner envelope | unchanged | unchanged |
+| resolution, result, execution, observed_at, timezone, diagnostics | unchanged semantics | unchanged |
+| sql_provenance | original explicit instrumentation/redaction | unchanged |
+| conversation_id / summary | opaque handle; v13 summary remains null | unchanged |
+| ConversationResponse | same alternative inside response | unwrap |
+| SemanticResearchPage | unavailable in Phase 2A | future Phase 2B |
 
-Evidence is already carried by semantic result items; do not introduce a conflicting
-parallel top-level evidence representation. Preserve existing needs-clarification,
-unsupported, infrastructure failure and top-K/non-authoritative semantics. A missing
-service is an explicit error, never an automatic local fallback.
+Successful envelope: `{"schema_version":"uranus-research-service-v1","response":{…}}`.
+Response schema parity tests compare actual ported Pydantic models with pinned Admin
+snapshots. No runtime Python imports from Admin or Planner are used.
 
-Admin's current browser QueryRequest has query, conversation_id,
-conversation_context and location_context. The future internal request adds timezone
-and language from validated server configuration. It deliberately omits caller-owned
-conversation_context for v13. Migration of v11/v12 browser contexts needs explicit
-compatibility treatment rather than silently ignoring them. Existing Admin request,
-execution and conversation response snapshots document these differences.
+## Planner validation and routing
 
-## Planner contract strategy
+Only POST `/v13/plan` executes. The metadata client retains older route checks for
+contract diagnostics, but runtime rejects a configured non-v13 contract. Every actual
+response passes PlanResponseV13 and all nested custom validators: exact outer/nested
+original_query, configured timezone, schema version v13, prompt research-planner-v19,
+model/diagnostic agreement, interaction kind/mode, semantic algebra, strict types and
+extra-field rejection. Injected clients are revalidated too. Duplicate JSON keys and
+nonfinite values are rejected. No retry, repair, inference during readiness or fallback.
 
-The source Admin setting defaults to `legacy` and explicitly supports v9–v13.
-The modern conversational path is v13 when configured; no production configuration
-was read for this phase-1 task. The new service expects **v13** by default and can
-explicitly select v9/v10/v11/v12 for compatibility testing. There is no negotiated
-fallback. Exact pinned Planner/Admin response schemas match for all five versions.
-Enum ordering is canonicalized as a set, preserving every other JSON Schema keyword.
+Greeting, acknowledgement, social and help return before normalization, resolution or
+SQL. Correction/clarification acts keep the original routing. A research plan carrying
+`semantic` is rejected before normalization, pending-state storage or SQL with a 200
+ConversationResponse: kind clarification, act unsupported, reason unsupported_constraint.
+The direct capability/executor boundary also rejects semantic with HTTP 422. No semantic
+constraint is discarded to execute the remaining structured filters.
 
-Per user decision, readiness checks Planner `/ready` plus OPTIONS on exactly the
-selected `/vN/plan` (405 and Allow: POST). That attests route availability only.
-Future actual replies must pass schema-version/prompt-version, original-query,
-timezone and all existing Pydantic semantic validators. JSON Schema snapshots alone
-do not capture those custom validators. Phase 1 exposes no method to execute plans
-or accept an unvalidated planner response for research. Planner is unchanged.
+## Conversation state
 
-## Conversation and principal design
+The ported process-local store retains TTL 1800 seconds, capacity 256, eight entries
+per principal, at most four bounded summaries, pending clarification, language, safe
+AnswerFacts and busy-turn rejection. Owner mismatch/expiry issues a new opaque handle
+and needs_context; another principal never obtains existing state. Failed/cancelled
+turns release busy state. Sensitive location contexts suppress summaries/facts as before.
+No raw transcript, SQL rows, vectors, coordinates or Admin credentials are stored.
 
-Current Admin `ConversationStore` is process-local, TTL 1800 seconds, bounded to
-256 entries/eight per session, with four bounded semantic summaries, pending
-clarification, safe answer facts, language and a busy-turn flag. It stores no raw
-transcript, SQL rows, embeddings or browser location coordinates. Current ownership
-is a digest of the Admin credential; that coupling must not leave Admin.
+Use one worker/instance or explicit sticky routing until shared state is separately
+reviewed. There is no persistence, Admin identity system or implicit global singleton.
 
-Later Admin mints a domain-separated keyed pseudonym for an authenticated session
-and sends it in a dedicated internal header, alongside a distinct service Bearer
-credential. Use a dedicated principal derivation secret and include a caller/service
-namespace. The browser cannot supply/override the header. The Research Service only
-stores the pseudonym and random conversation handle; no session cookie, bearer token,
-raw account ID or reversible credential. Rotate derivation keys by expiring handles.
-Authentication and authorization remain Admin concerns.
+## Safe errors
 
-Ownership mismatch/expiry, concurrency rejection, private-location state suppression
-and no-transcript guarantees require regression tests during extraction. Process-local
-state implies one instance or explicitly sticky routing until a reviewed shared
-store exists. Phase 1 implements no conversation persistence or principal migration.
+| Failure | HTTP |
+| --- | --- |
+| Missing/invalid service authentication | 401 |
+| Missing/invalid principal, malformed/extra request fields, wrong event zone | 422 |
+| Oversized streaming request | 413 |
+| Planner timeout/auth/unavailable | 503 |
+| Invalid Planner response/identity/contract | 502 |
+| Unsupported direct plan/constraint | 422 |
+| DB unavailable or unsafe privilege boundary | 503 |
+| Invalid execution plan | 502 |
+| Conversation busy/capacity or request deadline | 503 |
+
+Public messages are centrally fixed; original SQL/provider exception strings are not
+returned or logged. Valid clarifications/unsupported conversation dispositions remain
+successful semantic conversation responses, not fabricated empty result sets.
+
+## Readiness capabilities
+
+`query_enabled` is a last-successful-readiness indicator, initially false. `/ready`
+checks Planner availability/v13 route and both database boundaries. It updates
+structured_query/conversation/spatial; semantic_query always remains false. Optional
+Geocoder readiness and inventory validation update named_place_resolution and
+administrative_grouping. `/version` has no dependency calls. No Encoder or Qdrant calls
+occur in readiness/query. Source/area preflights repeat before structured resolution
+and SQL reads even if no prior /ready request occurred.

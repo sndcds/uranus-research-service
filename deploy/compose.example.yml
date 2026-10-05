@@ -17,20 +17,25 @@ services:
     environment:
       RESEARCH_API_KEY_FILE: /run/secrets/research_api_key
       PLANNER_API_KEY_FILE: /run/secrets/planner_api_key
-      ENCODER_API_KEY_FILE: /run/secrets/encoder_api_key
+      RESEARCH_DATABASE_URL_FILE: /run/secrets/source_reader_url
+      RESEARCH_AREA_DATABASE_URL_FILE: /run/secrets/area_reader_url
       # Real reachable HTTPS service origins are supplied by the operator.
       # Loopback defaults are for local processes, not other containers.
       PLANNER_URL: ${PLANNER_URL:-https://planner.internal.invalid}
-      ENCODER_URL: ${ENCODER_URL:-https://encoder.internal.invalid}
+      EVENT_TIMEZONE: Europe/Berlin
+      URANUS_TIMESTAMP_TIMEZONE: UTC
       PLANNER_CONTRACT: v13
     secrets:
       - research_api_key
       - planner_api_key
-      - encoder_api_key
+      - source_reader_url
+      - area_reader_url
 secrets:
   research_api_key:
     file: ${RESEARCH_KEY_PATH:-./secrets/research_api_key}
   planner_api_key:
     file: ${PLANNER_KEY_PATH:-./secrets/planner_api_key}
-  encoder_api_key:
-    file: ${ENCODER_KEY_PATH:-./secrets/encoder_api_key}
+  source_reader_url:
+    file: ${SOURCE_READER_PATH:-./secrets/source_reader_url}
+  area_reader_url:
+    file: ${AREA_READER_PATH:-./secrets/area_reader_url}

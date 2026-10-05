@@ -1,8 +1,50 @@
 {
+  "$defs": {
+    "RuntimeCapabilities": {
+      "additionalProperties": false,
+      "properties": {
+        "administrative_grouping": {
+          "default": false,
+          "title": "Administrative Grouping",
+          "type": "boolean"
+        },
+        "conversation": {
+          "default": false,
+          "title": "Conversation",
+          "type": "boolean"
+        },
+        "named_place_resolution": {
+          "default": false,
+          "title": "Named Place Resolution",
+          "type": "boolean"
+        },
+        "semantic_query": {
+          "const": false,
+          "default": false,
+          "title": "Semantic Query",
+          "type": "boolean"
+        },
+        "spatial": {
+          "default": false,
+          "title": "Spatial",
+          "type": "boolean"
+        },
+        "structured_query": {
+          "default": false,
+          "title": "Structured Query",
+          "type": "boolean"
+        }
+      },
+      "title": "RuntimeCapabilities",
+      "type": "object"
+    }
+  },
   "additionalProperties": false,
   "properties": {
+    "capabilities": {
+      "$ref": "#/$defs/RuntimeCapabilities"
+    },
     "query_enabled": {
-      "const": false,
       "default": false,
       "title": "Query Enabled",
       "type": "boolean"

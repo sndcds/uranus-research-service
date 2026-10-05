@@ -1,86 +1,126 @@
 # Uranus Research Service
 
-Internal Research orchestration boundary for Kulturbytes/Uranus. **Phase 1**:
-configuration, authenticated metadata endpoints, dependency compatibility clients,
-contract snapshots and extraction design. `/query` validates its closed request
-and returns HTTP 501 `query_not_enabled`; it performs no Research execution.
+Internal deterministic Research execution for Kulturbytes/Uranus. **Phase 2A** supports
+structured Planner-v13 queries and grounded conversation responses. Admin still runs
+its existing Research path; this repository does not switch any consumer or deployment.
 
 ```text
-Browser → uranus-admin (identity, UI, workflows)
-                     ↓ internal authenticated HTTP (future)
-              uranus-research-service
-                ├─ Planner: language → validated plan
-                ├─ PostgreSQL/PostGIS: authoritative facts (future)
-                ├─ Qdrant: non-authoritative retrieval (future)
-                └─ Encoder: offline Jina-v5 embedding runtime
+Today: Browser → Admin → existing Admin Research execution
+
+Isolated service / future Admin adapter:
+Admin identity → internal Bearer + opaque principal → Research Service
+    ├─ Planner v13: language → closed, validated plan
+    ├─ deterministic resolution + execution → read-only PostgreSQL/PostGIS
+    ├─ separate metadata reader → admin.research_area only
+    ├─ optional Research Geocoder + reviewed complete area inventory
+    └─ bounded conversation state → safe AnswerFacts → deterministic answer
+
+Semantic plans → unsupported_constraint, before resolution or SQL
+Encoder / Qdrant / indexing: outside the Phase-2A query and readiness paths
 ```
 
-This repository provides the orchestration boundary. It does not provide an Admin
-UI, LLM provider, model runtime, vector database, source database or autonomous agent.
-Admin still executes Research. No consumer or production service is switched here.
+This service owns execution, not Admin identity/workflows, language inference, model
+weights, a vector database or the authoritative source data. PostgreSQL remains the
+facts source. No free-form SQL, model-generated answers or autonomous tools are accepted.
 
-## Local use
+## Run and contracts
 
-Python 3.13 and uv, following the neighboring repositories:
+Python 3.13, uv, FastAPI, Pydantic, httpx, SQLAlchemy async and asyncpg:
 
 ```sh
 uv sync --locked
-# Set protected key files and dependency origins; see .env.example.
+# Supply protected key/reader files and fixed service origins; see .env.example.
 uv run uranus-research-service
-uv run pytest -q
-uv run ruff check .
-uv run ruff format --check .
 ```
 
-No `.env` is loaded implicitly. `RESEARCH_API_KEY_FILE` is preferred over the
-environment key; the same file convention applies to `PLANNER_API_KEY` and
-`ENCODER_API_KEY`. Files must be absolute paths. File read errors fail startup;
-there is no credential fallback. No keys or model weights belong in the image.
+No `.env` is loaded implicitly. Secret files take precedence over environment secrets;
+file errors fail startup without fallback. No credentials or model weights belong in
+Git or the image. The executable listens on 6338; expose it only internally/loopback.
 
-`GET /health` is unauthenticated process liveness. `/version`, `/ready` and `/query`
-require one internal Bearer key. Browser cookies and Origin headers are rejected.
-The executable listens on port 6338; use loopback publication as shown in Compose.
+| Endpoint | Behavior |
+| --- | --- |
+| GET /health | Unauthenticated process liveness, exactly `{"status":"ok"}`; no dependencies |
+| GET /version | Authenticated service 0.2.0 / contract v1, expected pins, last readiness capabilities |
+| GET /ready | Planner readiness/v13 route, both read-only DB boundaries, required tables/PostGIS |
+| POST /query | Validated v13 planning → conversation or deterministic structured execution |
 
-## Readiness and current limitation
+`/query` requires both `Authorization: Bearer …` and `X-Research-Principal` (64 lowercase
+hex characters). The latter is an opaque pseudonym minted by the trusted caller, not
+an Admin cookie or session token. A future Admin adapter must derive it server-side
+using a dedicated, domain-separated HMAC key. No Admin adapter is activated here.
 
-The encoder is pinned to service 0.2.0's `uranus-research-encoder-v1`, Jina v5,
-revision `dd76d535f5447ca3897a9c893fb1e612ead98192`, 1024 dimensions and
-`sections-480-overlap64-v2`. Exact embedding-version and Torch compatibility are
-checked using metadata only. There is no embedding or model download.
+```json
+{"query":"Welche Veranstaltungen gibt es am Wochenende?","timezone":"Europe/Berlin","language":"auto","conversation_id":null,"location_context":null}
+```
 
-Planner readiness checks `/ready` and sends `OPTIONS` to the configured
-`/v9/plan`–`/v13/plan` route, requiring HTTP 405 and `Allow: POST`. This verifies
-availability of the configured route without any inference. It does **not** attest
-the running response schema. The user selected this phase-1 policy; full validation
-of actual plan responses against the pinned contracts belongs to phase 2. No fallback
-to another route/version is attempted, and Planner itself remains unchanged.
-Even with compatible dependencies, readiness includes `query_enabled: false`.
-PostgreSQL and Qdrant are not configured or contacted in phase 1.
+Successful responses use `{"schema_version":"uranus-research-service-v1","response":…}`.
+The inner ResearchExecutionResponse / ConversationResponse preserves Admin semantics.
+Semantic requests produce a bounded conversation `unsupported_constraint`, never
+partial structured execution. Caller-selected SQL/model/collection/backend fields fail.
+See [query contract](docs/query-contract.md) for mappings and errors.
 
-See [extraction audit](docs/extraction-audit.md), [query contract](docs/query-contract.md),
-[database boundary](docs/database-boundary.md), [Qdrant boundary](docs/qdrant-boundary.md),
-[v5 migration](docs/jina-v5-consumer-migration.md) and
-[validation](docs/validation.md). Snapshot provenance is in `contracts/sources.json`.
+## Readiness and capabilities
 
-## Container build
+Every Planner response passes the actual closed v13 Pydantic validators, including
+original query, nested plan, timezone, prompt, model/diagnostic and interaction identity.
+Readiness itself uses GET /ready and OPTIONS /v13/plan without inference.
 
-Prepare locked/hash-checked wheels on Python 3.13 Linux for the target architecture,
-then build without Docker network access:
+`query_enabled` and `capabilities.structured_query` start false and become true after
+a successful explicit readiness probe. `/version` reports that last probe, not a new
+external check. Failed readiness/server-side execution invalidates it. Every structured
+resolution rechecks both reader boundaries, and every SQL snapshot rechecks its role.
+Conversation-only acts can return without touching either database.
+
+Capabilities distinguish structured execution, conversation, SQL spatial operations,
+optional named-place resolution, complete administrative grouping and disabled semantic
+retrieval. Missing optional Geocoder/inventory does not block basic SQL readiness; its
+capability is false and affected requests fail explicitly. Encoder/Qdrant availability
+never blocks structured readiness. Encoder metadata in /version remains an **expected
+future consumer pin**, not a claim of current encoder connectivity or inference.
+
+## Validation
 
 ```sh
-uv run python scripts/build_wheelhouse.py
-docker build --network=none -f deploy/Dockerfile -t uranus-research-service:phase1 .
-# Provide protected key files, then use deploy/compose.example.yml.
+uv run --no-sync ruff check .
+uv run --no-sync ruff format --check .
+uv run --no-sync pytest -q -m 'not integration'
+# Empty disposable LOOPBACK PostgreSQL/PostGIS DB ending _test, synthetic credentials:
+TEST_DATABASE_URL=... ADMIN_PARITY_ROOT=/path/to/pinned/uranus-admin \
+  uv run --no-sync pytest -q
 ```
 
-The wheelhouse is ignored by Git; it contains the service wheel and dependencies
-selected from uv.lock, never credentials or model artifacts. Rebuild it after source
-or lockfile changes. The Docker build installs with `--no-index` and hash verification.
-The image runs as UID 10001 and supports read-only root plus a small /tmp tmpfs.
+The integration fixture refuses populated source/admin schemas, creates synthetic
+rows and restricted roles, and removes only its own schemas/roles. Differential tests
+execute untouched pinned Admin code with its own Python environment on the identical
+dataset/plans/reference date. No live Planner inference is claimed by these fixtures.
+CI runs both unit tests and disposable PostGIS/Admin parity, plus an offline image build.
+Actual results and limitations: [validation](docs/validation.md).
 
-## License
+## Container
 
-Service code: AGPL-3.0-only, matching the existing Uranus repositories; see LICENSE.
-Jina v5 weights are separate and published under CC-BY-NC-4.0. Review the model's
-license conditions before commercial use. This repository includes no model weights
-and makes no legal assessment of a deployment.
+```sh
+uv run --no-sync python scripts/build_wheelhouse.py
+docker build --network=none -f deploy/Dockerfile -t uranus-research-service:phase2a .
+```
+
+Prepare locked, hash-checked wheels using Python 3.13 Linux for the target architecture.
+The ignored wheelhouse must be rebuilt after code/lock changes. The image installs
+without package networking and runs as UID 10001 with read-only root support. See
+`deploy/compose.example.yml`; it is an example, not a deployment command or role grant.
+
+## Extraction and ownership
+
+[Phase-2A implementation](docs/phase2-structured-execution.md),
+[extraction audit](docs/extraction-audit.md),
+[per-module source/target manifest](docs/phase2-port-manifest.json),
+[database boundary](docs/database-boundary.md),
+[future Qdrant boundary](docs/qdrant-boundary.md), and
+[future v5 migration](docs/jina-v5-consumer-migration.md).
+
+Code was selectively ported from the pinned AGPL Uranus Admin reference. Contracts
+are local JSON snapshots and validators, not runtime imports from sibling repositories.
+Admin auth, sessions, CSRF, UI, learning and workflow tables remain in Admin.
+
+Service code: AGPL-3.0-only (LICENSE). No model weights are included. The separate
+future Jina-v5 encoder uses CC-BY-NC-4.0 weights; review their terms before commercial
+use. This is not a legal assessment and the model is not loaded by this service.

@@ -1,6 +1,6 @@
 """Reviewed compatibility pins. These describe expectations, not deployed services."""
 
-SERVICE_VERSION = "0.1.0"
+SERVICE_VERSION = "0.2.0"
 CONTRACT_VERSION = "uranus-research-service-v1"
 ENCODER_SERVICE_VERSION = "0.2.0"
 ENCODER_CONTRACT = "uranus-research-encoder-v1"

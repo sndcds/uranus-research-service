@@ -9,6 +9,7 @@ from uranus_research_service.config import Settings
 from uranus_research_service.contracts import (
     HealthResponse,
     QueryRequest,
+    QueryResponse,
     ReadyResponse,
     VersionResponse,
 )
@@ -33,14 +34,22 @@ class NoDependency:
 async def generate():
     target = ROOT / "contracts/service"
     target.mkdir(exist_ok=True)
-    for model in (HealthResponse, QueryRequest, ReadyResponse, VersionResponse, ErrorResponse):
+    for model in (
+        HealthResponse,
+        QueryRequest,
+        QueryResponse,
+        ReadyResponse,
+        VersionResponse,
+        ErrorResponse,
+    ):
         (target / (model.__name__ + ".json")).write_text(
             json.dumps(canonical(model.model_json_schema()), indent=2, sort_keys=True) + "\n"
         )
     app = create_app(
         Settings(api_key="schema-generation-only-key-0123456789"),
         planner=NoDependency(),
-        encoder=NoDependency(),
+        database=NoDependency(),
+        areas=NoDependency(),
     )
     (target / "openapi.json").write_text(
         json.dumps(canonical(app.openapi()), indent=2, sort_keys=True) + "\n"

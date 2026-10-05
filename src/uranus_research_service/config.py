@@ -4,8 +4,10 @@ import os
 from pathlib import Path
 from typing import Literal, Self
 from urllib.parse import urlsplit
+from zoneinfo import ZoneInfo
 
 from pydantic import BaseModel, ConfigDict, Field, SecretStr, field_validator
+from sqlalchemy.engine import make_url
 
 PlannerContract = Literal["v9", "v10", "v11", "v12", "v13"]
 
@@ -38,6 +40,17 @@ class Settings(BaseModel):
     planner_url: str = "http://127.0.0.1:6334"
     planner_api_key: SecretStr | None = None
     planner_contract: PlannerContract = "v13"
+    database_url: SecretStr | None = None
+    area_database_url: SecretStr | None = None
+    event_timezone: str = "Europe/Berlin"
+    uranus_timestamp_timezone: str = "UTC"
+    uranus_api_url: str = "https://api.kulturbytes.de"
+    db_timeout_seconds: int = Field(default=10, ge=1, le=120)
+    db_pool_size: int = Field(default=4, ge=1, le=16)
+    research_geocoder_url: str = "http://127.0.0.1:6337"
+    research_geocoder_api_key: SecretStr | None = None
+    research_geocoder_timeout_seconds: float = Field(default=5, gt=0, le=10)
+    research_administrative_catalog_path: Path | None = None
     encoder_url: str = "http://127.0.0.1:6335"
     encoder_api_key: SecretStr | None = None
     dependency_timeout_seconds: float = Field(default=5, gt=0, le=30)
@@ -46,7 +59,7 @@ class Settings(BaseModel):
     body_timeout_seconds: float = Field(default=5, gt=0, le=10)
     request_timeout_seconds: float = Field(default=25, gt=0, le=120)
 
-    @field_validator("api_key", "planner_api_key", "encoder_api_key")
+    @field_validator("api_key", "planner_api_key", "encoder_api_key", "research_geocoder_api_key")
     @classmethod
     def valid_key(cls, value: SecretStr | None) -> SecretStr | None:
         if value is not None:
@@ -55,7 +68,7 @@ class Settings(BaseModel):
                 raise ValueError("invalid_service_key")
         return value
 
-    @field_validator("planner_url", "encoder_url")
+    @field_validator("planner_url", "encoder_url", "research_geocoder_url")
     @classmethod
     def fixed_origin(cls, value: str) -> str:
         try:
@@ -88,9 +101,46 @@ class Settings(BaseModel):
             raise ValueError("fixed_internal_origin_required") from None
         return value
 
+    @field_validator("database_url", "area_database_url")
+    @classmethod
+    def database_origin(cls, value):
+        if value is not None:
+            try:
+                url = make_url(value.get_secret_value())
+                if url.drivername != "postgresql+asyncpg" or not url.host or not url.database:
+                    raise ValueError
+                if any(k not in {"ssl"} for k in url.query):
+                    raise ValueError
+            except Exception:
+                raise ValueError("invalid_database_configuration") from None
+        return value
+
+    @field_validator("event_timezone", "uranus_timestamp_timezone")
+    @classmethod
+    def timezone_exists(cls, value):
+        try:
+            ZoneInfo(value)
+        except (ValueError, KeyError):
+            raise ValueError("invalid_timezone") from None
+        return value
+
     @classmethod
     def from_env(cls) -> Self:
         return cls(
+            database_url=read_secret("RESEARCH_DATABASE_URL"),
+            area_database_url=read_secret("RESEARCH_AREA_DATABASE_URL"),
+            event_timezone=os.environ.get("EVENT_TIMEZONE", "Europe/Berlin"),
+            uranus_timestamp_timezone=os.environ.get("URANUS_TIMESTAMP_TIMEZONE", "UTC"),
+            db_timeout_seconds=os.environ.get("DB_TIMEOUT_SECONDS", "10"),
+            db_pool_size=os.environ.get("DB_POOL_SIZE", "4"),
+            research_geocoder_url=os.environ.get("RESEARCH_GEOCODER_URL", "http://127.0.0.1:6337"),
+            research_geocoder_api_key=read_secret("RESEARCH_GEOCODER_API_KEY"),
+            research_geocoder_timeout_seconds=os.environ.get(
+                "RESEARCH_GEOCODER_TIMEOUT_SECONDS", "5"
+            ),
+            research_administrative_catalog_path=os.environ.get(
+                "RESEARCH_ADMINISTRATIVE_CATALOG_PATH"
+            ),
             api_key=read_secret("RESEARCH_API_KEY", required=True),
             planner_api_key=read_secret("PLANNER_API_KEY"),
             encoder_api_key=read_secret("ENCODER_API_KEY"),

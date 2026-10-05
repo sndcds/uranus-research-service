@@ -8,3 +8,4 @@ secrets/
 dist/
 *.egg-info/
 wheelhouse/
+.reference-admin/

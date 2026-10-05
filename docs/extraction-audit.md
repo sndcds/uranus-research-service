@@ -6,6 +6,19 @@ The machine-readable inventory records source hashes and internal imports for ev
 Research module, repository, schema and service inspected. This is an extraction
 plan, not a claim that the new service or production rollout already exists.
 
+## Phase-2A implementation status (2026-10-05)
+
+The classifications below preserve the original audit. Structured execution has now
+been selectively ported; Admin files were not removed or modified. See the precise
+[source → target manifest](phase2-port-manifest.json), including source hashes and
+partial helper selections, and [Phase-2A implementation](phase2-structured-execution.md).
+Planner v13 execution/validation, normalization, deterministic resolution, read-only
+SQL/PostGIS, answer facts, SQL provenance and semantic conversation state are active.
+`Request.app.state`, Admin credentials and broad Admin engine imports are absent from
+the service execution path. Optional Geocoder is injected; area reads have their own
+restricted role. Semantic/vector/indexing classifications remain future Phase 2B.
+
+
 ## Existing repositories and architecture
 
 At the start of this audit, no `uranus-research-service` existed in the inspected
@@ -146,7 +159,7 @@ No grant may be generated blindly from this inventory.
 
 ### `backend/app/repositories/research.py`
 
-- Classification: **MOVE** (later extraction).
+- Classification: **MOVE** (structured subset ported in Phase 2A; Admin retained).
 - Responsibility: Public research projections over the existing read-only source snapshot.
 - Proposed target: `src/uranus_research_service/repositories/research.py`.
 - Imports: `app.config`, `app.errors`, `app.repositories.activity_previews`, `app.repositories.created_period`, `app.repositories.entities`, `app.repositories.entity_search`, `app.repositories.location`, `app.repositories.research_areas`, `app.repositories.research_place`, `app.research.sql_provenance`, `app.schemas.research`, `app.services.quality.urls`.
@@ -158,7 +171,7 @@ No grant may be generated blindly from this inventory.
 
 ### `backend/app/repositories/research_administrative.py`
 
-- Classification: **MOVE** (later extraction).
+- Classification: **MOVE** (structured subset ported in Phase 2A; Admin retained).
 - Responsibility: Assemble resolved identities from the administrative metadata boundary.
 - Proposed target: `src/uranus_research_service/repositories/research_administrative.py`.
 - Imports: `app.repositories.research_administrative_metadata`, `app.repositories.research_areas`, `app.research.geography`.
@@ -170,7 +183,7 @@ No grant may be generated blindly from this inventory.
 
 ### `backend/app/repositories/research_administrative_metadata.py`
 
-- Classification: **MOVE** (later extraction).
+- Classification: **MOVE** (structured subset ported in Phase 2A; Admin retained).
 - Responsibility: TRANSITIONAL metadata adapter for the existing research_area schema.
 - Proposed target: `src/uranus_research_service/repositories/research_administrative_metadata.py`.
 - Imports: `app.repositories.research_areas`, `app.research.catalog`, `app.research.geography`.
@@ -182,7 +195,7 @@ No grant may be generated blindly from this inventory.
 
 ### `backend/app/repositories/research_areas.py`
 
-- Classification: **MOVE** (later extraction).
+- Classification: **MOVE** (structured subset ported in Phase 2A; Admin retained).
 - Responsibility: Persisted areas are resolved once; no provider access in a Research request.
 - Proposed target: `src/uranus_research_service/repositories/research_areas.py`.
 - Imports: `app.admin_database`, `app.errors`, `app.repositories.entities`, `app.repositories.entity_search`, `app.research.area_selection`, `app.schemas.research_areas`.
@@ -194,7 +207,7 @@ No grant may be generated blindly from this inventory.
 
 ### `backend/app/repositories/research_execution.py`
 
-- Classification: **MOVE** (later extraction).
+- Classification: **MOVE** (structured subset ported in Phase 2A; Admin retained).
 - Responsibility: Exact, bounded SQL metrics using the shared eligible Research population.
 - Proposed target: `src/uranus_research_service/repositories/research_execution.py`.
 - Imports: `app.config`, `app.errors`, `app.repositories.research`, `app.repositories.research_areas`, `app.repositories.research_resolution`, `app.research.semantic_limits`, `app.research.sql_provenance`, `app.schemas.research`, `app.schemas.research_execution`, `app.schemas.research_sql`.
@@ -206,7 +219,7 @@ No grant may be generated blindly from this inventory.
 
 ### `backend/app/repositories/research_grouping.py`
 
-- Classification: **MOVE** (later extraction).
+- Classification: **MOVE** (structured subset ported in Phase 2A; Admin retained).
 - Responsibility: Ordered cell aggregation on the shared authoritative occurrence selection.
 - Proposed target: `src/uranus_research_service/repositories/research_grouping.py`.
 - Imports: `app.config`, `app.repositories.administrative_execution`, `app.repositories.research`, `app.repositories.research_areas`, `app.repositories.research_execution`, `app.research.capabilities`, `app.research.plan`, `app.research.sql_provenance`, `app.schemas.research_execution`.
@@ -230,7 +243,7 @@ No grant may be generated blindly from this inventory.
 
 ### `backend/app/repositories/research_place.py`
 
-- Classification: **MOVE** (later extraction).
+- Classification: **MOVE** (structured subset ported in Phase 2A; Admin retained).
 - Responsibility: Place selection over effective venue data. All SQL identifiers are application-owned.
 - Proposed target: `src/uranus_research_service/repositories/research_place.py`.
 - Imports: `app.schemas.research_location`.
@@ -242,7 +255,7 @@ No grant may be generated blindly from this inventory.
 
 ### `backend/app/repositories/research_resolution.py`
 
-- Classification: **MOVE** (later extraction).
+- Classification: **MOVE** (structured subset ported in Phase 2A; Admin retained).
 - Responsibility: Bounded exact-first resolution; optional vectors propose source-revalidated taxonomy.
 - Proposed target: `src/uranus_research_service/repositories/research_resolution.py`.
 - Imports: `app.admin_database`, `app.clients.research_geocoder`, `app.config`, `app.database`, `app.errors`, `app.repositories.entity_search`, `app.repositories.research`, `app.repositories.research_administrative`, `app.repositories.research_administrative_metadata`, `app.repositories.research_areas`, `app.repositories.research_place`, `app.repositories.research_taxonomy`, `app.research.administrative_catalog`, `app.research.administrative_resolver`, `app.research.capabilities`, `app.research.context`, `app.research.geography`, `app.research.plan`, `app.schemas.research_execution`, `app.schemas.research_location`, `app.services.taxonomy_resolution`.
@@ -266,7 +279,7 @@ No grant may be generated blindly from this inventory.
 
 ### `backend/app/repositories/research_taxonomy.py`
 
-- Classification: **MOVE** (later extraction).
+- Classification: **MOVE** (structured subset ported in Phase 2A; Admin retained).
 - Responsibility: Shared authoritative public taxonomy projections, including localized labels.
 - Proposed target: `src/uranus_research_service/repositories/research_taxonomy.py`.
 - Imports: `app.repositories.research`, `app.repositories.vector_events`, `app.research.taxonomy`.
@@ -290,7 +303,7 @@ No grant may be generated blindly from this inventory.
 
 ### `backend/app/repositories/vector_events.py`
 
-- Classification: **MOVE** (later extraction).
+- Classification: **MOVE** (structured subset ported in Phase 2A; Admin retained).
 - Responsibility: Bounded public event snapshot. No model calls or source mutations in this module.
 - Proposed target: `src/uranus_research_service/repositories/vector_events.py`.
 - Imports: `app.config`, `app.repositories.activity_previews`, `app.repositories.location`, `app.repositories.research`, `app.repositories.temporal`, `app.research.semantic_contracts`, `app.research.semantic_documents`, `app.research.vector_documents`.
@@ -338,7 +351,7 @@ No grant may be generated blindly from this inventory.
 
 ### `backend/app/research/administrative_catalog.py`
 
-- Classification: **MOVE** (later extraction).
+- Classification: **MOVE** (structured subset ported in Phase 2A; Admin retained).
 - Responsibility: Operator-built complete inventories; Nominatim search is never an enumeration API.
 - Proposed target: `src/uranus_research_service/research/administrative_catalog.py`.
 - Imports: `app.errors`, `app.research.administrative_resolver`, `app.research.geography`, `app.schemas.research_administrative`, `app.schemas.research_values`.
@@ -362,7 +375,7 @@ No grant may be generated blindly from this inventory.
 
 ### `backend/app/research/administrative_resolver.py`
 
-- Classification: **MOVE** (later extraction).
+- Classification: **MOVE** (structured subset ported in Phase 2A; Admin retained).
 - Responsibility: Geocoder is authoritative; ambiguity and role mismatches are never auto-corrected.
 - Proposed target: `src/uranus_research_service/research/administrative_resolver.py`.
 - Imports: `app.clients.research_geocoder`, `app.errors`, `app.research.geography`, `app.schemas.research_administrative`.
@@ -374,7 +387,7 @@ No grant may be generated blindly from this inventory.
 
 ### `backend/app/research/answer.py`
 
-- Classification: **MOVE** (later extraction).
+- Classification: **MOVE** (structured subset ported in Phase 2A; Admin retained).
 - Responsibility: Pure German answer text from the executed selection, never model prose or SQL.
 - Proposed target: `src/uranus_research_service/research/answer.py`.
 - Imports: `app.research.plan`, `app.schemas.research_execution`.
@@ -386,7 +399,7 @@ No grant may be generated blindly from this inventory.
 
 ### `backend/app/research/answer_facts.py`
 
-- Classification: **MOVE** (later extraction).
+- Classification: **MOVE** (structured subset ported in Phase 2A; Admin retained).
 - Responsibility: Bounded, identity-free factual projection for deterministic conversational rendering.
 - Proposed target: `src/uranus_research_service/research/answer_facts.py`.
 - Imports: `app.research.plan`, `app.research.wire.research_v13_schema`, `app.schemas.research_execution`, `app.schemas.research_values`.
@@ -398,7 +411,7 @@ No grant may be generated blindly from this inventory.
 
 ### `backend/app/research/area_selection.py`
 
-- Classification: **MOVE** (later extraction).
+- Classification: **MOVE** (structured subset ported in Phase 2A; Admin retained).
 - Responsibility: Shared bounded selection for semantic area filters.
 - Proposed target: `src/uranus_research_service/research/area_selection.py`.
 - Imports: None.
@@ -422,7 +435,7 @@ No grant may be generated blindly from this inventory.
 
 ### `backend/app/research/capabilities.py`
 
-- Classification: **MOVE** (later extraction).
+- Classification: **MOVE** (structured subset ported in Phase 2A; Admin retained).
 - Responsibility: One version-independent capability gate. No natural-language interpretation.
 - Proposed target: `src/uranus_research_service/research/capabilities.py`.
 - Imports: `app.errors`, `app.research.geography`, `app.research.plan`.
@@ -434,7 +447,7 @@ No grant may be generated blindly from this inventory.
 
 ### `backend/app/research/catalog.py`
 
-- Classification: **MOVE** (later extraction).
+- Classification: **MOVE** (structured subset ported in Phase 2A; Admin retained).
 - Responsibility: Offline BKG VG250 municipality names/AGS to bounded Nominatim discovery input.
 - Proposed target: `src/uranus_research_service/research/catalog.py`.
 - Imports: None.
@@ -446,7 +459,7 @@ No grant may be generated blindly from this inventory.
 
 ### `backend/app/research/chunk_kinds.py`
 
-- Classification: **MOVE** (later extraction).
+- Classification: **MOVE** (structured subset ported in Phase 2A; Admin retained).
 - Responsibility: Canonical public chunk kinds shared by index and response contracts.
 - Proposed target: `src/uranus_research_service/research/chunk_kinds.py`.
 - Imports: None.
@@ -458,7 +471,7 @@ No grant may be generated blindly from this inventory.
 
 ### `backend/app/research/context.py`
 
-- Classification: **MOVE** (later extraction).
+- Classification: **MOVE** (structured subset ported in Phase 2A; Admin retained).
 - Responsibility: Transient request/runtime inputs; never persisted or sent to the Planner.
 - Proposed target: `src/uranus_research_service/research/context.py`.
 - Imports: `app.schemas.research_location`.
@@ -470,7 +483,7 @@ No grant may be generated blindly from this inventory.
 
 ### `backend/app/research/conversation.py`
 
-- Classification: **MOVE** (later extraction).
+- Classification: **MOVE** (structured subset ported in Phase 2A; Admin retained).
 - Responsibility: Deliberate allowlist projection of executed intent, not response serialization.
 - Proposed target: `src/uranus_research_service/research/conversation.py`.
 - Imports: `app.research.geography`, `app.research.plan`, `app.schemas.research_conversation`, `app.schemas.research_conversation_v12`.
@@ -482,7 +495,7 @@ No grant may be generated blindly from this inventory.
 
 ### `backend/app/research/conversation_state.py`
 
-- Classification: **MOVE** (later extraction).
+- Classification: **MOVE** (structured subset ported in Phase 2A; Admin retained).
 - Responsibility: Bounded process-local, session-bound state. Tokens are random, not encoded semantics.
 - Proposed target: `src/uranus_research_service/research/conversation_state.py`.
 - Imports: `app.errors`, `app.research.answer_facts`, `app.research.wire.research_v13_schema`, `app.schemas.research_conversation_v12`.
@@ -518,7 +531,7 @@ No grant may be generated blindly from this inventory.
 
 ### `backend/app/research/geography.py`
 
-- Classification: **MOVE** (later extraction).
+- Classification: **MOVE** (structured subset ported in Phase 2A; Admin retained).
 - Responsibility: Internal geography: identity and administrative level are separate from names.
 - Proposed target: `src/uranus_research_service/research/geography.py`.
 - Imports: None.
@@ -530,7 +543,7 @@ No grant may be generated blindly from this inventory.
 
 ### `backend/app/research/normalize.py`
 
-- Classification: **MOVE** (later extraction).
+- Classification: **MOVE** (structured subset ported in Phase 2A; Admin retained).
 - Responsibility: Validated wire -> domain adapters. No lookup, inference or contract repair.
 - Proposed target: `src/uranus_research_service/research/normalize.py`.
 - Imports: `app.errors`, `app.research.geography`, `app.research.normalize_v10`, `app.research.normalize_v12`, `app.research.normalize_v9`, `app.research.plan`, `app.research.wire.research_v10_schema`, `app.research.wire.research_v11_schema`, `app.research.wire.research_v12_schema`, `app.research.wire.research_v8_schema`, `app.research.wire.research_v8_types`, `app.research.wire.research_v9_schema`, `app.schemas.research_analytics`, `app.schemas.research_analytics_guard`, `app.schemas.research_geography`, `app.schemas.research_planner`.
@@ -554,7 +567,7 @@ No grant may be generated blindly from this inventory.
 
 ### `backend/app/research/normalize_v10.py`
 
-- Classification: **MOVE** (later extraction).
+- Classification: **MOVE** (structured subset ported in Phase 2A; Admin retained).
 - Responsibility: Additive wire calendar fields become shared domain predicates; no execution.
 - Proposed target: `src/uranus_research_service/research/normalize_v10.py`.
 - Imports: `app.research.capabilities`, `app.research.normalize_v9`, `app.research.plan`, `app.research.wire.research_v10_schema`, `app.research.wire.research_v9_schema`.
@@ -566,7 +579,7 @@ No grant may be generated blindly from this inventory.
 
 ### `backend/app/research/normalize_v12.py`
 
-- Classification: **MOVE** (later extraction).
+- Classification: **MOVE** (structured subset ported in Phase 2A; Admin retained).
 - Responsibility: Lossless v12 spatial adapter to the shared research plan; no resolver or executor.
 - Proposed target: `src/uranus_research_service/research/normalize_v12.py`.
 - Imports: `app.research.capabilities`, `app.research.geography`, `app.research.normalize`, `app.research.normalize_v10`, `app.research.normalize_v9`, `app.research.plan`, `app.research.wire.research_v10_schema`, `app.research.wire.research_v12_schema`, `app.research.wire.research_v9_constraints`.
@@ -578,7 +591,7 @@ No grant may be generated blindly from this inventory.
 
 ### `backend/app/research/normalize_v9.py`
 
-- Classification: **MOVE** (later extraction).
+- Classification: **MOVE** (structured subset ported in Phase 2A; Admin retained).
 - Responsibility: Lossless v9 wire adapter to existing Admin capabilities; no lookup or execution.
 - Proposed target: `src/uranus_research_service/research/normalize_v9.py`.
 - Imports: `app.research.capabilities`, `app.research.geography`, `app.research.normalize`, `app.research.plan`, `app.research.wire.research_v9_constraints`, `app.research.wire.research_v9_schema`, `app.research.wire.research_v9_types`, `app.schemas.research_execution`.
@@ -590,7 +603,7 @@ No grant may be generated blindly from this inventory.
 
 ### `backend/app/research/outcome.py`
 
-- Classification: **MOVE** (later extraction).
+- Classification: **MOVE** (structured subset ported in Phase 2A; Admin retained).
 - Responsibility: Execution output without the transport envelope; assembled into HTTP at the API edge.
 - Proposed target: `src/uranus_research_service/research/outcome.py`.
 - Imports: `app.schemas.research_administrative_result`, `app.schemas.research_execution`, `app.schemas.research_sql`.
@@ -602,7 +615,7 @@ No grant may be generated blindly from this inventory.
 
 ### `backend/app/research/plan.py`
 
-- Classification: **MOVE** (later extraction).
+- Classification: **MOVE** (structured subset ported in Phase 2A; Admin retained).
 - Responsibility: Admin-owned execution intent. Not an HTTP model or a Planner schema mirror.
 - Proposed target: `src/uranus_research_service/research/plan.py`.
 - Imports: `app.research.geography`, `app.schemas.research_execution`.
@@ -626,7 +639,7 @@ No grant may be generated blindly from this inventory.
 
 ### `backend/app/research/public_result.py`
 
-- Classification: **MOVE** (later extraction).
+- Classification: **MOVE** (structured subset ported in Phase 2A; Admin retained).
 - Responsibility: Mask internal taxonomy choices only at the public response boundary.
 - Proposed target: `src/uranus_research_service/research/public_result.py`.
 - Imports: `app.schemas.research_execution`.
@@ -722,7 +735,7 @@ No grant may be generated blindly from this inventory.
 
 ### `backend/app/research/sql_provenance.py`
 
-- Classification: **MOVE** (later extraction).
+- Classification: **MOVE** (structured subset ported in Phase 2A; Admin retained).
 - Responsibility: Opt-in source execution capture, never a SQLAlchemy listener or query logger.
 - Proposed target: `src/uranus_research_service/research/sql_provenance.py`.
 - Imports: `app.schemas.research_sql`.
@@ -1286,7 +1299,7 @@ No grant may be generated blindly from this inventory.
 
 ### `backend/app/services/research_conversational.py`
 
-- Classification: **MOVE** (later extraction).
+- Classification: **MOVE** (structured subset ported in Phase 2A; Admin retained).
 - Responsibility: v13 orchestration: semantic routing before any resolver, source or vector access.
 - Proposed target: `src/uranus_research_service/services/research_conversational.py`.
 - Imports: `app.auth.credentials`, `app.auth.service`, `app.config`, `app.errors`, `app.research.answer_facts`, `app.research.context`, `app.research.conversation`, `app.research.conversation_state`, `app.research.geography`, `app.research.normalize_v12`, `app.research.public_result`, `app.research.wire.research_v13_schema`, `app.schemas.research_conversation_v12`, `app.schemas.research_location`, `app.schemas.research_response`, `app.services.research_plan_execution`, `app.services.research_planner`.
@@ -1334,7 +1347,7 @@ No grant may be generated blindly from this inventory.
 
 ### `backend/app/services/research_plan_execution.py`
 
-- Classification: **MOVE** (later extraction).
+- Classification: **MOVE** (structured subset ported in Phase 2A; Admin retained).
 - Responsibility: Deterministic execution of validated server-side plans. No inference or persistence.
 - Proposed target: `src/uranus_research_service/services/research_plan_execution.py`.
 - Imports: `app.config`, `app.database`, `app.errors`, `app.repositories.administrative_execution`, `app.repositories.research`, `app.repositories.research_execution`, `app.repositories.research_grouping`, `app.repositories.research_resolution`, `app.research.capabilities`, `app.research.context`, `app.research.geography`, `app.research.outcome`, `app.research.plan`, `app.research.sql_provenance`, `app.schemas.research_execution`, `app.services.semantic_search`.
@@ -1406,7 +1419,7 @@ No grant may be generated blindly from this inventory.
 
 ### `backend/app/repositories/administrative_execution.py`
 
-- Classification: **MOVE** (later extraction).
+- Classification: **MOVE** (structured subset ported in Phase 2A; Admin retained).
 - Responsibility: Deterministic PostGIS execution; only resolved identities, polygons and category IDs.
 - Proposed target: `src/uranus_research_service/repositories/administrative_execution.py`.
 - Imports: `app.config`, `app.errors`, `app.repositories.research`, `app.research.plan`, `app.research.sql_provenance`, `app.schemas.research_administrative_result`, `sqlalchemy`, `sqlalchemy.ext.asyncio`, `typing`.

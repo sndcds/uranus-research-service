@@ -7,32 +7,33 @@ import pytest
 
 from tests.conftest import KEY
 from uranus_research_service.app import create_app
-from uranus_research_service.errors import DependencyError
+from uranus_research_service.errors import APIError, DependencyError
 from uranus_research_service.logging import SafeFormatter, logger
 from uranus_research_service.version import CONTRACT_VERSION, MODEL_REVISION
 
 
 @pytest.fixture
 async def api(settings):
-    planner, encoder = AsyncMock(), AsyncMock()
-    app = create_app(settings, planner=planner, encoder=encoder)
+    planner, database = AsyncMock(), AsyncMock()
+    planner.plan_natural.return_value = object()
+    app = create_app(settings, planner=planner, database=database, areas=AsyncMock())
     async with (
         app.router.lifespan_context(app),
         httpx.AsyncClient(
             transport=httpx.ASGITransport(app=app),
             base_url="http://test",
-            headers={"Authorization": "Bearer " + KEY},
+            headers={"Authorization": "Bearer " + KEY, "X-Research-Principal": "a" * 64},
         ) as client,
     ):
-        yield client, planner, encoder
+        yield client, planner, database
 
 
-async def test_health_version_and_disabled_query(api):
-    client, planner, encoder = api
+async def test_health_version_and_invalid_planner_query(api):
+    client, planner, database = api
     result = await client.get("/health", headers={"Authorization": ""})
     assert result.status_code == 200 and result.content == b'{"status":"ok"}'
     planner.ready.assert_not_awaited()
-    encoder.ready.assert_not_awaited()
+    database.ready.assert_not_awaited()
     metadata = (await client.get("/version")).json()
     assert (
         metadata["contract_version"] == CONTRACT_VERSION
@@ -41,29 +42,32 @@ async def test_health_version_and_disabled_query(api):
     assert metadata["dimensions"] == 1024 and metadata["query_enabled"] is False
     assert KEY not in str(metadata) and "url" not in str(metadata)
     result = await client.post("/query", json={"query": "Welche Events?"})
-    assert result.status_code == 501 and result.json()["error"]["code"] == "query_not_enabled"
+    assert (
+        result.status_code == 502
+        and result.json()["error"]["code"] == "research_planner_invalid_response"
+    )
     planner.ready.assert_not_awaited()
-    encoder.ready.assert_not_awaited()
+    database.ready.assert_not_awaited()
     assert (await client.get("/health/")).status_code == 404
     assert (await client.get("/docs")).status_code == 404
 
 
 async def test_ready_and_dependency_failures(api):
-    client, planner, encoder = api
-    assert (await client.get("/ready")).json() == {"status": "ready", "query_enabled": False}
+    client, planner, database = api
+    assert (await client.get("/ready")).json()["query_enabled"] is True
     planner.ready.side_effect = DependencyError("planner", "unavailable")
-    encoder.ready.reset_mock()
+    database.ready.reset_mock()
     result = await client.get("/ready")
     assert result.status_code == 503 and result.json()["error"]["code"] == "not_ready"
-    encoder.ready.assert_not_awaited()
+    database.ready.assert_not_awaited()
     planner.ready.side_effect = None
-    encoder.ready.side_effect = DependencyError("encoder", "incompatible")
+    database.ready.side_effect = APIError(503, "research_execution_unavailable", "private")
     assert (await client.get("/ready")).status_code == 503
 
 
 @pytest.mark.parametrize("path", ["/version", "/ready", "/query"])
 async def test_auth_required_before_dependencies(api, path):
-    client, planner, encoder = api
+    client, planner, database = api
     result = await client.request(
         "POST" if path == "/query" else "GET",
         path,
@@ -72,7 +76,7 @@ async def test_auth_required_before_dependencies(api, path):
     )
     assert result.status_code == 401
     planner.ready.assert_not_awaited()
-    encoder.ready.assert_not_awaited()
+    database.ready.assert_not_awaited()
 
 
 @pytest.mark.parametrize(
@@ -84,14 +88,14 @@ async def test_auth_required_before_dependencies(api, path):
     ],
 )
 async def test_duplicates_and_browser_credentials_rejected(api, headers):
-    client, planner, encoder = api
+    client, planner, database = api
     response = await client.get("/ready", headers=headers)
     assert response.status_code in {401, 422}
     planner.ready.assert_not_awaited()
 
 
 async def test_body_limit_json_and_secrets_not_reflected(api):
-    client, planner, encoder = api
+    client, planner, database = api
 
     async def large():
         for _ in range(10):
@@ -121,13 +125,13 @@ async def test_concurrency_limit(settings):
 
     planner = AsyncMock()
     planner.ready.side_effect = blocked
-    app = create_app(settings, planner=planner, encoder=AsyncMock())
+    app = create_app(settings, planner=planner, database=AsyncMock(), areas=AsyncMock())
     async with (
         app.router.lifespan_context(app),
         httpx.AsyncClient(
             transport=httpx.ASGITransport(app=app),
             base_url="http://test",
-            headers={"Authorization": "Bearer " + KEY},
+            headers={"Authorization": "Bearer " + KEY, "X-Research-Principal": "a" * 64},
         ) as client,
     ):
         first = asyncio.create_task(client.get("/ready"))
@@ -140,7 +144,7 @@ async def test_concurrency_limit(settings):
 
 
 async def test_request_logs_do_not_contain_input(api, caplog):
-    client, planner, encoder = api
+    client, planner, database = api
     logger.addHandler(caplog.handler)
     try:
         await client.post("/query", json={"query": "private-query-example"})
@@ -170,7 +174,7 @@ async def test_slow_request_body_and_total_timeout(settings):
         await asyncio.sleep(0.05)
 
     planner.ready.side_effect = slow_ready
-    app = create_app(configured, planner=planner, encoder=AsyncMock())
+    app = create_app(configured, planner=planner, database=AsyncMock(), areas=AsyncMock())
 
     async def slow_body():
         yield b"{"
@@ -182,7 +186,7 @@ async def test_slow_request_body_and_total_timeout(settings):
         httpx.AsyncClient(
             transport=httpx.ASGITransport(app=app),
             base_url="http://test",
-            headers={"Authorization": "Bearer " + KEY},
+            headers={"Authorization": "Bearer " + KEY, "X-Research-Principal": "a" * 64},
         ) as client,
     ):
         result = await client.post(
@@ -202,13 +206,13 @@ async def test_provider_error_is_not_reflected_or_logged(settings, caplog):
         settings,
         transport=httpx.MockTransport(lambda r: httpx.Response(500, json={"secret": secret})),
     )
-    app = create_app(settings, planner=planner, encoder=AsyncMock())
+    app = create_app(settings, planner=planner, database=AsyncMock(), areas=AsyncMock())
     async with (
         app.router.lifespan_context(app),
         httpx.AsyncClient(
             transport=httpx.ASGITransport(app=app),
             base_url="http://test",
-            headers={"Authorization": "Bearer " + KEY},
+            headers={"Authorization": "Bearer " + KEY, "X-Research-Principal": "a" * 64},
         ) as client,
     ):
         logger.addHandler(caplog.handler)
