@@ -1,0 +1,385 @@
+{
+  "$defs": {
+    "Eligibility": {
+      "additionalProperties": false,
+      "properties": {
+        "city": {
+          "anyOf": [
+            {
+              "maxLength": 2000,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "City"
+        },
+        "contract": {
+          "const": "public-snapshot-eligibility-v1",
+          "default": "public-snapshot-eligibility-v1",
+          "title": "Contract",
+          "type": "string"
+        },
+        "date_from": {
+          "anyOf": [
+            {
+              "format": "date",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Date From"
+        },
+        "date_to": {
+          "anyOf": [
+            {
+              "format": "date",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Date To"
+        },
+        "venue_id": {
+          "anyOf": [
+            {
+              "format": "uuid",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Venue Id"
+        },
+        "weekdays": {
+          "items": {
+            "type": "integer"
+          },
+          "maxItems": 7,
+          "title": "Weekdays",
+          "type": "array"
+        }
+      },
+      "title": "Eligibility",
+      "type": "object"
+    },
+    "Judgment": {
+      "additionalProperties": false,
+      "properties": {
+        "adjudicated_relevance": {
+          "anyOf": [
+            {
+              "maximum": 3,
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Adjudicated Relevance"
+        },
+        "document_hash": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Document Hash",
+          "type": "string"
+        },
+        "event_id": {
+          "format": "uuid",
+          "title": "Event Id",
+          "type": "string"
+        },
+        "reason": {
+          "default": "",
+          "maxLength": 2000,
+          "title": "Reason",
+          "type": "string"
+        },
+        "relevance": {
+          "anyOf": [
+            {
+              "maximum": 3,
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Relevance"
+        },
+        "relevance_a": {
+          "anyOf": [
+            {
+              "maximum": 3,
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Relevance A"
+        },
+        "relevance_b": {
+          "anyOf": [
+            {
+              "maximum": 3,
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Relevance B"
+        },
+        "reviewer_a": {
+          "anyOf": [
+            {
+              "maxLength": 100,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Reviewer A"
+        },
+        "reviewer_b": {
+          "anyOf": [
+            {
+              "maxLength": 100,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Reviewer B"
+        },
+        "supporting_fields": {
+          "items": {
+            "enum": [
+              "title",
+              "subtitle",
+              "summary",
+              "description",
+              "event_types",
+              "venue_accessibility",
+              "space_accessibility",
+              "accessibility_info",
+              "venue",
+              "city",
+              "occurrences",
+              "price_type"
+            ],
+            "type": "string"
+          },
+          "title": "Supporting Fields",
+          "type": "array"
+        }
+      },
+      "required": [
+        "event_id",
+        "document_hash"
+      ],
+      "title": "Judgment",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "approved_at": {
+      "anyOf": [
+        {
+          "format": "date-time",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Approved At"
+    },
+    "approved_by": {
+      "anyOf": [
+        {
+          "maxLength": 100,
+          "minLength": 1,
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Approved By"
+    },
+    "category": {
+      "enum": [
+        "accessibility",
+        "atmosphere",
+        "music",
+        "theatre",
+        "exhibition",
+        "family",
+        "venue",
+        "location",
+        "genre",
+        "cultural_style",
+        "combined",
+        "paraphrase",
+        "ambiguous",
+        "multiple_results",
+        "no_hit",
+        "workshops",
+        "readings",
+        "outdoor"
+      ],
+      "title": "Category",
+      "type": "string"
+    },
+    "eligibility": {
+      "$ref": "#/$defs/Eligibility"
+    },
+    "expected_no_hit": {
+      "anyOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Expected No Hit"
+    },
+    "id": {
+      "pattern": "^[a-z0-9_-]{1,100}$",
+      "title": "Id",
+      "type": "string"
+    },
+    "judgments": {
+      "items": {
+        "$ref": "#/$defs/Judgment"
+      },
+      "maxItems": 10000,
+      "title": "Judgments",
+      "type": "array"
+    },
+    "language": {
+      "enum": [
+        "de",
+        "da",
+        "en"
+      ],
+      "title": "Language",
+      "type": "string"
+    },
+    "no_hit_review_scope": {
+      "anyOf": [
+        {
+          "const": "full_eligible_corpus",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "No Hit Review Scope"
+    },
+    "notes": {
+      "default": "",
+      "maxLength": 2000,
+      "title": "Notes",
+      "type": "string"
+    },
+    "purpose": {
+      "anyOf": [
+        {
+          "enum": [
+            "calibration",
+            "evaluation"
+          ],
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Purpose"
+    },
+    "query": {
+      "maxLength": 1000,
+      "minLength": 3,
+      "title": "Query",
+      "type": "string"
+    },
+    "query_group": {
+      "pattern": "^[a-z0-9_-]{1,100}$",
+      "title": "Query Group",
+      "type": "string"
+    },
+    "reference_time": {
+      "format": "date-time",
+      "title": "Reference Time",
+      "type": "string"
+    },
+    "review_status": {
+      "default": "generated",
+      "enum": [
+        "generated",
+        "reviewed",
+        "approved"
+      ],
+      "title": "Review Status",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "retrieval-ground-truth-v1",
+      "default": "retrieval-ground-truth-v1",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "source_snapshot_hash": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Source Snapshot Hash",
+      "type": "string"
+    }
+  },
+  "required": [
+    "id",
+    "query",
+    "language",
+    "category",
+    "query_group",
+    "source_snapshot_hash",
+    "reference_time",
+    "judgments"
+  ],
+  "title": "GroundTruthCase",
+  "type": "object"
+}

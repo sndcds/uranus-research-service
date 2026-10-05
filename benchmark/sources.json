@@ -1,0 +1,29 @@
+{
+  "source_repository": "sndcds/uranus-admin",
+  "source_commit": "340df4684611dbc4b8ec73a7702f1fad2ae1973c",
+  "historical_exports": [
+    {
+      "path": "docs/research-ai/results/2026-09-27/jina-v3/results.json",
+      "sha256": "d0d2ae3249fd2719af4d971771a5f4f4f5c9330b03cafda9c7c904451a19e1d6",
+      "rows": 300,
+      "classification": "historical_unjudged"
+    },
+    {
+      "path": "docs/research-ai/results/2026-09-27/e5-small/results.json",
+      "sha256": "e2803e068273def73c4f61f56913bfd26634bb1338202f6d4ebb0c114865611d",
+      "rows": 300,
+      "classification": "historical_unjudged"
+    },
+    {
+      "path": "docs/research-ai/results/2026-09-27/e5-base/results.json",
+      "sha256": "b2d7a4104aa38fd61b5700c8310c9c904daea6103ee48f55f05bfe45574ac5b9",
+      "rows": 300,
+      "classification": "historical_unjudged"
+    }
+  ],
+  "query_proposals": {
+    "historical_unjudged": 30,
+    "assistant_proposed_needs_human_review": 90
+  },
+  "synthetic_pipeline_goldens": "tests/fixtures/retrieval_goldens.json (excluded)"
+}

@@ -1,3 +1,22 @@
+# Human-reviewed evaluation preparation (Phase 2B.2b)
+
+The new [public snapshot and annotation workflow](phase2b2b-ground-truth.md) is
+separate from the historical pipeline benchmarks below. It contains 611 real public
+events and 120 reviewable query proposals, with **zero approved cases**. It is a
+**draft**, not usable ground truth or an official v3/v5 evaluation result.
+
+`benchmark/ground-truth-v1.jsonl` uses the new snapshot-bound human-review schema.
+Do not feed it into the old synthetic `index benchmark` evaluator, convert null grades
+to zero, or infer relevance from pooled rankings. The approval gate and coverage report
+must pass before a later explicit evaluator adapter/controlled comparison is introduced.
+No such adapter, model comparison, threshold tuning or semantic activation is part of
+this phase. [Annotation guidelines](retrieval-annotation-guidelines.md) define review,
+no-hit confirmation, hard eligibility, grouping and unjudged-result handling.
+
+The nine cases below are classified **synthetic_pipeline_goldens**. Historical
+900-result exports are **historical_unjudged**, used only as candidate-ID/query sources.
+Neither is silently promoted into human-approved relevance.
+
 # Retrieval benchmark
 
 `tests/fixtures/retrieval_goldens.json` contains nine **synthetic** goldens: DE/DA/EN,

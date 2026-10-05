@@ -1,0 +1,263 @@
+{
+  "$defs": {
+    "EventType": {
+      "additionalProperties": false,
+      "properties": {
+        "genre_id": {
+          "title": "Genre Id",
+          "type": "integer"
+        },
+        "genre_name": {
+          "maxLength": 2000,
+          "title": "Genre Name",
+          "type": "string"
+        },
+        "type_id": {
+          "title": "Type Id",
+          "type": "integer"
+        },
+        "type_name": {
+          "maxLength": 2000,
+          "title": "Type Name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "type_id",
+        "genre_id",
+        "type_name",
+        "genre_name"
+      ],
+      "title": "EventType",
+      "type": "object"
+    },
+    "Occurrence": {
+      "additionalProperties": false,
+      "properties": {
+        "accessibility_info": {
+          "maxLength": 20000,
+          "title": "Accessibility Info",
+          "type": "string"
+        },
+        "city": {
+          "maxLength": 2000,
+          "title": "City",
+          "type": "string"
+        },
+        "end_date": {
+          "anyOf": [
+            {
+              "format": "date",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "End Date"
+        },
+        "id": {
+          "format": "uuid",
+          "title": "Id",
+          "type": "string"
+        },
+        "space": {
+          "maxLength": 2000,
+          "title": "Space",
+          "type": "string"
+        },
+        "space_accessibility": {
+          "maxLength": 20000,
+          "title": "Space Accessibility",
+          "type": "string"
+        },
+        "space_id": {
+          "anyOf": [
+            {
+              "format": "uuid",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Space Id"
+        },
+        "start_date": {
+          "format": "date",
+          "title": "Start Date",
+          "type": "string"
+        },
+        "start_time": {
+          "maxLength": 8,
+          "title": "Start Time",
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "released",
+            "cancelled",
+            "deferred",
+            "rescheduled"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "venue": {
+          "maxLength": 2000,
+          "title": "Venue",
+          "type": "string"
+        },
+        "venue_accessibility": {
+          "maxLength": 20000,
+          "title": "Venue Accessibility",
+          "type": "string"
+        },
+        "venue_id": {
+          "anyOf": [
+            {
+              "format": "uuid",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Venue Id"
+        }
+      },
+      "required": [
+        "id",
+        "status",
+        "start_date",
+        "start_time",
+        "venue",
+        "city",
+        "space",
+        "venue_accessibility",
+        "space_accessibility",
+        "accessibility_info"
+      ],
+      "title": "Occurrence",
+      "type": "object"
+    },
+    "PublicEvent": {
+      "additionalProperties": false,
+      "properties": {
+        "content_language": {
+          "maxLength": 20,
+          "title": "Content Language",
+          "type": "string"
+        },
+        "description": {
+          "maxLength": 200000,
+          "title": "Description",
+          "type": "string"
+        },
+        "event_types": {
+          "items": {
+            "$ref": "#/$defs/EventType"
+          },
+          "maxItems": 100,
+          "title": "Event Types",
+          "type": "array"
+        },
+        "id": {
+          "format": "uuid",
+          "title": "Id",
+          "type": "string"
+        },
+        "languages": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 100,
+          "title": "Languages",
+          "type": "array"
+        },
+        "occurrences": {
+          "items": {
+            "$ref": "#/$defs/Occurrence"
+          },
+          "maxItems": 10000,
+          "title": "Occurrences",
+          "type": "array"
+        },
+        "price_type": {
+          "maxLength": 100,
+          "title": "Price Type",
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "released",
+            "cancelled",
+            "deferred",
+            "rescheduled"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "subtitle": {
+          "maxLength": 10000,
+          "title": "Subtitle",
+          "type": "string"
+        },
+        "summary": {
+          "maxLength": 200000,
+          "title": "Summary",
+          "type": "string"
+        },
+        "tags": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 1000,
+          "title": "Tags",
+          "type": "array"
+        },
+        "title": {
+          "maxLength": 10000,
+          "title": "Title",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "status",
+        "title",
+        "subtitle",
+        "summary",
+        "description",
+        "content_language",
+        "languages",
+        "tags",
+        "price_type",
+        "event_types",
+        "occurrences"
+      ],
+      "title": "PublicEvent",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "document_hash": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Document Hash",
+      "type": "string"
+    },
+    "event": {
+      "$ref": "#/$defs/PublicEvent"
+    }
+  },
+  "required": [
+    "document_hash",
+    "event"
+  ],
+  "title": "SnapshotRow",
+  "type": "object"
+}
