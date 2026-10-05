@@ -1,3 +1,27 @@
+# Phase-2B.2b ground-truth preparation — 2026-10-05
+
+Final local suite: **404 passed, 2 optional real-Encoder tests skipped (34.13 s)**:
+382 unit tests plus 22 disposable PostGIS/Qdrant/Admin parity integration tests.
+The 25 new ground-truth tests cover schema/grade/review invariants, blinded pools,
+source/document hashes, deterministic export, query groups, hard occurrence filters,
+CSV import, schema snapshots and the actual committed public draft/report.
+`--require-approved` correctly rejects the draft. No relevance labels were generated.
+
+Locked sync, Ruff/format and upstream Admin/Planner/Encoder contract parity passed.
+Live evidence is limited to read-only source checks and the user-authorized
+`uranus_reader` export. Integration tests used local synthetic databases only, never
+production credentials/data. No v3/v5 comparison or threshold measurement was run.
+See [completion report](phase2b2b-completion-report.md) for counts and review gaps.
+Implementation commit `6d54a11d8d8cb2610cc59064efe9b10c605591ff` passed both jobs in
+[PR CI](https://github.com/sndcds/uranus-research-service/actions/runs/37352629018)
+and [push CI](https://github.com/sndcds/uranus-research-service/actions/runs/37352574689).
+CI retains its existing unit/Docker and PostGIS/Qdrant/pinned Admin jobs. Local offline
+Docker build passed (`02e005d58a28`); the annotation coverage CLI succeeded as non-root
+with network disabled and a read-only public-artifact mount. CSV newline normalization
+was retested with all 25 annotation tests. Both disposable test containers were removed.
+The ongoing review and current-head checks are on
+[PR #5](https://github.com/sndcds/uranus-research-service/pull/5); no merge was performed.
+
 # Phase-2B.2a-runtime validation — 2026-10-05
 
 Runtime refactor only; no benchmark/ground-truth work or live access. Final local

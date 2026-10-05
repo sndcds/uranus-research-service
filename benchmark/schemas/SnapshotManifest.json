@@ -1,0 +1,100 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "capture_rule": {
+      "const": "repeatable_read_read_only",
+      "title": "Capture Rule",
+      "type": "string"
+    },
+    "captured_at": {
+      "format": "date-time",
+      "title": "Captured At",
+      "type": "string"
+    },
+    "exporter_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Exporter Sha256",
+      "type": "string"
+    },
+    "file_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "File Sha256",
+      "type": "string"
+    },
+    "public_event_count": {
+      "maximum": 10000,
+      "minimum": 1,
+      "title": "Public Event Count",
+      "type": "integer"
+    },
+    "reference_time": {
+      "format": "date-time",
+      "title": "Reference Time",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "public-annotation-snapshot-v1",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "snapshot_id": {
+      "pattern": "^[a-z0-9_-]{1,80}$",
+      "title": "Snapshot Id",
+      "type": "string"
+    },
+    "source": {
+      "const": "uranus_reader_public_select",
+      "title": "Source",
+      "type": "string"
+    },
+    "source_code_revision": {
+      "const": "340df4684611dbc4b8ec73a7702f1fad2ae1973c",
+      "title": "Source Code Revision",
+      "type": "string"
+    },
+    "source_row_count": {
+      "maximum": 10000,
+      "minimum": 1,
+      "title": "Source Row Count",
+      "type": "integer"
+    },
+    "source_snapshot_hash": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Source Snapshot Hash",
+      "type": "string"
+    },
+    "timezone": {
+      "title": "Timezone",
+      "type": "string"
+    },
+    "window_end": {
+      "format": "date",
+      "title": "Window End",
+      "type": "string"
+    },
+    "window_start": {
+      "format": "date",
+      "title": "Window Start",
+      "type": "string"
+    }
+  },
+  "required": [
+    "schema_version",
+    "snapshot_id",
+    "captured_at",
+    "reference_time",
+    "timezone",
+    "source",
+    "exporter_sha256",
+    "source_code_revision",
+    "source_row_count",
+    "public_event_count",
+    "source_snapshot_hash",
+    "file_sha256",
+    "window_start",
+    "window_end",
+    "capture_rule"
+  ],
+  "title": "SnapshotManifest",
+  "type": "object"
+}

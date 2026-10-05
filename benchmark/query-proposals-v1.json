@@ -1,0 +1,995 @@
+[
+  {
+    "id": "historical-q01",
+    "query": "kostenlose Veranstaltungen für Familien",
+    "language": "de",
+    "category": "family",
+    "query_group": "historical-q01",
+    "notes": "Historical unjudged query proposal; verify interpretation before approval."
+  },
+  {
+    "id": "historical-q02",
+    "query": "Angebote zur kulturellen Bildung",
+    "language": "de",
+    "category": "cultural_style",
+    "query_group": "historical-q02",
+    "notes": "Historical unjudged query proposal; verify interpretation before approval."
+  },
+  {
+    "id": "historical-q03",
+    "query": "barrierefreie Veranstaltungen",
+    "language": "de",
+    "category": "accessibility",
+    "query_group": "historical-accessible",
+    "notes": "Historical unjudged query proposal; verify interpretation before approval."
+  },
+  {
+    "id": "historical-q04",
+    "query": "Veranstaltungen mit Anmeldung",
+    "language": "de",
+    "category": "combined",
+    "query_group": "historical-q04",
+    "notes": "Historical unjudged query proposal; verify interpretation before approval."
+  },
+  {
+    "id": "historical-q05",
+    "query": "Sprachkurse",
+    "language": "de",
+    "category": "workshops",
+    "query_group": "historical-q05",
+    "notes": "Historical unjudged query proposal; verify interpretation before approval."
+  },
+  {
+    "id": "historical-q06",
+    "query": "Veranstaltungen zum Thema Nachhaltigkeit",
+    "language": "de",
+    "category": "cultural_style",
+    "query_group": "historical-sustainable",
+    "notes": "Historical unjudged query proposal; verify interpretation before approval."
+  },
+  {
+    "id": "historical-q07",
+    "query": "Angebote für Kinder",
+    "language": "de",
+    "category": "family",
+    "query_group": "historical-q07",
+    "notes": "Historical unjudged query proposal; verify interpretation before approval."
+  },
+  {
+    "id": "historical-q08",
+    "query": "Veranstaltungen für Seniorinnen und Senioren",
+    "language": "de",
+    "category": "family",
+    "query_group": "historical-q08",
+    "notes": "Historical unjudged query proposal; verify interpretation before approval."
+  },
+  {
+    "id": "historical-q09",
+    "query": "Veranstaltungen mit Treffpunkt",
+    "language": "de",
+    "category": "location",
+    "query_group": "historical-q09",
+    "notes": "Historical unjudged query proposal; verify interpretation before approval."
+  },
+  {
+    "id": "historical-q10",
+    "query": "Veranstaltungen mit ermäßigtem Eintritt",
+    "language": "de",
+    "category": "paraphrase",
+    "query_group": "historical-q10",
+    "notes": "Historical unjudged query proposal; verify interpretation before approval."
+  },
+  {
+    "id": "historical-q11",
+    "query": "Veranstaltungen im Freien",
+    "language": "de",
+    "category": "outdoor",
+    "query_group": "historical-q11",
+    "notes": "Historical unjudged query proposal; verify interpretation before approval."
+  },
+  {
+    "id": "historical-q12",
+    "query": "Integration und Migration",
+    "language": "de",
+    "category": "cultural_style",
+    "query_group": "historical-q12",
+    "notes": "Historical unjudged query proposal; verify interpretation before approval."
+  },
+  {
+    "id": "historical-q13",
+    "query": "queere Kultur",
+    "language": "de",
+    "category": "cultural_style",
+    "query_group": "historical-q13",
+    "notes": "Historical unjudged query proposal; verify interpretation before approval."
+  },
+  {
+    "id": "historical-q14",
+    "query": "lokale Geschichte",
+    "language": "de",
+    "category": "readings",
+    "query_group": "historical-q14",
+    "notes": "Historical unjudged query proposal; verify interpretation before approval."
+  },
+  {
+    "id": "historical-q15",
+    "query": "Kunst zum Mitmachen",
+    "language": "de",
+    "category": "exhibition",
+    "query_group": "historical-q15",
+    "notes": "Historical unjudged query proposal; verify interpretation before approval."
+  },
+  {
+    "id": "historical-q16",
+    "query": "soziale Teilhabe",
+    "language": "de",
+    "category": "multiple_results",
+    "query_group": "historical-q16",
+    "notes": "Historical unjudged query proposal; verify interpretation before approval."
+  },
+  {
+    "id": "historical-q17",
+    "query": "Musikveranstaltungen draußen",
+    "language": "de",
+    "category": "music",
+    "query_group": "historical-outdoor-music",
+    "notes": "Historical unjudged query proposal; verify interpretation before approval."
+  },
+  {
+    "id": "historical-q18",
+    "query": "Veranstaltungen für Jugendliche",
+    "language": "de",
+    "category": "family",
+    "query_group": "historical-q18",
+    "notes": "Historical unjudged query proposal; verify interpretation before approval."
+  },
+  {
+    "id": "historical-q19",
+    "query": "Dänische Kultur und Begegnungen in Dänemark",
+    "language": "de",
+    "category": "location",
+    "query_group": "historical-q19",
+    "notes": "Historical unjudged query proposal; verify interpretation before approval."
+  },
+  {
+    "id": "historical-q20",
+    "query": "Workshops für gemeinsames kreatives Arbeiten",
+    "language": "de",
+    "category": "workshops",
+    "query_group": "historical-q20",
+    "notes": "Historical unjudged query proposal; verify interpretation before approval."
+  },
+  {
+    "id": "historical-q21",
+    "query": "Gratis arrangementer for familier",
+    "language": "da",
+    "category": "family",
+    "query_group": "historical-q21",
+    "notes": "Historical unjudged query proposal; verify interpretation before approval."
+  },
+  {
+    "id": "historical-q22",
+    "query": "Sprogkurser i Tyskland",
+    "language": "da",
+    "category": "location",
+    "query_group": "historical-q22",
+    "notes": "Historical unjudged query proposal; verify interpretation before approval."
+  },
+  {
+    "id": "historical-q23",
+    "query": "Tilgængelige kulturarrangementer",
+    "language": "da",
+    "category": "accessibility",
+    "query_group": "historical-accessible",
+    "notes": "Historical unjudged query proposal; verify interpretation before approval."
+  },
+  {
+    "id": "historical-q24",
+    "query": "Arrangementer om bæredygtighed",
+    "language": "da",
+    "category": "cultural_style",
+    "query_group": "historical-sustainable",
+    "notes": "Historical unjudged query proposal; verify interpretation before approval."
+  },
+  {
+    "id": "historical-q25",
+    "query": "Musik under åben himmel",
+    "language": "da",
+    "category": "music",
+    "query_group": "historical-outdoor-music",
+    "notes": "Historical unjudged query proposal; verify interpretation before approval."
+  },
+  {
+    "id": "historical-q26",
+    "query": "Free family activities in Germany and Denmark",
+    "language": "en",
+    "category": "family",
+    "query_group": "historical-q26",
+    "notes": "Historical unjudged query proposal; verify interpretation before approval."
+  },
+  {
+    "id": "historical-q27",
+    "query": "Accessible events requiring registration",
+    "language": "en",
+    "category": "accessibility",
+    "query_group": "historical-q27",
+    "notes": "Historical unjudged query proposal; verify interpretation before approval."
+  },
+  {
+    "id": "historical-q28",
+    "query": "Language classes and cultural education",
+    "language": "en",
+    "category": "workshops",
+    "query_group": "historical-q28",
+    "notes": "Historical unjudged query proposal; verify interpretation before approval."
+  },
+  {
+    "id": "historical-q29",
+    "query": "Participatory art workshops for young people",
+    "language": "en",
+    "category": "exhibition",
+    "query_group": "historical-q29",
+    "notes": "Historical unjudged query proposal; verify interpretation before approval."
+  },
+  {
+    "id": "historical-q30",
+    "query": "Local history and social inclusion",
+    "language": "en",
+    "category": "readings",
+    "query_group": "historical-q30",
+    "notes": "Historical unjudged query proposal; verify interpretation before approval."
+  },
+  {
+    "id": "stepfree-de",
+    "query": "Konzerte mit stufenlosem Zugang",
+    "language": "de",
+    "category": "accessibility",
+    "query_group": "stepfree",
+    "notes": "Assistant-proposed query; needs human language/interpretation and relevance review. No inferred judgments."
+  },
+  {
+    "id": "stepfree-da",
+    "query": "Koncerter med trinfri adgang",
+    "language": "da",
+    "category": "accessibility",
+    "query_group": "stepfree",
+    "notes": "Assistant-proposed query; needs human language/interpretation and relevance review. No inferred judgments."
+  },
+  {
+    "id": "stepfree-en",
+    "query": "Concerts with step-free access",
+    "language": "en",
+    "category": "accessibility",
+    "query_group": "stepfree",
+    "notes": "Assistant-proposed query; needs human language/interpretation and relevance review. No inferred judgments."
+  },
+  {
+    "id": "wheelchair-de",
+    "query": "Kulturangebote mit ausdrücklich beschriebenem Rollstuhlzugang",
+    "language": "de",
+    "category": "accessibility",
+    "query_group": "wheelchair",
+    "notes": "Assistant-proposed query; needs human language/interpretation and relevance review. No inferred judgments."
+  },
+  {
+    "id": "wheelchair-da",
+    "query": "Kulturtilbud med dokumenteret adgang for kørestole",
+    "language": "da",
+    "category": "accessibility",
+    "query_group": "wheelchair",
+    "notes": "Assistant-proposed query; needs human language/interpretation and relevance review. No inferred judgments."
+  },
+  {
+    "id": "wheelchair-en",
+    "query": "Cultural events with explicitly documented wheelchair access",
+    "language": "en",
+    "category": "accessibility",
+    "query_group": "wheelchair",
+    "notes": "Assistant-proposed query; needs human language/interpretation and relevance review. No inferred judgments."
+  },
+  {
+    "id": "quiet-de",
+    "query": "Ruhige Livemusik in gemütlicher Atmosphäre",
+    "language": "de",
+    "category": "atmosphere",
+    "query_group": "quiet",
+    "notes": "Assistant-proposed query; needs human language/interpretation and relevance review. No inferred judgments."
+  },
+  {
+    "id": "quiet-da",
+    "query": "Rolig livemusik i hyggelige omgivelser",
+    "language": "da",
+    "category": "atmosphere",
+    "query_group": "quiet",
+    "notes": "Assistant-proposed query; needs human language/interpretation and relevance review. No inferred judgments."
+  },
+  {
+    "id": "quiet-en",
+    "query": "Quiet live music in a cosy atmosphere",
+    "language": "en",
+    "category": "atmosphere",
+    "query_group": "quiet",
+    "notes": "Assistant-proposed query; needs human language/interpretation and relevance review. No inferred judgments."
+  },
+  {
+    "id": "dance-de",
+    "query": "Ein ausgelassener Abend zum Tanzen",
+    "language": "de",
+    "category": "atmosphere",
+    "query_group": "dance",
+    "notes": "Assistant-proposed query; needs human language/interpretation and relevance review. No inferred judgments."
+  },
+  {
+    "id": "dance-da",
+    "query": "En festlig aften med dans",
+    "language": "da",
+    "category": "atmosphere",
+    "query_group": "dance",
+    "notes": "Assistant-proposed query; needs human language/interpretation and relevance review. No inferred judgments."
+  },
+  {
+    "id": "dance-en",
+    "query": "A lively evening for dancing",
+    "language": "en",
+    "category": "atmosphere",
+    "query_group": "dance",
+    "notes": "Assistant-proposed query; needs human language/interpretation and relevance review. No inferred judgments."
+  },
+  {
+    "id": "jazz-de",
+    "query": "Jazz live erleben",
+    "language": "de",
+    "category": "music",
+    "query_group": "jazz",
+    "notes": "Assistant-proposed query; needs human language/interpretation and relevance review. No inferred judgments."
+  },
+  {
+    "id": "jazz-da",
+    "query": "Oplev levende jazzmusik",
+    "language": "da",
+    "category": "music",
+    "query_group": "jazz",
+    "notes": "Assistant-proposed query; needs human language/interpretation and relevance review. No inferred judgments."
+  },
+  {
+    "id": "jazz-en",
+    "query": "Experience live jazz",
+    "language": "en",
+    "category": "music",
+    "query_group": "jazz",
+    "notes": "Assistant-proposed query; needs human language/interpretation and relevance review. No inferred judgments."
+  },
+  {
+    "id": "chamber-de",
+    "query": "Kleine Ensembles und Kammermusik",
+    "language": "de",
+    "category": "music",
+    "query_group": "chamber",
+    "notes": "Assistant-proposed query; needs human language/interpretation and relevance review. No inferred judgments."
+  },
+  {
+    "id": "chamber-da",
+    "query": "Små ensembler og kammermusik",
+    "language": "da",
+    "category": "music",
+    "query_group": "chamber",
+    "notes": "Assistant-proposed query; needs human language/interpretation and relevance review. No inferred judgments."
+  },
+  {
+    "id": "chamber-en",
+    "query": "Small ensembles and chamber music",
+    "language": "en",
+    "category": "music",
+    "query_group": "chamber",
+    "notes": "Assistant-proposed query; needs human language/interpretation and relevance review. No inferred judgments."
+  },
+  {
+    "id": "puppet-de",
+    "query": "Puppentheater für Kinder",
+    "language": "de",
+    "category": "theatre",
+    "query_group": "puppet",
+    "notes": "Assistant-proposed query; needs human language/interpretation and relevance review. No inferred judgments."
+  },
+  {
+    "id": "puppet-da",
+    "query": "Dukketeater for børn",
+    "language": "da",
+    "category": "theatre",
+    "query_group": "puppet",
+    "notes": "Assistant-proposed query; needs human language/interpretation and relevance review. No inferred judgments."
+  },
+  {
+    "id": "puppet-en",
+    "query": "Puppet theatre for children",
+    "language": "en",
+    "category": "theatre",
+    "query_group": "puppet",
+    "notes": "Assistant-proposed query; needs human language/interpretation and relevance review. No inferred judgments."
+  },
+  {
+    "id": "stage-de",
+    "query": "Eine szenische Aufführung auf der Bühne",
+    "language": "de",
+    "category": "theatre",
+    "query_group": "stage",
+    "notes": "Assistant-proposed query; needs human language/interpretation and relevance review. No inferred judgments."
+  },
+  {
+    "id": "stage-da",
+    "query": "En scenisk forestilling på en scene",
+    "language": "da",
+    "category": "theatre",
+    "query_group": "stage",
+    "notes": "Assistant-proposed query; needs human language/interpretation and relevance review. No inferred judgments."
+  },
+  {
+    "id": "stage-en",
+    "query": "A staged theatrical performance",
+    "language": "en",
+    "category": "theatre",
+    "query_group": "stage",
+    "notes": "Assistant-proposed query; needs human language/interpretation and relevance review. No inferred judgments."
+  },
+  {
+    "id": "painting-de",
+    "query": "Ausstellungen mit Malerei",
+    "language": "de",
+    "category": "exhibition",
+    "query_group": "painting",
+    "notes": "Assistant-proposed query; needs human language/interpretation and relevance review. No inferred judgments."
+  },
+  {
+    "id": "painting-da",
+    "query": "Udstillinger med maleri",
+    "language": "da",
+    "category": "exhibition",
+    "query_group": "painting",
+    "notes": "Assistant-proposed query; needs human language/interpretation and relevance review. No inferred judgments."
+  },
+  {
+    "id": "painting-en",
+    "query": "Exhibitions of paintings",
+    "language": "en",
+    "category": "exhibition",
+    "query_group": "painting",
+    "notes": "Assistant-proposed query; needs human language/interpretation and relevance review. No inferred judgments."
+  },
+  {
+    "id": "curator-de",
+    "query": "Kunst mit einer Kuratorenführung entdecken",
+    "language": "de",
+    "category": "exhibition",
+    "query_group": "curator",
+    "notes": "Assistant-proposed query; needs human language/interpretation and relevance review. No inferred judgments."
+  },
+  {
+    "id": "curator-da",
+    "query": "Oplev kunst på en kuratorrundvisning",
+    "language": "da",
+    "category": "exhibition",
+    "query_group": "curator",
+    "notes": "Assistant-proposed query; needs human language/interpretation and relevance review. No inferred judgments."
+  },
+  {
+    "id": "curator-en",
+    "query": "Explore art on a curator-led tour",
+    "language": "en",
+    "category": "exhibition",
+    "query_group": "curator",
+    "notes": "Assistant-proposed query; needs human language/interpretation and relevance review. No inferred judgments."
+  },
+  {
+    "id": "children-de",
+    "query": "Musik zum Entdecken für Kinder",
+    "language": "de",
+    "category": "family",
+    "query_group": "children",
+    "notes": "Assistant-proposed query; needs human language/interpretation and relevance review. No inferred judgments."
+  },
+  {
+    "id": "children-da",
+    "query": "Musikoplevelser for børn",
+    "language": "da",
+    "category": "family",
+    "query_group": "children",
+    "notes": "Assistant-proposed query; needs human language/interpretation and relevance review. No inferred judgments."
+  },
+  {
+    "id": "children-en",
+    "query": "Music for children to discover",
+    "language": "en",
+    "category": "family",
+    "query_group": "children",
+    "notes": "Assistant-proposed query; needs human language/interpretation and relevance review. No inferred judgments."
+  },
+  {
+    "id": "together-de",
+    "query": "Als Familie gemeinsam kreativ werden",
+    "language": "de",
+    "category": "family",
+    "query_group": "together",
+    "notes": "Assistant-proposed query; needs human language/interpretation and relevance review. No inferred judgments."
+  },
+  {
+    "id": "together-da",
+    "query": "Vær kreative sammen som familie",
+    "language": "da",
+    "category": "family",
+    "query_group": "together",
+    "notes": "Assistant-proposed query; needs human language/interpretation and relevance review. No inferred judgments."
+  },
+  {
+    "id": "together-en",
+    "query": "Creative activities to do together as a family",
+    "language": "en",
+    "category": "family",
+    "query_group": "together",
+    "notes": "Assistant-proposed query; needs human language/interpretation and relevance review. No inferred judgments."
+  },
+  {
+    "id": "kuehlhaus-de",
+    "query": "Livemusik im Kühlhaus",
+    "language": "de",
+    "category": "venue",
+    "query_group": "kuehlhaus",
+    "notes": "Assistant-proposed query; needs human language/interpretation and relevance review. No inferred judgments."
+  },
+  {
+    "id": "kuehlhaus-da",
+    "query": "Livemusik på Kühlhaus",
+    "language": "da",
+    "category": "venue",
+    "query_group": "kuehlhaus",
+    "notes": "Assistant-proposed query; needs human language/interpretation and relevance review. No inferred judgments."
+  },
+  {
+    "id": "kuehlhaus-en",
+    "query": "Live music at Kühlhaus",
+    "language": "en",
+    "category": "venue",
+    "query_group": "kuehlhaus",
+    "notes": "Assistant-proposed query; needs human language/interpretation and relevance review. No inferred judgments."
+  },
+  {
+    "id": "museumsberg-de",
+    "query": "Kunst auf dem Museumsberg",
+    "language": "de",
+    "category": "venue",
+    "query_group": "museumsberg",
+    "notes": "Assistant-proposed query; needs human language/interpretation and relevance review. No inferred judgments."
+  },
+  {
+    "id": "museumsberg-da",
+    "query": "Kunst på Museumsberg",
+    "language": "da",
+    "category": "venue",
+    "query_group": "museumsberg",
+    "notes": "Assistant-proposed query; needs human language/interpretation and relevance review. No inferred judgments."
+  },
+  {
+    "id": "museumsberg-en",
+    "query": "Art at Museumsberg",
+    "language": "en",
+    "category": "venue",
+    "query_group": "museumsberg",
+    "notes": "Assistant-proposed query; needs human language/interpretation and relevance review. No inferred judgments."
+  },
+  {
+    "id": "flensburg-de",
+    "query": "Kulturelle Begegnungen in Flensburg",
+    "language": "de",
+    "category": "location",
+    "query_group": "flensburg",
+    "notes": "Assistant-proposed query; needs human language/interpretation and relevance review. No inferred judgments."
+  },
+  {
+    "id": "flensburg-da",
+    "query": "Kulturelle møder i Flensborg",
+    "language": "da",
+    "category": "location",
+    "query_group": "flensburg",
+    "notes": "Assistant-proposed query; needs human language/interpretation and relevance review. No inferred judgments."
+  },
+  {
+    "id": "flensburg-en",
+    "query": "Cultural encounters in Flensburg",
+    "language": "en",
+    "category": "location",
+    "query_group": "flensburg",
+    "notes": "Assistant-proposed query; needs human language/interpretation and relevance review. No inferred judgments."
+  },
+  {
+    "id": "gluecksburg-de",
+    "query": "Kultur erleben in Glücksburg",
+    "language": "de",
+    "category": "location",
+    "query_group": "gluecksburg",
+    "notes": "Assistant-proposed query; needs human language/interpretation and relevance review. No inferred judgments."
+  },
+  {
+    "id": "gluecksburg-da",
+    "query": "Oplev kultur i Lyksborg",
+    "language": "da",
+    "category": "location",
+    "query_group": "gluecksburg",
+    "notes": "Assistant-proposed query; needs human language/interpretation and relevance review. No inferred judgments."
+  },
+  {
+    "id": "gluecksburg-en",
+    "query": "Experience culture in Glücksburg",
+    "language": "en",
+    "category": "location",
+    "query_group": "gluecksburg",
+    "notes": "Assistant-proposed query; needs human language/interpretation and relevance review. No inferred judgments."
+  },
+  {
+    "id": "folk-de",
+    "query": "Folk und traditionelle Musik",
+    "language": "de",
+    "category": "genre",
+    "query_group": "folk",
+    "notes": "Assistant-proposed query; needs human language/interpretation and relevance review. No inferred judgments."
+  },
+  {
+    "id": "folk-da",
+    "query": "Folk og traditionel musik",
+    "language": "da",
+    "category": "genre",
+    "query_group": "folk",
+    "notes": "Assistant-proposed query; needs human language/interpretation and relevance review. No inferred judgments."
+  },
+  {
+    "id": "folk-en",
+    "query": "Folk and traditional music",
+    "language": "en",
+    "category": "genre",
+    "query_group": "folk",
+    "notes": "Assistant-proposed query; needs human language/interpretation and relevance review. No inferred judgments."
+  },
+  {
+    "id": "punk-de",
+    "query": "Punkmusik und laute Gitarren",
+    "language": "de",
+    "category": "genre",
+    "query_group": "punk",
+    "notes": "Assistant-proposed query; needs human language/interpretation and relevance review. No inferred judgments."
+  },
+  {
+    "id": "punk-da",
+    "query": "Punkmusik og høje guitarer",
+    "language": "da",
+    "category": "genre",
+    "query_group": "punk",
+    "notes": "Assistant-proposed query; needs human language/interpretation and relevance review. No inferred judgments."
+  },
+  {
+    "id": "punk-en",
+    "query": "Punk music and loud guitars",
+    "language": "en",
+    "category": "genre",
+    "query_group": "punk",
+    "notes": "Assistant-proposed query; needs human language/interpretation and relevance review. No inferred judgments."
+  },
+  {
+    "id": "nordic-de",
+    "query": "Nordische Klänge und skandinavische Musik",
+    "language": "de",
+    "category": "cultural_style",
+    "query_group": "nordic",
+    "notes": "Assistant-proposed query; needs human language/interpretation and relevance review. No inferred judgments."
+  },
+  {
+    "id": "nordic-da",
+    "query": "Nordiske klange og skandinavisk musik",
+    "language": "da",
+    "category": "cultural_style",
+    "query_group": "nordic",
+    "notes": "Assistant-proposed query; needs human language/interpretation and relevance review. No inferred judgments."
+  },
+  {
+    "id": "nordic-en",
+    "query": "Nordic sounds and Scandinavian music",
+    "language": "en",
+    "category": "cultural_style",
+    "query_group": "nordic",
+    "notes": "Assistant-proposed query; needs human language/interpretation and relevance review. No inferred judgments."
+  },
+  {
+    "id": "experimental-de",
+    "query": "Experimentelle Kunst und ungewöhnliche Ausdrucksformen",
+    "language": "de",
+    "category": "cultural_style",
+    "query_group": "experimental",
+    "notes": "Assistant-proposed query; needs human language/interpretation and relevance review. No inferred judgments."
+  },
+  {
+    "id": "experimental-da",
+    "query": "Eksperimenterende kunst og usædvanlige udtryksformer",
+    "language": "da",
+    "category": "cultural_style",
+    "query_group": "experimental",
+    "notes": "Assistant-proposed query; needs human language/interpretation and relevance review. No inferred judgments."
+  },
+  {
+    "id": "experimental-en",
+    "query": "Experimental art and unusual forms of expression",
+    "language": "en",
+    "category": "cultural_style",
+    "query_group": "experimental",
+    "notes": "Assistant-proposed query; needs human language/interpretation and relevance review. No inferred judgments."
+  },
+  {
+    "id": "saturday-de",
+    "query": "Jazz am Samstag, 10. Oktober 2026, in Flensburg",
+    "language": "de",
+    "category": "combined",
+    "query_group": "saturday",
+    "notes": "Assistant-proposed query; needs human language/interpretation and relevance review. No inferred judgments.",
+    "eligibility": {
+      "date_from": "2026-10-10",
+      "date_to": "2026-10-10",
+      "weekdays": [
+        6
+      ],
+      "city": "Flensburg"
+    }
+  },
+  {
+    "id": "saturday-da",
+    "query": "Jazz lørdag den 10. oktober 2026 i Flensborg",
+    "language": "da",
+    "category": "combined",
+    "query_group": "saturday",
+    "notes": "Assistant-proposed query; needs human language/interpretation and relevance review. No inferred judgments.",
+    "eligibility": {
+      "date_from": "2026-10-10",
+      "date_to": "2026-10-10",
+      "weekdays": [
+        6
+      ],
+      "city": "Flensburg"
+    }
+  },
+  {
+    "id": "saturday-en",
+    "query": "Jazz in Flensburg on Saturday 10 October 2026",
+    "language": "en",
+    "category": "combined",
+    "query_group": "saturday",
+    "notes": "Assistant-proposed query; needs human language/interpretation and relevance review. No inferred judgments.",
+    "eligibility": {
+      "date_from": "2026-10-10",
+      "date_to": "2026-10-10",
+      "weekdays": [
+        6
+      ],
+      "city": "Flensburg"
+    }
+  },
+  {
+    "id": "cityart-de",
+    "query": "Kunstausstellungen in Glücksburg",
+    "language": "de",
+    "category": "combined",
+    "query_group": "cityart",
+    "notes": "Assistant-proposed query; needs human language/interpretation and relevance review. No inferred judgments.",
+    "eligibility": {
+      "city": "Glücksburg"
+    }
+  },
+  {
+    "id": "cityart-da",
+    "query": "Kunstudstillinger i Lyksborg",
+    "language": "da",
+    "category": "combined",
+    "query_group": "cityart",
+    "notes": "Assistant-proposed query; needs human language/interpretation and relevance review. No inferred judgments.",
+    "eligibility": {
+      "city": "Glücksburg"
+    }
+  },
+  {
+    "id": "cityart-en",
+    "query": "Art exhibitions in Glücksburg",
+    "language": "en",
+    "category": "combined",
+    "query_group": "cityart",
+    "notes": "Assistant-proposed query; needs human language/interpretation and relevance review. No inferred judgments.",
+    "eligibility": {
+      "city": "Glücksburg"
+    }
+  },
+  {
+    "id": "songwriters-de",
+    "query": "Selbstgeschriebene Lieder und persönliche Geschichten",
+    "language": "de",
+    "category": "paraphrase",
+    "query_group": "songwriters",
+    "notes": "Assistant-proposed query; needs human language/interpretation and relevance review. No inferred judgments."
+  },
+  {
+    "id": "songwriters-da",
+    "query": "Egne sange og personlige fortællinger",
+    "language": "da",
+    "category": "paraphrase",
+    "query_group": "songwriters",
+    "notes": "Assistant-proposed query; needs human language/interpretation and relevance review. No inferred judgments."
+  },
+  {
+    "id": "songwriters-en",
+    "query": "Original songs and personal stories",
+    "language": "en",
+    "category": "paraphrase",
+    "query_group": "songwriters",
+    "notes": "Assistant-proposed query; needs human language/interpretation and relevance review. No inferred judgments."
+  },
+  {
+    "id": "creative-de",
+    "query": "Mit den eigenen Händen etwas gestalten",
+    "language": "de",
+    "category": "paraphrase",
+    "query_group": "creative",
+    "notes": "Assistant-proposed query; needs human language/interpretation and relevance review. No inferred judgments."
+  },
+  {
+    "id": "creative-da",
+    "query": "Skab noget med dine egne hænder",
+    "language": "da",
+    "category": "paraphrase",
+    "query_group": "creative",
+    "notes": "Assistant-proposed query; needs human language/interpretation and relevance review. No inferred judgments."
+  },
+  {
+    "id": "creative-en",
+    "query": "Make something with your own hands",
+    "language": "en",
+    "category": "paraphrase",
+    "query_group": "creative",
+    "notes": "Assistant-proposed query; needs human language/interpretation and relevance review. No inferred judgments."
+  },
+  {
+    "id": "open-de",
+    "query": "Offene Bühne",
+    "language": "de",
+    "category": "ambiguous",
+    "query_group": "open",
+    "notes": "Assistant-proposed query; needs human language/interpretation and relevance review. No inferred judgments."
+  },
+  {
+    "id": "open-da",
+    "query": "Åben scene",
+    "language": "da",
+    "category": "ambiguous",
+    "query_group": "open",
+    "notes": "Assistant-proposed query; needs human language/interpretation and relevance review. No inferred judgments."
+  },
+  {
+    "id": "open-en",
+    "query": "Open stage",
+    "language": "en",
+    "category": "ambiguous",
+    "query_group": "open",
+    "notes": "Assistant-proposed query; needs human language/interpretation and relevance review. No inferred judgments."
+  },
+  {
+    "id": "colourful-de",
+    "query": "Ein bunter Kulturabend",
+    "language": "de",
+    "category": "ambiguous",
+    "query_group": "colourful",
+    "notes": "Assistant-proposed query; needs human language/interpretation and relevance review. No inferred judgments."
+  },
+  {
+    "id": "colourful-da",
+    "query": "En farverig kulturaften",
+    "language": "da",
+    "category": "ambiguous",
+    "query_group": "colourful",
+    "notes": "Assistant-proposed query; needs human language/interpretation and relevance review. No inferred judgments."
+  },
+  {
+    "id": "colourful-en",
+    "query": "A colourful cultural evening",
+    "language": "en",
+    "category": "ambiguous",
+    "query_group": "colourful",
+    "notes": "Assistant-proposed query; needs human language/interpretation and relevance review. No inferred judgments."
+  },
+  {
+    "id": "concerts-de",
+    "query": "Konzerte mit unterschiedlichen Musikrichtungen",
+    "language": "de",
+    "category": "multiple_results",
+    "query_group": "concerts",
+    "notes": "Assistant-proposed query; needs human language/interpretation and relevance review. No inferred judgments."
+  },
+  {
+    "id": "concerts-da",
+    "query": "Koncerter med forskellige musikgenrer",
+    "language": "da",
+    "category": "multiple_results",
+    "query_group": "concerts",
+    "notes": "Assistant-proposed query; needs human language/interpretation and relevance review. No inferred judgments."
+  },
+  {
+    "id": "concerts-en",
+    "query": "Concerts spanning different musical genres",
+    "language": "en",
+    "category": "multiple_results",
+    "query_group": "concerts",
+    "notes": "Assistant-proposed query; needs human language/interpretation and relevance review. No inferred judgments."
+  },
+  {
+    "id": "artoptions-de",
+    "query": "Verschiedene Ausstellungen zum Entdecken",
+    "language": "de",
+    "category": "multiple_results",
+    "query_group": "artoptions",
+    "notes": "Assistant-proposed query; needs human language/interpretation and relevance review. No inferred judgments."
+  },
+  {
+    "id": "artoptions-da",
+    "query": "Forskellige udstillinger at gå på opdagelse i",
+    "language": "da",
+    "category": "multiple_results",
+    "query_group": "artoptions",
+    "notes": "Assistant-proposed query; needs human language/interpretation and relevance review. No inferred judgments."
+  },
+  {
+    "id": "artoptions-en",
+    "query": "Different exhibitions to explore",
+    "language": "en",
+    "category": "multiple_results",
+    "query_group": "artoptions",
+    "notes": "Assistant-proposed query; needs human language/interpretation and relevance review. No inferred judgments."
+  },
+  {
+    "id": "koreanopera-de",
+    "query": "Oper mit koreanischen Übertiteln",
+    "language": "de",
+    "category": "no_hit",
+    "query_group": "koreanopera",
+    "notes": "Assistant-proposed query; needs human language/interpretation and relevance review. No inferred judgments. Candidate no-hit hypothesis only; inspect full eligible corpus before confirming."
+  },
+  {
+    "id": "koreanopera-da",
+    "query": "Opera med koreanske overtekster",
+    "language": "da",
+    "category": "no_hit",
+    "query_group": "koreanopera",
+    "notes": "Assistant-proposed query; needs human language/interpretation and relevance review. No inferred judgments. Candidate no-hit hypothesis only; inspect full eligible corpus before confirming."
+  },
+  {
+    "id": "koreanopera-en",
+    "query": "Opera with Korean surtitles",
+    "language": "en",
+    "category": "no_hit",
+    "query_group": "koreanopera",
+    "notes": "Assistant-proposed query; needs human language/interpretation and relevance review. No inferred judgments. Candidate no-hit hypothesis only; inspect full eligible corpus before confirming."
+  },
+  {
+    "id": "harpsichord-de",
+    "query": "Workshop zum Bau eines Cembalos",
+    "language": "de",
+    "category": "no_hit",
+    "query_group": "harpsichord",
+    "notes": "Assistant-proposed query; needs human language/interpretation and relevance review. No inferred judgments. Candidate no-hit hypothesis only; inspect full eligible corpus before confirming."
+  },
+  {
+    "id": "harpsichord-da",
+    "query": "Workshop i at bygge et cembalo",
+    "language": "da",
+    "category": "no_hit",
+    "query_group": "harpsichord",
+    "notes": "Assistant-proposed query; needs human language/interpretation and relevance review. No inferred judgments. Candidate no-hit hypothesis only; inspect full eligible corpus before confirming."
+  },
+  {
+    "id": "harpsichord-en",
+    "query": "Workshop on building a harpsichord",
+    "language": "en",
+    "category": "no_hit",
+    "query_group": "harpsichord",
+    "notes": "Assistant-proposed query; needs human language/interpretation and relevance review. No inferred judgments. Candidate no-hit hypothesis only; inspect full eligible corpus before confirming."
+  }
+]

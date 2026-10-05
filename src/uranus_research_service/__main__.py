@@ -12,6 +12,11 @@ def main():
 
         index_main(sys.argv[2:])
         return
+    if len(sys.argv) > 1 and sys.argv[1] == "benchmark":
+        from uranus_research_service.ground_truth_cli import main as benchmark_main
+
+        benchmark_main(sys.argv[2:])
+        return
     configure_logging()
     try:
         app = create_app()
