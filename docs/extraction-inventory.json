@@ -1,0 +1,2969 @@
+{
+  "source_commit": "340df4684611dbc4b8ec73a7702f1fad2ae1973c",
+  "files": [
+    {
+      "source": "backend/app/api/research.py",
+      "category": "REPLACE_WITH_HTTP_CLIENT",
+      "reason": "Query, plan and semantic endpoint dispatch to internal service; Admin authentication/learning and legacy rollout switch stay here.",
+      "sha256": "0d2fd7905307021f562cbfe52c9a980daf03f591ad6f2a6b2ccd7a947ef1a84c",
+      "imports": [
+        "app.admin_database",
+        "app.auth.dependencies",
+        "app.config",
+        "app.database",
+        "app.errors",
+        "app.repositories",
+        "app.repositories.research",
+        "app.repositories.research_areas",
+        "app.research.answer",
+        "app.research.context",
+        "app.research.conversation",
+        "app.research.geography",
+        "app.research.normalize",
+        "app.research.public_result",
+        "app.schemas.research",
+        "app.schemas.research_administrative_result",
+        "app.schemas.research_areas",
+        "app.schemas.research_location",
+        "app.schemas.research_planner",
+        "app.schemas.research_response",
+        "app.schemas.research_suggestions",
+        "app.schemas.research_unified",
+        "app.services.research_administrative",
+        "app.services.research_conversational",
+        "app.services.research_learning",
+        "app.services.research_legacy_conversation",
+        "app.services.research_plan_execution",
+        "app.services.research_planner",
+        "app.services.research_unified",
+        "app.services.semantic_search"
+      ],
+      "responsibility": "Research routes with source read-only access and admin-only suggestion learning.",
+      "database_dependencies": [],
+      "admin_dependencies": [
+        "app.admin_database",
+        "app.auth.dependencies",
+        "Admin Request/app.state dependency to remove"
+      ],
+      "external_services": [
+        "Planner HTTP"
+      ],
+      "tests": [
+        "backend/tests/test_research_sql_provenance.py",
+        "backend/tests/test_vector_metadata.py",
+        "backend/tests/test_research_calendar.py",
+        "backend/tests/test_research_internal_plan.py",
+        "backend/tests/test_admin_auth.py",
+        "backend/tests/test_research_area_migration.py",
+        "backend/tests/test_research_v13.py",
+        "backend/tests/test_review_benchmark.py",
+        "backend/tests/test_research_population.py",
+        "backend/tests/test_research_administrative.py",
+        "backend/tests/test_research_resolution.py",
+        "backend/tests/test_research_administrative_areas_batch.py",
+        "backend/tests/test_research_geography.py",
+        "backend/tests/test_project_knowledge.py",
+        "backend/tests/test_administrative_integration_guards.py",
+        "backend/tests/test_administrative_geography.py",
+        "backend/tests/test_research_suggestions.py",
+        "backend/tests/test_research_areas.py",
+        "backend/tests/test_research_scope.py",
+        "backend/tests/test_research_taxonomy.py",
+        "backend/tests/test_taxonomy_index.py",
+        "backend/tests/test_research_v12.py",
+        "backend/tests/test_research_grouping_flow.py",
+        "backend/tests/test_research_catalog.py",
+        "backend/tests/test_research_conversation.py",
+        "backend/tests/test_research_grouping.py",
+        "backend/tests/test_taxonomy_semantic.py",
+        "backend/tests/test_search_gateway.py",
+        "backend/tests/test_admin_upgrade_contracts.py",
+        "backend/tests/test_admin_roles.py",
+        "backend/tests/test_research_domain_contract.py",
+        "backend/tests/test_research_administrative_areas.py",
+        "backend/tests/test_research_answer.py",
+        "backend/tests/test_research_operator_config.py",
+        "backend/tests/test_research_chronology.py",
+        "backend/tests/test_semantic_search.py",
+        "backend/tests/test_operator_diagnostics.py",
+        "backend/tests/test_taxonomy_flow.py",
+        "backend/tests/test_semantic_genres.py",
+        "backend/tests/test_research_plan_execution.py",
+        "backend/tests/test_vector_index.py",
+        "backend/tests/test_research_ordering_contract.py",
+        "backend/tests/test_research_planner.py",
+        "backend/tests/test_research_analytics.py",
+        "backend/tests/test_research_unified.py",
+        "backend/tests/test_research_geocoder.py",
+        "backend/tests/test_semantic_knowledge_index.py",
+        "backend/tests/test_research_v12_postgis.py",
+        "backend/tests/test_research_v9_adapter.py",
+        "backend/tests/test_semantic_relevance.py",
+        "backend/tests/test_research.py",
+        "backend/tests/test_research_semantic_eligibility.py"
+      ],
+      "target": "Admin internal HTTP adapter (future)",
+      "phase": "Design only in phase 1; no extraction activated"
+    },
+    {
+      "source": "backend/app/repositories/research.py",
+      "category": "MOVE",
+      "reason": "Preserve deterministic Research behavior in the execution service.",
+      "sha256": "55a41cffbcb4f3bd62e774a1055a330fb67e02683ca73b74eec16245387e00f7",
+      "imports": [
+        "app.config",
+        "app.errors",
+        "app.repositories.activity_previews",
+        "app.repositories.created_period",
+        "app.repositories.entities",
+        "app.repositories.entity_search",
+        "app.repositories.location",
+        "app.repositories.research_areas",
+        "app.repositories.research_place",
+        "app.research.sql_provenance",
+        "app.schemas.research",
+        "app.services.quality.urls"
+      ],
+      "responsibility": "Public research projections over the existing read-only source snapshot.",
+      "database_dependencies": [
+        "uranus.event",
+        "uranus.event_category",
+        "uranus.event_date",
+        "uranus.event_type_link",
+        "uranus.genre_type",
+        "uranus.organization",
+        "uranus.pluto_image",
+        "uranus.pluto_image_link",
+        "uranus.space",
+        "uranus.venue"
+      ],
+      "admin_dependencies": [],
+      "external_services": [],
+      "tests": [
+        "backend/tests/test_research_sql_provenance.py",
+        "backend/tests/test_vector_metadata.py",
+        "backend/tests/test_research_calendar.py",
+        "backend/tests/test_research_internal_plan.py",
+        "backend/tests/test_admin_auth.py",
+        "backend/tests/test_research_area_migration.py",
+        "backend/tests/test_research_v13.py",
+        "backend/tests/test_review_benchmark.py",
+        "backend/tests/test_research_population.py",
+        "backend/tests/test_research_administrative.py",
+        "backend/tests/test_research_resolution.py",
+        "backend/tests/test_research_administrative_areas_batch.py",
+        "backend/tests/test_research_geography.py",
+        "backend/tests/test_project_knowledge.py",
+        "backend/tests/test_administrative_integration_guards.py",
+        "backend/tests/test_administrative_geography.py",
+        "backend/tests/test_research_suggestions.py",
+        "backend/tests/test_research_areas.py",
+        "backend/tests/test_research_scope.py",
+        "backend/tests/test_research_taxonomy.py",
+        "backend/tests/test_taxonomy_index.py",
+        "backend/tests/test_research_v12.py",
+        "backend/tests/test_research_grouping_flow.py",
+        "backend/tests/test_research_catalog.py",
+        "backend/tests/test_research_conversation.py",
+        "backend/tests/test_research_grouping.py",
+        "backend/tests/test_taxonomy_semantic.py",
+        "backend/tests/test_search_gateway.py",
+        "backend/tests/test_admin_upgrade_contracts.py",
+        "backend/tests/test_admin_roles.py",
+        "backend/tests/test_research_domain_contract.py",
+        "backend/tests/test_research_administrative_areas.py",
+        "backend/tests/test_research_answer.py",
+        "backend/tests/test_research_operator_config.py",
+        "backend/tests/test_research_chronology.py",
+        "backend/tests/test_semantic_search.py",
+        "backend/tests/test_operator_diagnostics.py",
+        "backend/tests/test_taxonomy_flow.py",
+        "backend/tests/test_semantic_genres.py",
+        "backend/tests/test_research_plan_execution.py",
+        "backend/tests/test_vector_index.py",
+        "backend/tests/test_research_ordering_contract.py",
+        "backend/tests/test_research_planner.py",
+        "backend/tests/test_research_analytics.py",
+        "backend/tests/test_research_unified.py",
+        "backend/tests/test_research_geocoder.py",
+        "backend/tests/test_semantic_knowledge_index.py",
+        "backend/tests/test_research_v12_postgis.py",
+        "backend/tests/test_research_v9_adapter.py",
+        "backend/tests/test_semantic_relevance.py",
+        "backend/tests/test_research.py",
+        "backend/tests/test_research_semantic_eligibility.py"
+      ],
+      "target": "src/uranus_research_service/repositories/research.py",
+      "phase": "Design only in phase 1; no extraction activated"
+    },
+    {
+      "source": "backend/app/repositories/research_administrative.py",
+      "category": "MOVE",
+      "reason": "Preserve deterministic Research behavior in the execution service.",
+      "sha256": "19ab3b9c645a8256cff4c88a680f6b87c24d886cdee1af205f01e087eece3799",
+      "imports": [
+        "app.repositories.research_administrative_metadata",
+        "app.repositories.research_areas",
+        "app.research.geography"
+      ],
+      "responsibility": "Assemble resolved identities from the administrative metadata boundary.",
+      "database_dependencies": [],
+      "admin_dependencies": [],
+      "external_services": [],
+      "tests": [
+        "backend/tests/test_research_sql_provenance.py",
+        "backend/tests/test_research_internal_plan.py",
+        "backend/tests/test_research_administrative.py",
+        "backend/tests/test_research_administrative_areas_batch.py",
+        "backend/tests/test_administrative_integration_guards.py",
+        "backend/tests/test_administrative_geography.py",
+        "backend/tests/test_research_v12.py",
+        "backend/tests/test_research_grouping_flow.py",
+        "backend/tests/test_research_analytics.py",
+        "backend/tests/test_research_v9_adapter.py"
+      ],
+      "target": "src/uranus_research_service/repositories/research_administrative.py",
+      "phase": "Design only in phase 1; no extraction activated"
+    },
+    {
+      "source": "backend/app/repositories/research_administrative_metadata.py",
+      "category": "MOVE",
+      "reason": "Preserve deterministic Research behavior in the execution service.",
+      "sha256": "6394799d35f35747a48544c8461fc85340af7296d5042bf7d8110217c7b6d01a",
+      "imports": [
+        "app.repositories.research_areas",
+        "app.research.catalog",
+        "app.research.geography"
+      ],
+      "responsibility": "TRANSITIONAL metadata adapter for the existing research_area schema.",
+      "database_dependencies": [],
+      "admin_dependencies": [],
+      "external_services": [],
+      "tests": [],
+      "target": "src/uranus_research_service/repositories/research_administrative_metadata.py",
+      "phase": "Design only in phase 1; no extraction activated"
+    },
+    {
+      "source": "backend/app/repositories/research_areas.py",
+      "category": "MOVE",
+      "reason": "Split: read-only area queries move; Admin area imports and writes remain. Dedicated reader may SELECT only admin.research_area.",
+      "sha256": "77b03d5aa13ab7fc2752efc981a1a3401ee41facfac1de9e7c8188d059b4e120",
+      "imports": [
+        "app.admin_database",
+        "app.errors",
+        "app.repositories.entities",
+        "app.repositories.entity_search",
+        "app.research.area_selection",
+        "app.schemas.research_areas"
+      ],
+      "responsibility": "Persisted areas are resolved once; no provider access in a Research request.",
+      "database_dependencies": [
+        "admin.research_area"
+      ],
+      "admin_dependencies": [
+        "app.admin_database"
+      ],
+      "external_services": [],
+      "tests": [
+        "backend/tests/test_research_administrative.py",
+        "backend/tests/test_research_areas.py",
+        "backend/tests/test_research_catalog.py",
+        "backend/tests/test_research_administrative_areas.py",
+        "backend/tests/test_research_chronology.py",
+        "backend/tests/test_semantic_search.py",
+        "backend/tests/test_semantic_genres.py",
+        "backend/tests/test_research_plan_execution.py",
+        "backend/tests/test_research_analytics.py",
+        "backend/tests/test_research_semantic_eligibility.py"
+      ],
+      "target": "src/uranus_research_service/repositories/research_areas.py",
+      "phase": "Design only in phase 1; no extraction activated"
+    },
+    {
+      "source": "backend/app/repositories/research_execution.py",
+      "category": "MOVE",
+      "reason": "Preserve deterministic Research behavior in the execution service.",
+      "sha256": "5954319cfca8f32c851dcad0dfed98f8fe0ef64a5e6659241c7bbb9d2b0263c3",
+      "imports": [
+        "app.config",
+        "app.errors",
+        "app.repositories.research",
+        "app.repositories.research_areas",
+        "app.repositories.research_resolution",
+        "app.research.semantic_limits",
+        "app.research.sql_provenance",
+        "app.schemas.research",
+        "app.schemas.research_execution",
+        "app.schemas.research_sql"
+      ],
+      "responsibility": "Exact, bounded SQL metrics using the shared eligible Research population.",
+      "database_dependencies": [
+        "uranus.event_type_link"
+      ],
+      "admin_dependencies": [],
+      "external_services": [],
+      "tests": [
+        "backend/tests/test_research_sql_provenance.py",
+        "backend/tests/test_research_calendar.py",
+        "backend/tests/test_research_internal_plan.py",
+        "backend/tests/test_research_v13.py",
+        "backend/tests/test_research_administrative.py",
+        "backend/tests/test_research_resolution.py",
+        "backend/tests/test_administrative_integration_guards.py",
+        "backend/tests/test_administrative_geography.py",
+        "backend/tests/test_research_taxonomy.py",
+        "backend/tests/test_research_v12.py",
+        "backend/tests/test_research_grouping.py",
+        "backend/tests/test_research_answer.py",
+        "backend/tests/test_research_chronology.py",
+        "backend/tests/test_taxonomy_flow.py",
+        "backend/tests/test_research_plan_execution.py",
+        "backend/tests/test_research_analytics.py",
+        "backend/tests/test_research_unified.py",
+        "backend/tests/test_research_v9_adapter.py",
+        "backend/tests/test_research_semantic_eligibility.py"
+      ],
+      "target": "src/uranus_research_service/repositories/research_execution.py",
+      "phase": "Design only in phase 1; no extraction activated"
+    },
+    {
+      "source": "backend/app/repositories/research_grouping.py",
+      "category": "MOVE",
+      "reason": "Preserve deterministic Research behavior in the execution service.",
+      "sha256": "2ee96aa95b191e2163b8ede50d66a5a140f395937154dab377c0a49a554a3f58",
+      "imports": [
+        "app.config",
+        "app.repositories.administrative_execution",
+        "app.repositories.research",
+        "app.repositories.research_areas",
+        "app.repositories.research_execution",
+        "app.research.capabilities",
+        "app.research.plan",
+        "app.research.sql_provenance",
+        "app.schemas.research_execution"
+      ],
+      "responsibility": "Ordered cell aggregation on the shared authoritative occurrence selection.",
+      "database_dependencies": [],
+      "admin_dependencies": [],
+      "external_services": [],
+      "tests": [
+        "backend/tests/test_research_calendar.py",
+        "backend/tests/test_research_v13.py",
+        "backend/tests/test_research_v12.py",
+        "backend/tests/test_research_grouping_flow.py",
+        "backend/tests/test_research_conversation.py",
+        "backend/tests/test_research_grouping.py",
+        "backend/tests/test_research_v12_postgis.py",
+        "backend/tests/test_research_v9_adapter.py"
+      ],
+      "target": "src/uranus_research_service/repositories/research_grouping.py",
+      "phase": "Design only in phase 1; no extraction activated"
+    },
+    {
+      "source": "backend/app/repositories/research_metrics.py",
+      "category": "DEFER",
+      "reason": "Legacy v4 metrics path; retain while active v9\u2013v13 extraction is staged.",
+      "sha256": "651ae2f67d3e400b8c78adcd519c5ddc14fffb28faab1a4357e06f187d02c26a",
+      "imports": [
+        "app.config",
+        "app.errors",
+        "app.repositories.research",
+        "app.repositories.research_areas",
+        "app.research.semantic_documents",
+        "app.research.sql_provenance",
+        "app.schemas.research_domain",
+        "app.schemas.research_execution",
+        "app.schemas.research_unified"
+      ],
+      "responsibility": "Closed exact metrics over the shared public PostgreSQL Research population.",
+      "database_dependencies": [],
+      "admin_dependencies": [],
+      "external_services": [],
+      "tests": [
+        "backend/tests/test_research_sql_provenance.py",
+        "backend/tests/test_research_unified.py"
+      ],
+      "target": "backend/app/repositories/research_metrics.py",
+      "phase": "Design only in phase 1; no extraction activated"
+    },
+    {
+      "source": "backend/app/repositories/research_place.py",
+      "category": "MOVE",
+      "reason": "Preserve deterministic Research behavior in the execution service.",
+      "sha256": "d713ee928f9943edc2f0327329114b8cc4474979c53ac99c46be5b37fb590518",
+      "imports": [
+        "app.schemas.research_location"
+      ],
+      "responsibility": "Place selection over effective venue data. All SQL identifiers are application-owned.",
+      "database_dependencies": [],
+      "admin_dependencies": [],
+      "external_services": [],
+      "tests": [
+        "backend/tests/test_research_geography.py"
+      ],
+      "target": "src/uranus_research_service/repositories/research_place.py",
+      "phase": "Design only in phase 1; no extraction activated"
+    },
+    {
+      "source": "backend/app/repositories/research_resolution.py",
+      "category": "MOVE",
+      "reason": "Preserve deterministic Research behavior in the execution service.",
+      "sha256": "67790bc274130e0e697f1b4577422d4f75f096902935e85b1f2a0fbd0636fe71",
+      "imports": [
+        "app.admin_database",
+        "app.clients.research_geocoder",
+        "app.config",
+        "app.database",
+        "app.errors",
+        "app.repositories.entity_search",
+        "app.repositories.research",
+        "app.repositories.research_administrative",
+        "app.repositories.research_administrative_metadata",
+        "app.repositories.research_areas",
+        "app.repositories.research_place",
+        "app.repositories.research_taxonomy",
+        "app.research.administrative_catalog",
+        "app.research.administrative_resolver",
+        "app.research.capabilities",
+        "app.research.context",
+        "app.research.geography",
+        "app.research.plan",
+        "app.schemas.research_execution",
+        "app.schemas.research_location",
+        "app.services.taxonomy_resolution"
+      ],
+      "responsibility": "Bounded exact-first resolution; optional vectors propose source-revalidated taxonomy.",
+      "database_dependencies": [
+        "admin.research_area"
+      ],
+      "admin_dependencies": [
+        "app.admin_database",
+        "Admin Request/app.state dependency to remove"
+      ],
+      "external_services": [
+        "Research Geocoder HTTP"
+      ],
+      "tests": [
+        "backend/tests/test_research_sql_provenance.py",
+        "backend/tests/test_research_internal_plan.py",
+        "backend/tests/test_research_administrative.py",
+        "backend/tests/test_research_resolution.py",
+        "backend/tests/test_administrative_geography.py",
+        "backend/tests/test_research_taxonomy.py",
+        "backend/tests/test_research_v12.py",
+        "backend/tests/test_research_grouping_flow.py",
+        "backend/tests/test_research_grouping.py",
+        "backend/tests/test_taxonomy_semantic.py",
+        "backend/tests/test_research_administrative_areas.py",
+        "backend/tests/test_research_chronology.py",
+        "backend/tests/test_taxonomy_flow.py",
+        "backend/tests/test_research_plan_execution.py",
+        "backend/tests/test_research_analytics.py",
+        "backend/tests/test_research_v12_postgis.py",
+        "backend/tests/test_research_v9_adapter.py",
+        "backend/tests/test_research_semantic_eligibility.py"
+      ],
+      "target": "src/uranus_research_service/repositories/research_resolution.py",
+      "phase": "Design only in phase 1; no extraction activated"
+    },
+    {
+      "source": "backend/app/repositories/research_suggestions.py",
+      "category": "KEEP_IN_ADMIN",
+      "reason": "Admin-owned persistence/import/learning; service receives only read-only geographic projection.",
+      "sha256": "8a876c466c6a0b6dc3459206f58857c7f39fa2d2d6251151b0efd05b3ca79135",
+      "imports": [
+        "app.admin_tables",
+        "app.errors",
+        "app.research.plan",
+        "app.schemas.research_analytics",
+        "app.schemas.research_planner",
+        "app.schemas.research_suggestions",
+        "app.services"
+      ],
+      "responsibility": "Admin-only learning transactions and one indexed suggestion retrieval.",
+      "database_dependencies": [
+        "admin.research_query_history",
+        "admin.research_query_suggestion",
+        "admin.research_query_suggestion_event"
+      ],
+      "admin_dependencies": [
+        "app.admin_tables"
+      ],
+      "external_services": [],
+      "tests": [
+        "backend/tests/test_research_suggestions.py"
+      ],
+      "target": "backend/app/repositories/research_suggestions.py",
+      "phase": "Design only in phase 1; no extraction activated"
+    },
+    {
+      "source": "backend/app/repositories/research_taxonomy.py",
+      "category": "MOVE",
+      "reason": "Preserve deterministic Research behavior in the execution service.",
+      "sha256": "d3f49db1b47aed2544c270067781fa2eb5e7673cc83d52e9e6a6ff917a70851e",
+      "imports": [
+        "app.repositories.research",
+        "app.repositories.vector_events",
+        "app.research.taxonomy"
+      ],
+      "responsibility": "Shared authoritative public taxonomy projections, including localized labels.",
+      "database_dependencies": [
+        "uranus.event",
+        "uranus.event_type",
+        "uranus.event_type_link",
+        "uranus.genre_type"
+      ],
+      "admin_dependencies": [],
+      "external_services": [],
+      "tests": [
+        "backend/tests/test_taxonomy_index.py",
+        "backend/tests/test_research_grouping.py",
+        "backend/tests/test_taxonomy_semantic.py",
+        "backend/tests/test_research_analytics.py"
+      ],
+      "target": "src/uranus_research_service/repositories/research_taxonomy.py",
+      "phase": "Design only in phase 1; no extraction activated"
+    },
+    {
+      "source": "backend/app/repositories/vector_entities.py",
+      "category": "MOVE",
+      "reason": "Preserve deterministic Research behavior in the execution service.",
+      "sha256": "4e390bd2a9cd8268ccb5bc57036b2ff4e47251a57cc9845d9a2b5ec4d7fb591d",
+      "imports": [
+        "app.config",
+        "app.repositories.location",
+        "app.repositories.research",
+        "app.repositories.vector_events",
+        "app.research.semantic_contracts",
+        "app.research.semantic_documents"
+      ],
+      "responsibility": "Bounded, read-only venue/organization projections with canonical public event gates.",
+      "database_dependencies": [
+        "uranus.event",
+        "uranus.event_date",
+        "uranus.organization",
+        "uranus.venue"
+      ],
+      "admin_dependencies": [],
+      "external_services": [],
+      "tests": [
+        "backend/tests/test_semantic_knowledge_index.py"
+      ],
+      "target": "src/uranus_research_service/repositories/vector_entities.py",
+      "phase": "Design only in phase 1; no extraction activated"
+    },
+    {
+      "source": "backend/app/repositories/vector_events.py",
+      "category": "MOVE",
+      "reason": "Preserve deterministic Research behavior in the execution service.",
+      "sha256": "e33a2608812d6ceb4583590b11f20172614b7a239104225814cce0b1fac20c8f",
+      "imports": [
+        "app.config",
+        "app.repositories.activity_previews",
+        "app.repositories.location",
+        "app.repositories.research",
+        "app.repositories.temporal",
+        "app.research.semantic_contracts",
+        "app.research.semantic_documents",
+        "app.research.vector_documents"
+      ],
+      "responsibility": "Bounded public event snapshot. No model calls or source mutations in this module.",
+      "database_dependencies": [
+        "admin.research_area",
+        "uranus.event",
+        "uranus.event_date",
+        "uranus.event_type",
+        "uranus.event_type_link",
+        "uranus.organization",
+        "uranus.space",
+        "uranus.venue"
+      ],
+      "admin_dependencies": [],
+      "external_services": [],
+      "tests": [
+        "backend/tests/test_semantic_genres.py",
+        "backend/tests/test_vector_index.py",
+        "backend/tests/test_semantic_knowledge_index.py"
+      ],
+      "target": "src/uranus_research_service/repositories/vector_events.py",
+      "phase": "Design only in phase 1; no extraction activated"
+    },
+    {
+      "source": "backend/app/research/__init__.py",
+      "category": "MOVE",
+      "reason": "Preserve deterministic Research behavior in the execution service.",
+      "sha256": "9d9400de6354b56c734f6352f1b50464eedc2a09248cd2e7eaa8194c8090cd64",
+      "imports": [],
+      "responsibility": "Operator tools for persisted Research metadata.",
+      "database_dependencies": [],
+      "admin_dependencies": [],
+      "external_services": [],
+      "tests": [
+        "backend/tests/test_research_sql_provenance.py",
+        "backend/tests/test_sql_console.py",
+        "backend/tests/test_timeline.py",
+        "backend/tests/test_notifications.py",
+        "backend/tests/test_notification_smtp_security.py",
+        "backend/tests/test_semantic_knowledge_index.py"
+      ],
+      "target": "src/uranus_research_service/research/__init__.py",
+      "phase": "Design only in phase 1; no extraction activated"
+    },
+    {
+      "source": "backend/app/research/administrative_areas.py",
+      "category": "KEEP_IN_ADMIN",
+      "reason": "Admin-owned persistence/import/learning; service receives only read-only geographic projection.",
+      "sha256": "d214e8060e7c749c7bc0260e1b8bdf7ba1b783cb164c46dc01c0a616f703a5b6",
+      "imports": [
+        "app.auth.diagnostics",
+        "app.clients.research_geocoder",
+        "app.config",
+        "app.research.administrative_catalog",
+        "app.research.administrative_import",
+        "app.research.administrative_resolver",
+        "app.research.areas",
+        "app.services.nominatim",
+        "app.storage_preflight"
+      ],
+      "responsibility": "Explicit, atomic operator import of reviewed district/state/region boundaries.",
+      "database_dependencies": [
+        "admin.research_area"
+      ],
+      "admin_dependencies": [
+        "app.auth.diagnostics"
+      ],
+      "external_services": [
+        "Research Geocoder HTTP"
+      ],
+      "tests": [
+        "backend/tests/test_research_administrative_areas_batch.py",
+        "backend/tests/test_research_administrative_areas.py"
+      ],
+      "target": "backend/app/research/administrative_areas.py",
+      "phase": "Design only in phase 1; no extraction activated"
+    },
+    {
+      "source": "backend/app/research/administrative_areas_batch.py",
+      "category": "KEEP_IN_ADMIN",
+      "reason": "Admin-owned persistence/import/learning; service receives only read-only geographic projection.",
+      "sha256": "d426a00194cc961e743fa3e530336f9c32ce595030712037e1f61cbc2d47d89e",
+      "imports": [
+        "app.config",
+        "app.research.administrative_areas"
+      ],
+      "responsibility": "Sequential operator import of checked-in DE states/districts and DK regions.",
+      "database_dependencies": [],
+      "admin_dependencies": [],
+      "external_services": [],
+      "tests": [
+        "backend/tests/test_research_administrative_areas_batch.py"
+      ],
+      "target": "backend/app/research/administrative_areas_batch.py",
+      "phase": "Design only in phase 1; no extraction activated"
+    },
+    {
+      "source": "backend/app/research/administrative_catalog.py",
+      "category": "MOVE",
+      "reason": "Preserve deterministic Research behavior in the execution service.",
+      "sha256": "e15bff62198bac1b7d9320764e450c17ecdda01f72721d856bbf01b842365883",
+      "imports": [
+        "app.errors",
+        "app.research.administrative_resolver",
+        "app.research.geography",
+        "app.schemas.research_administrative",
+        "app.schemas.research_values"
+      ],
+      "responsibility": "Operator-built complete inventories; Nominatim search is never an enumeration API.",
+      "database_dependencies": [],
+      "admin_dependencies": [],
+      "external_services": [
+        "Nominatim (Admin operator import)"
+      ],
+      "tests": [
+        "backend/tests/test_administrative_integration_guards.py",
+        "backend/tests/test_administrative_geography.py"
+      ],
+      "target": "src/uranus_research_service/research/administrative_catalog.py",
+      "phase": "Design only in phase 1; no extraction activated"
+    },
+    {
+      "source": "backend/app/research/administrative_import.py",
+      "category": "KEEP_IN_ADMIN",
+      "reason": "Admin-owned persistence/import/learning; service receives only read-only geographic projection.",
+      "sha256": "dfd702fa5c2908818a64b0f56a4b49807a8606938ad923fb15925a0cf75d865d",
+      "imports": [
+        "app.clients.research_geocoder",
+        "app.config",
+        "app.research.administrative_catalog",
+        "app.research.administrative_resolver",
+        "app.research.geography",
+        "app.schemas.research_values"
+      ],
+      "responsibility": "Build a reviewed inventory through the private Geocoder; never infer completeness.",
+      "database_dependencies": [],
+      "admin_dependencies": [],
+      "external_services": [
+        "Research Geocoder HTTP"
+      ],
+      "tests": [],
+      "target": "backend/app/research/administrative_import.py",
+      "phase": "Design only in phase 1; no extraction activated"
+    },
+    {
+      "source": "backend/app/research/administrative_resolver.py",
+      "category": "MOVE",
+      "reason": "Preserve deterministic Research behavior in the execution service.",
+      "sha256": "1561128c7ae6da54fcb44b567047a03429ac5fb7db386e3e1004d80b948e6e52",
+      "imports": [
+        "app.clients.research_geocoder",
+        "app.errors",
+        "app.research.geography",
+        "app.schemas.research_administrative"
+      ],
+      "responsibility": "Geocoder is authoritative; ambiguity and role mismatches are never auto-corrected.",
+      "database_dependencies": [],
+      "admin_dependencies": [],
+      "external_services": [
+        "Research Geocoder HTTP"
+      ],
+      "tests": [
+        "backend/tests/test_administrative_integration_guards.py",
+        "backend/tests/test_administrative_geography.py"
+      ],
+      "target": "src/uranus_research_service/research/administrative_resolver.py",
+      "phase": "Design only in phase 1; no extraction activated"
+    },
+    {
+      "source": "backend/app/research/answer.py",
+      "category": "MOVE",
+      "reason": "Preserve deterministic Research behavior in the execution service.",
+      "sha256": "e1fd5cf1901d244077698118a293f5566e5f5b566168f0f08a241630a5f21da3",
+      "imports": [
+        "app.research.plan",
+        "app.schemas.research_execution"
+      ],
+      "responsibility": "Pure German answer text from the executed selection, never model prose or SQL.",
+      "database_dependencies": [],
+      "admin_dependencies": [],
+      "external_services": [],
+      "tests": [
+        "backend/tests/test_research_v13.py",
+        "backend/tests/test_research_answer.py"
+      ],
+      "target": "src/uranus_research_service/research/answer.py",
+      "phase": "Design only in phase 1; no extraction activated"
+    },
+    {
+      "source": "backend/app/research/answer_facts.py",
+      "category": "MOVE",
+      "reason": "Preserve deterministic Research behavior in the execution service.",
+      "sha256": "be4d55a579abf1c724add705365578203d4499cd3dca4f0bd9cbed7f1e2ce53a",
+      "imports": [
+        "app.research.plan",
+        "app.research.wire.research_v13_schema",
+        "app.schemas.research_execution",
+        "app.schemas.research_values"
+      ],
+      "responsibility": "Bounded, identity-free factual projection for deterministic conversational rendering.",
+      "database_dependencies": [],
+      "admin_dependencies": [],
+      "external_services": [],
+      "tests": [
+        "backend/tests/test_research_v13.py"
+      ],
+      "target": "src/uranus_research_service/research/answer_facts.py",
+      "phase": "Design only in phase 1; no extraction activated"
+    },
+    {
+      "source": "backend/app/research/area_selection.py",
+      "category": "MOVE",
+      "reason": "Preserve deterministic Research behavior in the execution service.",
+      "sha256": "8697060cf82b4f7d41d2a20872861bb178a46da908cbca518a7e5b748556683e",
+      "imports": [],
+      "responsibility": "Shared bounded selection for semantic area filters.",
+      "database_dependencies": [],
+      "admin_dependencies": [],
+      "external_services": [],
+      "tests": [
+        "backend/tests/test_semantic_knowledge_index.py"
+      ],
+      "target": "src/uranus_research_service/research/area_selection.py",
+      "phase": "Design only in phase 1; no extraction activated"
+    },
+    {
+      "source": "backend/app/research/areas.py",
+      "category": "KEEP_IN_ADMIN",
+      "reason": "Admin-owned persistence/import/learning; service receives only read-only geographic projection.",
+      "sha256": "1461cdb0d094c49694445bb6d85b522a1136c0f580f5f61b8c75df66f7ff0a14",
+      "imports": [
+        "app.auth.diagnostics",
+        "app.config",
+        "app.errors",
+        "app.logging",
+        "app.research.catalog",
+        "app.research.danish_catalog",
+        "app.schemas.geo",
+        "app.services.nominatim",
+        "app.storage_preflight"
+      ],
+      "responsibility": "Explicit operator import of OSM municipalities through the configured Nominatim.",
+      "database_dependencies": [
+        "admin.research_area"
+      ],
+      "admin_dependencies": [
+        "app.auth.diagnostics"
+      ],
+      "external_services": [
+        "Nominatim (Admin operator import)"
+      ],
+      "tests": [
+        "backend/tests/test_research_area_migration.py",
+        "backend/tests/test_research_administrative_areas_batch.py",
+        "backend/tests/test_research_areas.py",
+        "backend/tests/test_research_catalog.py",
+        "backend/tests/test_research_administrative_areas.py"
+      ],
+      "target": "backend/app/research/areas.py",
+      "phase": "Design only in phase 1; no extraction activated"
+    },
+    {
+      "source": "backend/app/research/capabilities.py",
+      "category": "MOVE",
+      "reason": "Preserve deterministic Research behavior in the execution service.",
+      "sha256": "b2f9ad7d9be65a7fe79a287a70ace260cf4d7232ced11dbacae8e9f2dbccf635",
+      "imports": [
+        "app.errors",
+        "app.research.geography",
+        "app.research.plan"
+      ],
+      "responsibility": "One version-independent capability gate. No natural-language interpretation.",
+      "database_dependencies": [],
+      "admin_dependencies": [],
+      "external_services": [],
+      "tests": [
+        "backend/tests/test_research_internal_plan.py",
+        "backend/tests/test_research_administrative.py",
+        "backend/tests/test_administrative_integration_guards.py",
+        "backend/tests/test_research_grouping.py",
+        "backend/tests/test_research_v9_adapter.py"
+      ],
+      "target": "src/uranus_research_service/research/capabilities.py",
+      "phase": "Design only in phase 1; no extraction activated"
+    },
+    {
+      "source": "backend/app/research/catalog.py",
+      "category": "MOVE",
+      "reason": "Preserve deterministic Research behavior in the execution service.",
+      "sha256": "7c77eec31b629d82057a60d30ba143a048d06593f223feb37b6ff244f5224f9b",
+      "imports": [],
+      "responsibility": "Offline BKG VG250 municipality names/AGS to bounded Nominatim discovery input.",
+      "database_dependencies": [],
+      "admin_dependencies": [],
+      "external_services": [
+        "Nominatim (Admin operator import)"
+      ],
+      "tests": [
+        "backend/tests/test_sql_console.py",
+        "backend/tests/test_sql_console_integration.py",
+        "backend/tests/test_source_schema_verify.py",
+        "backend/tests/test_research_administrative_areas_batch.py",
+        "backend/tests/test_administrative_integration_guards.py",
+        "backend/tests/test_administrative_geography.py",
+        "backend/tests/test_research_areas.py",
+        "backend/tests/test_research_scope.py",
+        "backend/tests/test_research_catalog.py",
+        "backend/tests/test_research_domain_contract.py",
+        "backend/tests/test_entities.py",
+        "backend/tests/test_notifications.py",
+        "backend/tests/test_research_unified.py"
+      ],
+      "target": "src/uranus_research_service/research/catalog.py",
+      "phase": "Design only in phase 1; no extraction activated"
+    },
+    {
+      "source": "backend/app/research/chunk_kinds.py",
+      "category": "MOVE",
+      "reason": "Preserve deterministic Research behavior in the execution service.",
+      "sha256": "22163e9d9c8dc0763f9ef39355bf6dce85fd3e4a59e362b6bf1dea7bf7c4f4e8",
+      "imports": [],
+      "responsibility": "Canonical public chunk kinds shared by index and response contracts.",
+      "database_dependencies": [],
+      "admin_dependencies": [],
+      "external_services": [],
+      "tests": [
+        "backend/tests/test_review_benchmark.py"
+      ],
+      "target": "src/uranus_research_service/research/chunk_kinds.py",
+      "phase": "Design only in phase 1; no extraction activated"
+    },
+    {
+      "source": "backend/app/research/context.py",
+      "category": "MOVE",
+      "reason": "Preserve deterministic Research behavior in the execution service.",
+      "sha256": "3f3673e7d22f369f91ffa2de38bf43705176e200e47bf267e054e48428ce8745",
+      "imports": [
+        "app.schemas.research_location"
+      ],
+      "responsibility": "Transient request/runtime inputs; never persisted or sent to the Planner.",
+      "database_dependencies": [],
+      "admin_dependencies": [],
+      "external_services": [],
+      "tests": [
+        "backend/tests/test_health.py",
+        "backend/tests/test_research_sql_provenance.py",
+        "backend/tests/test_research_internal_plan.py",
+        "backend/tests/test_admin_auth.py",
+        "backend/tests/test_geo_analytics.py",
+        "backend/tests/test_activity.py",
+        "backend/tests/test_research_v13.py",
+        "backend/tests/test_finding_previews.py",
+        "backend/tests/test_research_administrative.py",
+        "backend/tests/test_temporal_entities.py",
+        "backend/tests/test_source_schema_verify.py",
+        "backend/tests/test_marks.py",
+        "backend/tests/test_research_geography.py",
+        "backend/tests/test_administrative_integration_guards.py",
+        "backend/tests/test_core_rules.py",
+        "backend/tests/test_live_sql_diagnostics.py",
+        "backend/tests/test_research_suggestions.py",
+        "backend/tests/test_quality_v2.py",
+        "backend/tests/test_entity_periods.py",
+        "backend/tests/test_logo_rules.py",
+        "backend/tests/test_research_taxonomy.py",
+        "backend/tests/test_research_v12.py",
+        "backend/tests/test_research_grouping_flow.py",
+        "backend/tests/test_research_conversation.py",
+        "backend/tests/test_venue_scope.py",
+        "backend/tests/test_entities.py",
+        "backend/tests/test_research_answer.py",
+        "backend/tests/test_entity_search.py",
+        "backend/tests/test_queues.py",
+        "backend/tests/test_url_reachability.py",
+        "backend/tests/test_research_chronology.py",
+        "backend/tests/test_semantic_search.py",
+        "backend/tests/test_semantic_genres.py",
+        "backend/tests/test_notifications.py",
+        "backend/tests/test_research_plan_execution.py",
+        "backend/tests/test_sql_diagnostics.py",
+        "backend/tests/test_vector_index.py",
+        "backend/tests/test_notification_smtp_security.py",
+        "backend/tests/test_research_planner.py",
+        "backend/tests/test_research_analytics.py",
+        "backend/tests/test_research_unified.py",
+        "backend/tests/test_research_geocoder.py",
+        "backend/tests/test_semantic_knowledge_index.py",
+        "backend/tests/test_event_content.py",
+        "backend/tests/test_research_v12_postgis.py",
+        "backend/tests/test_postal_code_rules.py",
+        "backend/tests/test_research_v9_adapter.py",
+        "backend/tests/test_semantic_relevance.py",
+        "backend/tests/test_research_semantic_eligibility.py"
+      ],
+      "target": "src/uranus_research_service/research/context.py",
+      "phase": "Design only in phase 1; no extraction activated"
+    },
+    {
+      "source": "backend/app/research/conversation.py",
+      "category": "MOVE",
+      "reason": "Preserve deterministic Research behavior in the execution service.",
+      "sha256": "1067768ea3b14cecc37786c643c841c370ebf9c101a8cbb29d9bab37eec535b3",
+      "imports": [
+        "app.research.geography",
+        "app.research.plan",
+        "app.schemas.research_conversation",
+        "app.schemas.research_conversation_v12"
+      ],
+      "responsibility": "Deliberate allowlist projection of executed intent, not response serialization.",
+      "database_dependencies": [],
+      "admin_dependencies": [],
+      "external_services": [],
+      "tests": [
+        "backend/tests/test_research_v13.py",
+        "backend/tests/test_research_v12.py",
+        "backend/tests/test_research_conversation.py",
+        "backend/tests/test_research_v12_postgis.py"
+      ],
+      "target": "src/uranus_research_service/research/conversation.py",
+      "phase": "Design only in phase 1; no extraction activated"
+    },
+    {
+      "source": "backend/app/research/conversation_state.py",
+      "category": "MOVE",
+      "reason": "Preserve deterministic Research behavior in the execution service.",
+      "sha256": "1fa194aef9b2619032624c8d27ffb549c18d998d85ce6e9e39b8668dcf477222",
+      "imports": [
+        "app.errors",
+        "app.research.answer_facts",
+        "app.research.wire.research_v13_schema",
+        "app.schemas.research_conversation_v12"
+      ],
+      "responsibility": "Bounded process-local, session-bound state. Tokens are random, not encoded semantics.",
+      "database_dependencies": [],
+      "admin_dependencies": [],
+      "external_services": [],
+      "tests": [
+        "backend/tests/test_research_v13.py"
+      ],
+      "target": "src/uranus_research_service/research/conversation_state.py",
+      "phase": "Design only in phase 1; no extraction activated"
+    },
+    {
+      "source": "backend/app/research/danish_catalog.py",
+      "category": "KEEP_IN_ADMIN",
+      "reason": "Admin-owned persistence/import/learning; service receives only read-only geographic projection.",
+      "sha256": "5520d9598faa02a97ec329ca7cdebc5047251112e6a6b0d71b2975991ddaab0e",
+      "imports": [],
+      "responsibility": "Explicit municipality identities; no discovery or public geocoder fallback.",
+      "database_dependencies": [],
+      "admin_dependencies": [],
+      "external_services": [
+        "Nominatim (Admin operator import)"
+      ],
+      "tests": [
+        "backend/tests/test_research_areas.py"
+      ],
+      "target": "backend/app/research/danish_catalog.py",
+      "phase": "Design only in phase 1; no extraction activated"
+    },
+    {
+      "source": "backend/app/research/evidence_context.py",
+      "category": "MOVE",
+      "reason": "Preserve deterministic Research behavior in the execution service.",
+      "sha256": "d7568242c1120c247ac339ccdd4c4d204709d8b7bfabc1e3c68d690e0f401615",
+      "imports": [],
+      "responsibility": "Explicit public source identities; never infer scope from names or prose.",
+      "database_dependencies": [],
+      "admin_dependencies": [],
+      "external_services": [],
+      "tests": [
+        "backend/tests/test_semantic_search.py",
+        "backend/tests/test_vector_index.py",
+        "backend/tests/test_semantic_knowledge_index.py"
+      ],
+      "target": "src/uranus_research_service/research/evidence_context.py",
+      "phase": "Design only in phase 1; no extraction activated"
+    },
+    {
+      "source": "backend/app/research/geography.py",
+      "category": "MOVE",
+      "reason": "Preserve deterministic Research behavior in the execution service.",
+      "sha256": "2c4576c22f2518ea862371f31edabc6a8e6afa0a62408492d0488f1796a87bcf",
+      "imports": [],
+      "responsibility": "Internal geography: identity and administrative level are separate from names.",
+      "database_dependencies": [],
+      "admin_dependencies": [],
+      "external_services": [],
+      "tests": [
+        "backend/tests/test_research_internal_plan.py",
+        "backend/tests/test_research_administrative.py",
+        "backend/tests/test_research_geography.py",
+        "backend/tests/test_administrative_integration_guards.py",
+        "backend/tests/test_administrative_geography.py",
+        "backend/tests/test_research_v12.py",
+        "backend/tests/test_research_conversation.py",
+        "backend/tests/test_research_grouping.py",
+        "backend/tests/test_research_analytics.py",
+        "backend/tests/test_semantic_knowledge_index.py",
+        "backend/tests/test_research_v12_postgis.py",
+        "backend/tests/test_research_v9_adapter.py"
+      ],
+      "target": "src/uranus_research_service/research/geography.py",
+      "phase": "Design only in phase 1; no extraction activated"
+    },
+    {
+      "source": "backend/app/research/normalize.py",
+      "category": "MOVE",
+      "reason": "Preserve deterministic Research behavior in the execution service.",
+      "sha256": "a0ca0d68fe7818376ab05b6f5080af7740de574901063954f66de671a4ce0989",
+      "imports": [
+        "app.errors",
+        "app.research.geography",
+        "app.research.normalize_v10",
+        "app.research.normalize_v12",
+        "app.research.normalize_v9",
+        "app.research.plan",
+        "app.research.wire.research_v10_schema",
+        "app.research.wire.research_v11_schema",
+        "app.research.wire.research_v12_schema",
+        "app.research.wire.research_v8_schema",
+        "app.research.wire.research_v8_types",
+        "app.research.wire.research_v9_schema",
+        "app.schemas.research_analytics",
+        "app.schemas.research_analytics_guard",
+        "app.schemas.research_geography",
+        "app.schemas.research_planner"
+      ],
+      "responsibility": "Validated wire -> domain adapters. No lookup, inference or contract repair.",
+      "database_dependencies": [],
+      "admin_dependencies": [],
+      "external_services": [],
+      "tests": [
+        "backend/tests/test_research_sql_provenance.py",
+        "backend/tests/test_research_calendar.py",
+        "backend/tests/test_research_internal_plan.py",
+        "backend/tests/test_research_administrative.py",
+        "backend/tests/test_research_resolution.py",
+        "backend/tests/test_administrative_integration_guards.py",
+        "backend/tests/test_administrative_geography.py",
+        "backend/tests/test_research_suggestions.py",
+        "backend/tests/test_research_v12.py",
+        "backend/tests/test_research_conversation.py",
+        "backend/tests/test_research_grouping.py",
+        "backend/tests/test_notifications.py",
+        "backend/tests/test_vector_index.py",
+        "backend/tests/test_geo.py",
+        "backend/tests/test_research_v12_postgis.py",
+        "backend/tests/test_research_v9_adapter.py"
+      ],
+      "target": "src/uranus_research_service/research/normalize.py",
+      "phase": "Design only in phase 1; no extraction activated"
+    },
+    {
+      "source": "backend/app/research/normalize_grouping.py",
+      "category": "MOVE",
+      "reason": "Preserve deterministic Research behavior in the execution service.",
+      "sha256": "a788fb63dc8a395661938e95567552090466065d388c1c5b189f8b0a251a1016",
+      "imports": [
+        "app.research.normalize_v9",
+        "app.research.plan",
+        "app.research.wire.research_v7_schema",
+        "app.research.wire.research_v9_schema"
+      ],
+      "responsibility": "Compatibility adapter for the frozen scalar v7 representation.",
+      "database_dependencies": [],
+      "admin_dependencies": [],
+      "external_services": [],
+      "tests": [
+        "backend/tests/test_research_grouping.py"
+      ],
+      "target": "src/uranus_research_service/research/normalize_grouping.py",
+      "phase": "Design only in phase 1; no extraction activated"
+    },
+    {
+      "source": "backend/app/research/normalize_v10.py",
+      "category": "MOVE",
+      "reason": "Preserve deterministic Research behavior in the execution service.",
+      "sha256": "bc1782875c8a766f7f306c34bb05ebd35aa2da6136b49193605dbbbfc0c1496e",
+      "imports": [
+        "app.research.capabilities",
+        "app.research.normalize_v9",
+        "app.research.plan",
+        "app.research.wire.research_v10_schema",
+        "app.research.wire.research_v9_schema"
+      ],
+      "responsibility": "Additive wire calendar fields become shared domain predicates; no execution.",
+      "database_dependencies": [],
+      "admin_dependencies": [],
+      "external_services": [],
+      "tests": [
+        "backend/tests/test_research_calendar.py",
+        "backend/tests/test_research_conversation.py"
+      ],
+      "target": "src/uranus_research_service/research/normalize_v10.py",
+      "phase": "Design only in phase 1; no extraction activated"
+    },
+    {
+      "source": "backend/app/research/normalize_v12.py",
+      "category": "MOVE",
+      "reason": "Preserve deterministic Research behavior in the execution service.",
+      "sha256": "d455a25bb15f085386d43dc206399e0e4745a2f929abcaeb63994b59e6e679a9",
+      "imports": [
+        "app.research.capabilities",
+        "app.research.geography",
+        "app.research.normalize",
+        "app.research.normalize_v10",
+        "app.research.normalize_v9",
+        "app.research.plan",
+        "app.research.wire.research_v10_schema",
+        "app.research.wire.research_v12_schema",
+        "app.research.wire.research_v9_constraints"
+      ],
+      "responsibility": "Lossless v12 spatial adapter to the shared research plan; no resolver or executor.",
+      "database_dependencies": [],
+      "admin_dependencies": [],
+      "external_services": [],
+      "tests": [
+        "backend/tests/test_research_v12.py"
+      ],
+      "target": "src/uranus_research_service/research/normalize_v12.py",
+      "phase": "Design only in phase 1; no extraction activated"
+    },
+    {
+      "source": "backend/app/research/normalize_v9.py",
+      "category": "MOVE",
+      "reason": "Preserve deterministic Research behavior in the execution service.",
+      "sha256": "acb113a30b89cfdea75ccfda682c10d8c520474068cc49a57c2cd910a5b1fd50",
+      "imports": [
+        "app.research.capabilities",
+        "app.research.geography",
+        "app.research.normalize",
+        "app.research.plan",
+        "app.research.wire.research_v9_constraints",
+        "app.research.wire.research_v9_schema",
+        "app.research.wire.research_v9_types",
+        "app.schemas.research_execution"
+      ],
+      "responsibility": "Lossless v9 wire adapter to existing Admin capabilities; no lookup or execution.",
+      "database_dependencies": [],
+      "admin_dependencies": [],
+      "external_services": [],
+      "tests": [
+        "backend/tests/test_research_calendar.py",
+        "backend/tests/test_research_grouping.py",
+        "backend/tests/test_research_v9_adapter.py"
+      ],
+      "target": "src/uranus_research_service/research/normalize_v9.py",
+      "phase": "Design only in phase 1; no extraction activated"
+    },
+    {
+      "source": "backend/app/research/outcome.py",
+      "category": "MOVE",
+      "reason": "Preserve deterministic Research behavior in the execution service.",
+      "sha256": "5c09a07c8c0731751a84b6e971c009611d1be5f40601e1d6a8ff850ff7fe76d5",
+      "imports": [
+        "app.schemas.research_administrative_result",
+        "app.schemas.research_execution",
+        "app.schemas.research_sql"
+      ],
+      "responsibility": "Execution output without the transport envelope; assembled into HTTP at the API edge.",
+      "database_dependencies": [],
+      "admin_dependencies": [],
+      "external_services": [],
+      "tests": [
+        "backend/tests/test_research_sql_provenance.py",
+        "backend/tests/test_research_internal_plan.py",
+        "backend/tests/test_research_v13.py",
+        "backend/tests/test_administrative_integration_guards.py",
+        "backend/tests/test_notifications.py",
+        "backend/tests/test_research_plan_execution.py"
+      ],
+      "target": "src/uranus_research_service/research/outcome.py",
+      "phase": "Design only in phase 1; no extraction activated"
+    },
+    {
+      "source": "backend/app/research/plan.py",
+      "category": "MOVE",
+      "reason": "Preserve deterministic Research behavior in the execution service.",
+      "sha256": "26fd9e13976414fbaf14cb0fad5b9c4abcc261f86fce464beeb02c11129d907e",
+      "imports": [
+        "app.research.geography",
+        "app.schemas.research_execution"
+      ],
+      "responsibility": "Admin-owned execution intent. Not an HTTP model or a Planner schema mirror.",
+      "database_dependencies": [],
+      "admin_dependencies": [],
+      "external_services": [],
+      "tests": [
+        "backend/tests/test_research_sql_provenance.py",
+        "backend/tests/test_research_calendar.py",
+        "backend/tests/test_research_internal_plan.py",
+        "backend/tests/test_research_v13.py",
+        "backend/tests/test_research_administrative.py",
+        "backend/tests/test_administrative_integration_guards.py",
+        "backend/tests/test_administrative_geography.py",
+        "backend/tests/test_research_grouping_flow.py",
+        "backend/tests/test_research_conversation.py",
+        "backend/tests/test_research_grouping.py",
+        "backend/tests/test_research_answer.py"
+      ],
+      "target": "src/uranus_research_service/research/plan.py",
+      "phase": "Design only in phase 1; no extraction activated"
+    },
+    {
+      "source": "backend/app/research/population.py",
+      "category": "KEEP_IN_ADMIN",
+      "reason": "Admin-owned persistence/import/learning; service receives only read-only geographic projection.",
+      "sha256": "4743fe8e86303f9f5600a99457555157b59b1e2d66b9bab2fda9fb08c736df5e",
+      "imports": [
+        "app.auth.diagnostics",
+        "app.config",
+        "app.logging",
+        "app.research.areas",
+        "app.research.catalog",
+        "app.storage_preflight"
+      ],
+      "responsibility": "Offline, AGS-exact BKG population import; never changes boundary geometry.",
+      "database_dependencies": [
+        "admin.research_area"
+      ],
+      "admin_dependencies": [
+        "app.auth.diagnostics"
+      ],
+      "external_services": [],
+      "tests": [
+        "backend/tests/test_research_calendar.py",
+        "backend/tests/test_research_population.py",
+        "backend/tests/test_research_administrative.py",
+        "backend/tests/test_research_areas.py",
+        "backend/tests/test_research_grouping_flow.py",
+        "backend/tests/test_research_grouping.py",
+        "backend/tests/test_research_administrative_areas.py",
+        "backend/tests/test_research_operator_config.py",
+        "backend/tests/test_taxonomy_flow.py",
+        "backend/tests/test_research_plan_execution.py",
+        "backend/tests/test_research_analytics.py",
+        "backend/tests/test_research_unified.py",
+        "backend/tests/test_research_v9_adapter.py",
+        "backend/tests/test_research_semantic_eligibility.py"
+      ],
+      "target": "backend/app/research/population.py",
+      "phase": "Design only in phase 1; no extraction activated"
+    },
+    {
+      "source": "backend/app/research/public_result.py",
+      "category": "MOVE",
+      "reason": "Preserve deterministic Research behavior in the execution service.",
+      "sha256": "d469dd0f003071c49981f022928530fd618b866893584077d3becd2b38af66b1",
+      "imports": [
+        "app.schemas.research_execution"
+      ],
+      "responsibility": "Mask internal taxonomy choices only at the public response boundary.",
+      "database_dependencies": [],
+      "admin_dependencies": [],
+      "external_services": [],
+      "tests": [],
+      "target": "src/uranus_research_service/research/public_result.py",
+      "phase": "Design only in phase 1; no extraction activated"
+    },
+    {
+      "source": "backend/app/research/scope.py",
+      "category": "KEEP_IN_ADMIN",
+      "reason": "Admin-owned persistence/import/learning; service receives only read-only geographic projection.",
+      "sha256": "cac0ac9692fb6a415d48a7ac6941279a8c9317f6772760b138e87bf07123193c",
+      "imports": [
+        "app.config",
+        "app.logging",
+        "app.research.areas",
+        "app.research.catalog",
+        "app.research.danish_catalog"
+      ],
+      "responsibility": "Run the municipality importer over the complete German/Danish input inventory.",
+      "database_dependencies": [],
+      "admin_dependencies": [],
+      "external_services": [],
+      "tests": [],
+      "target": "backend/app/research/scope.py",
+      "phase": "Design only in phase 1; no extraction activated"
+    },
+    {
+      "source": "backend/app/research/search_gateway.py",
+      "category": "DEFER",
+      "reason": "Historical pilot/project-knowledge path, separate from current v9\u2013v13 execution; keep explicit legacy route during phased rollout.",
+      "sha256": "1717c3a7f9db8b6563d08d9a0c7eb1055b7c551698f55503f50cf5771788e5eb",
+      "imports": [
+        "app.errors"
+      ],
+      "responsibility": "Bounded candidate-only access to the operator-confirmed Jina-v3 event gateway.",
+      "database_dependencies": [],
+      "admin_dependencies": [],
+      "external_services": [],
+      "tests": [
+        "backend/tests/test_search_gateway.py"
+      ],
+      "target": "backend/app/research/search_gateway.py",
+      "phase": "Design only in phase 1; no extraction activated"
+    },
+    {
+      "source": "backend/app/research/semantic_contracts.py",
+      "category": "MOVE",
+      "reason": "Preserve deterministic Research behavior in the execution service.",
+      "sha256": "4a11f8d0eb35338b2fd2d254b337fe195dbbe1516c5431bc170050b3e396c1dc",
+      "imports": [
+        "app.research.evidence_context",
+        "app.research.vector_documents",
+        "app.schemas.genre"
+      ],
+      "responsibility": "Internal, closed contracts for the next semantic index; no public API changes.",
+      "database_dependencies": [],
+      "admin_dependencies": [],
+      "external_services": [],
+      "tests": [
+        "backend/tests/test_vector_metadata.py",
+        "backend/tests/test_semantic_genres.py",
+        "backend/tests/test_vector_index.py",
+        "backend/tests/test_semantic_knowledge_index.py"
+      ],
+      "target": "src/uranus_research_service/research/semantic_contracts.py",
+      "phase": "Design only in phase 1; no extraction activated"
+    },
+    {
+      "source": "backend/app/research/semantic_documents.py",
+      "category": "MOVE",
+      "reason": "Preserve deterministic Research behavior in the execution service.",
+      "sha256": "d5ed315ae556b697ea38b21f38bf936847de1a84336dd48e6c86545bef75e12e",
+      "imports": [
+        "app.repositories.activity_previews",
+        "app.repositories.research",
+        "app.research.evidence_context",
+        "app.research.semantic_contracts",
+        "app.research.vector_documents"
+      ],
+      "responsibility": "Explicit public field builders, reusing the event section and normalization pipeline.",
+      "database_dependencies": [],
+      "admin_dependencies": [],
+      "external_services": [],
+      "tests": [
+        "backend/tests/test_semantic_knowledge_index.py"
+      ],
+      "target": "src/uranus_research_service/research/semantic_documents.py",
+      "phase": "Design only in phase 1; no extraction activated"
+    },
+    {
+      "source": "backend/app/research/semantic_evidence.py",
+      "category": "MOVE",
+      "reason": "Preserve deterministic Research behavior in the execution service.",
+      "sha256": "ba5cd8d692d44cd03e631a7252325d4a4764ca54a8824c2dbddb093ec88bffd7",
+      "imports": [
+        "app.research.area_selection",
+        "app.research.evidence_context",
+        "app.research.semantic_contracts",
+        "app.research.semantic_documents",
+        "app.research.vector_documents",
+        "app.research.vector_models",
+        "app.schemas.genre"
+      ],
+      "responsibility": "Allowlisted evidence, deterministic entity ranking and explicit hard area filters.",
+      "database_dependencies": [],
+      "admin_dependencies": [],
+      "external_services": [],
+      "tests": [
+        "backend/tests/test_semantic_search.py",
+        "backend/tests/test_semantic_genres.py",
+        "backend/tests/test_semantic_knowledge_index.py"
+      ],
+      "target": "src/uranus_research_service/research/semantic_evidence.py",
+      "phase": "Design only in phase 1; no extraction activated"
+    },
+    {
+      "source": "backend/app/research/semantic_explanations.py",
+      "category": "MOVE",
+      "reason": "Preserve deterministic Research behavior in the execution service.",
+      "sha256": "3ae9faa5925e80f7a5ebd6c682d4495b1c00a017a2b800b8bacee4eb2c0079dd",
+      "imports": [
+        "app.research.chunk_kinds",
+        "app.research.semantic_contracts",
+        "app.schemas.research"
+      ],
+      "responsibility": "Deterministic presentation of validated evidence; never query-generated prose.",
+      "database_dependencies": [],
+      "admin_dependencies": [],
+      "external_services": [],
+      "tests": [],
+      "target": "src/uranus_research_service/research/semantic_explanations.py",
+      "phase": "Design only in phase 1; no extraction activated"
+    },
+    {
+      "source": "backend/app/research/semantic_limits.py",
+      "category": "MOVE",
+      "reason": "Preserve deterministic Research behavior in the execution service.",
+      "sha256": "e181d031e0eae3fa9989acd2a57c0adbcc07e38d3b99b0198a7e8dc808b35a44",
+      "imports": [],
+      "responsibility": "Internal semantic execution bounds and relevance policy; no public request controls.",
+      "database_dependencies": [],
+      "admin_dependencies": [],
+      "external_services": [],
+      "tests": [
+        "backend/tests/test_semantic_relevance.py",
+        "backend/tests/test_research_semantic_eligibility.py"
+      ],
+      "target": "src/uranus_research_service/research/semantic_limits.py",
+      "phase": "Design only in phase 1; no extraction activated"
+    },
+    {
+      "source": "backend/app/research/sql_provenance.py",
+      "category": "MOVE",
+      "reason": "Preserve deterministic Research behavior in the execution service.",
+      "sha256": "9b87fd8b9ebcf6c7228cd9cd95fb252366132138c82548b0ef602903b902e341",
+      "imports": [
+        "app.schemas.research_sql"
+      ],
+      "responsibility": "Opt-in source execution capture, never a SQLAlchemy listener or query logger.",
+      "database_dependencies": [],
+      "admin_dependencies": [],
+      "external_services": [],
+      "tests": [
+        "backend/tests/test_research_sql_provenance.py",
+        "backend/tests/test_research_calendar.py",
+        "backend/tests/test_research_v12.py",
+        "backend/tests/test_research_grouping_flow.py",
+        "backend/tests/test_research_conversation.py",
+        "backend/tests/test_research_grouping.py",
+        "backend/tests/test_taxonomy_flow.py",
+        "backend/tests/test_sql_provenance.py",
+        "backend/tests/test_research_v12_postgis.py",
+        "backend/tests/test_research_v9_adapter.py"
+      ],
+      "target": "src/uranus_research_service/research/sql_provenance.py",
+      "phase": "Design only in phase 1; no extraction activated"
+    },
+    {
+      "source": "backend/app/research/taxonomy.py",
+      "category": "MOVE",
+      "reason": "Preserve deterministic Research behavior in the execution service.",
+      "sha256": "84af206d0b1e636b99829cf8a65ed0456fb84c71c6bf8563fe64e756a361d751",
+      "imports": [
+        "app.research.vector_models"
+      ],
+      "responsibility": "Closed, bounded taxonomy index documents. No query aliases or source identities invented.",
+      "database_dependencies": [],
+      "admin_dependencies": [],
+      "external_services": [],
+      "tests": [
+        "backend/tests/test_research_sql_provenance.py",
+        "backend/tests/test_research_calendar.py",
+        "backend/tests/test_research_internal_plan.py",
+        "backend/tests/test_research_administrative.py",
+        "backend/tests/test_research_resolution.py",
+        "backend/tests/test_research_taxonomy.py",
+        "backend/tests/test_taxonomy_index.py",
+        "backend/tests/test_research_grouping.py",
+        "backend/tests/test_taxonomy_semantic.py",
+        "backend/tests/test_research_answer.py",
+        "backend/tests/test_taxonomy_flow.py",
+        "backend/tests/test_research_plan_execution.py",
+        "backend/tests/test_research_analytics.py",
+        "backend/tests/test_research_v9_adapter.py"
+      ],
+      "target": "src/uranus_research_service/research/taxonomy.py",
+      "phase": "Design only in phase 1; no extraction activated"
+    },
+    {
+      "source": "backend/app/research/taxonomy_benchmark.py",
+      "category": "MOVE",
+      "reason": "Preserve deterministic Research behavior in the execution service.",
+      "sha256": "94067e64420509f83a2a663cc6c4bb8dd599aa57c16b49e78edaa272b1c3168d",
+      "imports": [
+        "app.repositories.research_resolution",
+        "app.research.taxonomy",
+        "app.research.taxonomy_policy",
+        "app.research.taxonomy_transport",
+        "app.research.vector_transport"
+      ],
+      "responsibility": "Measured exact-first, kind-aware calibration; synthetic scores are not live evidence.",
+      "database_dependencies": [],
+      "admin_dependencies": [],
+      "external_services": [
+        "Encoder HTTP",
+        "Qdrant HTTP"
+      ],
+      "tests": [
+        "backend/tests/test_taxonomy_index.py"
+      ],
+      "target": "src/uranus_research_service/research/taxonomy_benchmark.py",
+      "phase": "Design only in phase 1; no extraction activated"
+    },
+    {
+      "source": "backend/app/research/taxonomy_index.py",
+      "category": "MOVE",
+      "reason": "Preserve deterministic Research behavior in the execution service.",
+      "sha256": "91b2da66731250cadb136c9b0d09f87dafbcb8ed5a474f0c41f7b05bcbefc9c1",
+      "imports": [
+        "app.config",
+        "app.database",
+        "app.logging",
+        "app.repositories.research_taxonomy",
+        "app.research.taxonomy",
+        "app.research.taxonomy_benchmark",
+        "app.research.taxonomy_transport",
+        "app.research.vector_index",
+        "app.research.vector_transport"
+      ],
+      "responsibility": "Operator-only taxonomy snapshot indexing; separate lifecycle from event documents.",
+      "database_dependencies": [],
+      "admin_dependencies": [],
+      "external_services": [
+        "Encoder HTTP",
+        "Qdrant HTTP"
+      ],
+      "tests": [
+        "backend/tests/test_taxonomy_index.py"
+      ],
+      "target": "src/uranus_research_service/research/taxonomy_index.py",
+      "phase": "Design only in phase 1; no extraction activated"
+    },
+    {
+      "source": "backend/app/research/taxonomy_policy.py",
+      "category": "MOVE",
+      "reason": "Preserve deterministic Research behavior in the execution service.",
+      "sha256": "e411a79f65656746e5d3d5caf83a6cf6478fc07fc35f84fcbbe18acd1a23d1b5",
+      "imports": [
+        "app.research.taxonomy"
+      ],
+      "responsibility": "Thresholds are an operator-reviewed benchmark artifact, never guessed defaults.",
+      "database_dependencies": [],
+      "admin_dependencies": [],
+      "external_services": [],
+      "tests": [
+        "backend/tests/test_taxonomy_index.py",
+        "backend/tests/test_taxonomy_semantic.py"
+      ],
+      "target": "src/uranus_research_service/research/taxonomy_policy.py",
+      "phase": "Design only in phase 1; no extraction activated"
+    },
+    {
+      "source": "backend/app/research/taxonomy_transport.py",
+      "category": "MOVE",
+      "reason": "Preserve deterministic Research behavior in the execution service.",
+      "sha256": "d14d1cd39606981a8f210ab625b30bdfb01804d44797a5df4a3ca6095182a4a0",
+      "imports": [
+        "app.config",
+        "app.research.taxonomy",
+        "app.research.vector_transport"
+      ],
+      "responsibility": "Dedicated taxonomy collection using the existing authenticated bounded HTTP transport.",
+      "database_dependencies": [],
+      "admin_dependencies": [],
+      "external_services": [
+        "Qdrant HTTP"
+      ],
+      "tests": [
+        "backend/tests/test_taxonomy_index.py",
+        "backend/tests/test_taxonomy_semantic.py"
+      ],
+      "target": "src/uranus_research_service/research/taxonomy_transport.py",
+      "phase": "Design only in phase 1; no extraction activated"
+    },
+    {
+      "source": "backend/app/research/vector_benchmark.py",
+      "category": "MOVE",
+      "reason": "Preserve deterministic Research behavior in the execution service.",
+      "sha256": "bff7478a3c2ccf28c83861d8179c061bc411bcc15730904a252d35707e65a33d",
+      "imports": [
+        "app.research.vector_documents",
+        "app.research.vector_sync",
+        "app.research.vector_transport"
+      ],
+      "responsibility": "Reproducible, unlabelled retrieval exports; quality metrics require real judgments.",
+      "database_dependencies": [],
+      "admin_dependencies": [],
+      "external_services": [
+        "Encoder HTTP",
+        "Qdrant HTTP"
+      ],
+      "tests": [
+        "backend/tests/test_review_benchmark.py",
+        "backend/tests/test_vector_index.py"
+      ],
+      "target": "src/uranus_research_service/research/vector_benchmark.py",
+      "phase": "Design only in phase 1; no extraction activated"
+    },
+    {
+      "source": "backend/app/research/vector_diagnostics.py",
+      "category": "MOVE",
+      "reason": "Preserve deterministic Research behavior in the execution service.",
+      "sha256": "bf2f05eb633f72f00931b50a1e62039968419086769ea0fcd807819af7e34483",
+      "imports": [
+        "app.research.vector_sync"
+      ],
+      "responsibility": "Bounded, value-redacted diagnostics for metadata-only payload differences.",
+      "database_dependencies": [],
+      "admin_dependencies": [],
+      "external_services": [],
+      "tests": [
+        "backend/tests/test_vector_metadata.py"
+      ],
+      "target": "src/uranus_research_service/research/vector_diagnostics.py",
+      "phase": "Design only in phase 1; no extraction activated"
+    },
+    {
+      "source": "backend/app/research/vector_documents.py",
+      "category": "MOVE",
+      "reason": "Preserve deterministic Research behavior in the execution service.",
+      "sha256": "d0cea569614556dcb1c619414f85880efaeace14f3e0e57bec263aabf1b3430a",
+      "imports": [
+        "app.repositories.research",
+        "app.research.chunk_kinds",
+        "app.research.evidence_context"
+      ],
+      "responsibility": "Allowlisted public prose and tokenizer-bounded, deterministic event chunks.",
+      "database_dependencies": [],
+      "admin_dependencies": [],
+      "external_services": [],
+      "tests": [
+        "backend/tests/test_semantic_search.py",
+        "backend/tests/test_vector_index.py",
+        "backend/tests/test_semantic_knowledge_index.py"
+      ],
+      "target": "src/uranus_research_service/research/vector_documents.py",
+      "phase": "Design only in phase 1; no extraction activated"
+    },
+    {
+      "source": "backend/app/research/vector_index.py",
+      "category": "MOVE",
+      "reason": "Preserve deterministic Research behavior in the execution service.",
+      "sha256": "0b5f08a7f7a797fde11875b4e6deb0de38a507956d635cfa93ce455b533de738",
+      "imports": [
+        "app.admin_database",
+        "app.config",
+        "app.database",
+        "app.logging",
+        "app.repositories.vector_entities",
+        "app.repositories.vector_events",
+        "app.research.semantic_contracts",
+        "app.research.vector_benchmark",
+        "app.research.vector_diagnostics",
+        "app.research.vector_documents",
+        "app.research.vector_models",
+        "app.research.vector_sync",
+        "app.research.vector_transport"
+      ],
+      "responsibility": "Explicit operator pilot: public source snapshot -> bounded internal retrieval services.",
+      "database_dependencies": [
+        "admin.research_area"
+      ],
+      "admin_dependencies": [
+        "app.admin_database"
+      ],
+      "external_services": [
+        "Encoder HTTP",
+        "Qdrant HTTP"
+      ],
+      "tests": [
+        "backend/tests/test_vector_metadata.py",
+        "backend/tests/test_review_benchmark.py",
+        "backend/tests/test_semantic_genres.py",
+        "backend/tests/test_vector_index.py",
+        "backend/tests/test_semantic_knowledge_index.py"
+      ],
+      "target": "src/uranus_research_service/research/vector_index.py",
+      "phase": "Design only in phase 1; no extraction activated"
+    },
+    {
+      "source": "backend/app/research/vector_models.py",
+      "category": "MOVE",
+      "reason": "Preserve deterministic Research behavior in the execution service.",
+      "sha256": "fbe7290e28d308d04986715e947512e3888bab71e72d9ceed0bfb5082dead40d",
+      "imports": [
+        "app.research.vector_documents"
+      ],
+      "responsibility": "Reviewed, pinned retrieval models; no implicit production model or remote input IDs.",
+      "database_dependencies": [],
+      "admin_dependencies": [],
+      "external_services": [],
+      "tests": [
+        "backend/tests/test_semantic_search.py",
+        "backend/tests/test_vector_index.py",
+        "backend/tests/test_semantic_knowledge_index.py",
+        "backend/tests/test_research_semantic_eligibility.py"
+      ],
+      "target": "src/uranus_research_service/research/vector_models.py",
+      "phase": "Design only in phase 1; no extraction activated"
+    },
+    {
+      "source": "backend/app/research/vector_sync.py",
+      "category": "MOVE",
+      "reason": "Preserve deterministic Research behavior in the execution service.",
+      "sha256": "2f2756da937591980dc00f1905f00744b60afa0dabb7613c1ab8b6e78264ad22",
+      "imports": [
+        "app.research.semantic_contracts",
+        "app.research.semantic_documents",
+        "app.research.vector_documents",
+        "app.research.vector_models",
+        "app.research.vector_transport"
+      ],
+      "responsibility": "Incremental embedding reuse and explicit reconciliation against a complete snapshot.",
+      "database_dependencies": [],
+      "admin_dependencies": [],
+      "external_services": [
+        "Encoder HTTP",
+        "Qdrant HTTP"
+      ],
+      "tests": [
+        "backend/tests/test_vector_metadata.py",
+        "backend/tests/test_vector_index.py",
+        "backend/tests/test_semantic_knowledge_index.py"
+      ],
+      "target": "src/uranus_research_service/research/vector_sync.py",
+      "phase": "Design only in phase 1; no extraction activated"
+    },
+    {
+      "source": "backend/app/research/vector_transport.py",
+      "category": "MOVE",
+      "reason": "Preserve deterministic Research behavior in the execution service.",
+      "sha256": "6a032b231f58c71fbae67bacd3d12d396da362b27fbadaa076c0de26f893ad99",
+      "imports": [
+        "app.config",
+        "app.errors",
+        "app.research.area_selection",
+        "app.research.semantic_contracts",
+        "app.research.semantic_evidence",
+        "app.research.semantic_limits",
+        "app.research.vector_documents",
+        "app.research.vector_models"
+      ],
+      "responsibility": "Fixed-origin, authenticated and bounded internal HTTP; never return provider errors.",
+      "database_dependencies": [],
+      "admin_dependencies": [],
+      "external_services": [
+        "Encoder HTTP",
+        "Qdrant HTTP"
+      ],
+      "tests": [
+        "backend/tests/test_vector_metadata.py",
+        "backend/tests/test_taxonomy_semantic.py",
+        "backend/tests/test_semantic_search.py",
+        "backend/tests/test_semantic_genres.py",
+        "backend/tests/test_vector_index.py",
+        "backend/tests/test_semantic_knowledge_index.py",
+        "backend/tests/test_research_semantic_eligibility.py"
+      ],
+      "target": "src/uranus_research_service/research/vector_transport.py",
+      "phase": "Design only in phase 1; no extraction activated"
+    },
+    {
+      "source": "backend/app/research/wire/__init__.py",
+      "category": "SHARED_CONTRACT",
+      "reason": "Retain wire shape; generated schema snapshot and parity checks, no runtime cross-repository import.",
+      "sha256": "dd445c6d92b5d216619d7a808cc1161a2f7294ca8d187b2179162565375787b2",
+      "imports": [],
+      "responsibility": "Mirrored Planner wire contract; never an execution model.",
+      "database_dependencies": [],
+      "admin_dependencies": [],
+      "external_services": [],
+      "tests": [
+        "backend/tests/test_research_sql_provenance.py",
+        "backend/tests/test_sql_console.py",
+        "backend/tests/test_timeline.py",
+        "backend/tests/test_notifications.py",
+        "backend/tests/test_notification_smtp_security.py",
+        "backend/tests/test_semantic_knowledge_index.py"
+      ],
+      "target": "contracts/ snapshots with parity tests; future consumer-side validation",
+      "phase": "Design only in phase 1; no extraction activated"
+    },
+    {
+      "source": "backend/app/research/wire/research_v10_schema.py",
+      "category": "SHARED_CONTRACT",
+      "reason": "Retain wire shape; generated schema snapshot and parity checks, no runtime cross-repository import.",
+      "sha256": "5d3198ae36397db58ad6d23e01fe9ec1fb2394de4dbe7fcdb6c62fb935f77e69",
+      "imports": [
+        "app.research.wire.research_v9_constraints",
+        "app.research.wire.research_v9_schema",
+        "app.research.wire.research_v9_types"
+      ],
+      "responsibility": "Additive recurring-calendar wire contract; v9 remains frozen.",
+      "database_dependencies": [],
+      "admin_dependencies": [],
+      "external_services": [],
+      "tests": [
+        "backend/tests/test_research_calendar.py"
+      ],
+      "target": "contracts/ snapshots with parity tests; future consumer-side validation",
+      "phase": "Design only in phase 1; no extraction activated"
+    },
+    {
+      "source": "backend/app/research/wire/research_v11_schema.py",
+      "category": "SHARED_CONTRACT",
+      "reason": "Retain wire shape; generated schema snapshot and parity checks, no runtime cross-repository import.",
+      "sha256": "0ae644894ff6f1949c64f32a1b8539c200c4bcc2ffa3bd3aa9405ca3eeb4194f",
+      "imports": [
+        "app.research.wire.research_v10_schema",
+        "app.research.wire.research_v9_types"
+      ],
+      "responsibility": "Additive conversation wire boundary; v10 stays frozen.",
+      "database_dependencies": [],
+      "admin_dependencies": [],
+      "external_services": [],
+      "tests": [
+        "backend/tests/test_research_conversation.py"
+      ],
+      "target": "contracts/ snapshots with parity tests; future consumer-side validation",
+      "phase": "Design only in phase 1; no extraction activated"
+    },
+    {
+      "source": "backend/app/research/wire/research_v12_schema.py",
+      "category": "SHARED_CONTRACT",
+      "reason": "Retain wire shape; generated schema snapshot and parity checks, no runtime cross-repository import.",
+      "sha256": "b0c08236c6178fba84d4a16ca5c250221e25dd4f1f9f63f91f0ce1c91f97d31a",
+      "imports": [
+        "app.research.wire.research_v10_schema",
+        "app.research.wire.research_v12_spatial",
+        "app.research.wire.research_v9_constraints",
+        "app.research.wire.research_v9_types"
+      ],
+      "responsibility": "Combined modern v12 contract: v11 semantics with bounded administrative geography.",
+      "database_dependencies": [],
+      "admin_dependencies": [],
+      "external_services": [],
+      "tests": [
+        "backend/tests/test_research_v12.py"
+      ],
+      "target": "contracts/ snapshots with parity tests; future consumer-side validation",
+      "phase": "Design only in phase 1; no extraction activated"
+    },
+    {
+      "source": "backend/app/research/wire/research_v12_spatial.py",
+      "category": "SHARED_CONTRACT",
+      "reason": "Retain wire shape; generated schema snapshot and parity checks, no runtime cross-repository import.",
+      "sha256": "cb43edae1e58f45bbef18f436cac75c89455e12e72a918fa32186608a85ca2d1",
+      "imports": [
+        "app.research.wire.research_v8_constraints"
+      ],
+      "responsibility": "Administrative semantics reuse v8's validated, identity-free spatial vocabulary.",
+      "database_dependencies": [],
+      "admin_dependencies": [],
+      "external_services": [],
+      "tests": [],
+      "target": "contracts/ snapshots with parity tests; future consumer-side validation",
+      "phase": "Design only in phase 1; no extraction activated"
+    },
+    {
+      "source": "backend/app/research/wire/research_v13_schema.py",
+      "category": "SHARED_CONTRACT",
+      "reason": "Retain wire shape; generated schema snapshot and parity checks, no runtime cross-repository import.",
+      "sha256": "04fa336d83dd089c1c9b8412d487cd78bbc0a44eed035cf25a016e7ce201fb30",
+      "imports": [
+        "app.research.wire.research_v12_schema",
+        "app.research.wire.research_v9_types"
+      ],
+      "responsibility": "Closed conversational envelope around the unchanged v12 research algebra.",
+      "database_dependencies": [],
+      "admin_dependencies": [],
+      "external_services": [],
+      "tests": [
+        "backend/tests/test_research_v13.py"
+      ],
+      "target": "contracts/ snapshots with parity tests; future consumer-side validation",
+      "phase": "Design only in phase 1; no extraction activated"
+    },
+    {
+      "source": "backend/app/research/wire/research_v7_constraints.py",
+      "category": "SHARED_CONTRACT",
+      "reason": "Retain wire shape; generated schema snapshot and parity checks, no runtime cross-repository import.",
+      "sha256": "c4128485e068c123edbb0c86389e35f2436920bf4444103af674d03938f367c5",
+      "imports": [
+        "app.research.wire.research_v7_types"
+      ],
+      "responsibility": "Closed v7 temporal, spatial, relation and interpretation constraints; no execution.",
+      "database_dependencies": [],
+      "admin_dependencies": [],
+      "external_services": [],
+      "tests": [],
+      "target": "contracts/ snapshots with parity tests; future consumer-side validation",
+      "phase": "Design only in phase 1; no extraction activated"
+    },
+    {
+      "source": "backend/app/research/wire/research_v7_schema.py",
+      "category": "SHARED_CONTRACT",
+      "reason": "Retain wire shape; generated schema snapshot and parity checks, no runtime cross-repository import.",
+      "sha256": "d67dc39f4a0879e5ab53be29a1c6093df62d591759d87efaebe0f0a846b96d60",
+      "imports": [
+        "app.research.wire.research_v7_constraints",
+        "app.research.wire.research_v7_types"
+      ],
+      "responsibility": "Research Query Language v7. Declarative interpretation, never an execution plan.",
+      "database_dependencies": [],
+      "admin_dependencies": [],
+      "external_services": [],
+      "tests": [
+        "backend/tests/test_research_grouping.py"
+      ],
+      "target": "contracts/ snapshots with parity tests; future consumer-side validation",
+      "phase": "Design only in phase 1; no extraction activated"
+    },
+    {
+      "source": "backend/app/research/wire/research_v7_types.py",
+      "category": "SHARED_CONTRACT",
+      "reason": "Retain wire shape; generated schema snapshot and parity checks, no runtime cross-repository import.",
+      "sha256": "1147dd4be8af98657f26dfdbb608c7d76f1d2b64e1de6227a12a234f8f384807",
+      "imports": [],
+      "responsibility": "Independent v7 vocabulary, nonrecursive metrics and typed predicates.",
+      "database_dependencies": [],
+      "admin_dependencies": [],
+      "external_services": [],
+      "tests": [],
+      "target": "contracts/ snapshots with parity tests; future consumer-side validation",
+      "phase": "Design only in phase 1; no extraction activated"
+    },
+    {
+      "source": "backend/app/research/wire/research_v8_constraints.py",
+      "category": "SHARED_CONTRACT",
+      "reason": "Retain wire shape; generated schema snapshot and parity checks, no runtime cross-repository import.",
+      "sha256": "a51d9967a59f9a867c23e7d82332f2c73cc45b4b21fe6db37ac227f02eff6d3d",
+      "imports": [
+        "app.research.wire.research_v8_types"
+      ],
+      "responsibility": "Closed v8 temporal, spatial, relation and interpretation constraints; no execution.",
+      "database_dependencies": [],
+      "admin_dependencies": [],
+      "external_services": [],
+      "tests": [
+        "backend/tests/test_research_internal_plan.py"
+      ],
+      "target": "contracts/ snapshots with parity tests; future consumer-side validation",
+      "phase": "Design only in phase 1; no extraction activated"
+    },
+    {
+      "source": "backend/app/research/wire/research_v8_schema.py",
+      "category": "SHARED_CONTRACT",
+      "reason": "Retain wire shape; generated schema snapshot and parity checks, no runtime cross-repository import.",
+      "sha256": "a181d5570acebb6cc1bc508085c149b00d22826b7c57afafddca743e8051e94d",
+      "imports": [
+        "app.research.wire.research_v8_constraints",
+        "app.research.wire.research_v8_types"
+      ],
+      "responsibility": "Research Query Language v8. Declarative interpretation, never an execution plan.",
+      "database_dependencies": [],
+      "admin_dependencies": [],
+      "external_services": [],
+      "tests": [
+        "backend/tests/test_research_internal_plan.py",
+        "backend/tests/test_administrative_geography.py",
+        "backend/tests/test_research_v9_adapter.py"
+      ],
+      "target": "contracts/ snapshots with parity tests; future consumer-side validation",
+      "phase": "Design only in phase 1; no extraction activated"
+    },
+    {
+      "source": "backend/app/research/wire/research_v8_types.py",
+      "category": "SHARED_CONTRACT",
+      "reason": "Retain wire shape; generated schema snapshot and parity checks, no runtime cross-repository import.",
+      "sha256": "d82ca2166536d7e9f91410b2550d4b636218bd1b4599dc88880b11fb9b7969ec",
+      "imports": [],
+      "responsibility": "Independent v8 vocabulary, nonrecursive metrics and typed predicates.",
+      "database_dependencies": [],
+      "admin_dependencies": [],
+      "external_services": [],
+      "tests": [
+        "backend/tests/test_research_internal_plan.py"
+      ],
+      "target": "contracts/ snapshots with parity tests; future consumer-side validation",
+      "phase": "Design only in phase 1; no extraction activated"
+    },
+    {
+      "source": "backend/app/research/wire/research_v9_constraints.py",
+      "category": "SHARED_CONTRACT",
+      "reason": "Retain wire shape; generated schema snapshot and parity checks, no runtime cross-repository import.",
+      "sha256": "f87d1695aa71510b864e7303a21257367874801af7d6db7cfd225408809a2562",
+      "imports": [
+        "app.research.wire.research_v9_types"
+      ],
+      "responsibility": "Closed v9 temporal, spatial, relation and interpretation constraints; no execution.",
+      "database_dependencies": [],
+      "admin_dependencies": [],
+      "external_services": [],
+      "tests": [],
+      "target": "contracts/ snapshots with parity tests; future consumer-side validation",
+      "phase": "Design only in phase 1; no extraction activated"
+    },
+    {
+      "source": "backend/app/research/wire/research_v9_schema.py",
+      "category": "SHARED_CONTRACT",
+      "reason": "Retain wire shape; generated schema snapshot and parity checks, no runtime cross-repository import.",
+      "sha256": "5f9533596ad45436b6f99e2ae39f64ac89d74726cd051c3749e35034963fcb3b",
+      "imports": [
+        "app.research.wire.research_v9_constraints",
+        "app.research.wire.research_v9_types"
+      ],
+      "responsibility": "Research Query Language v9. Declarative interpretation, never an execution plan.",
+      "database_dependencies": [],
+      "admin_dependencies": [],
+      "external_services": [],
+      "tests": [
+        "backend/tests/test_research_grouping_flow.py",
+        "backend/tests/test_research_grouping.py",
+        "backend/tests/test_research_v9_adapter.py"
+      ],
+      "target": "contracts/ snapshots with parity tests; future consumer-side validation",
+      "phase": "Design only in phase 1; no extraction activated"
+    },
+    {
+      "source": "backend/app/research/wire/research_v9_types.py",
+      "category": "SHARED_CONTRACT",
+      "reason": "Retain wire shape; generated schema snapshot and parity checks, no runtime cross-repository import.",
+      "sha256": "ace2443b35e07bfec3fa0a32a44232a4ea9de0785c6129851f651b62306ac44a",
+      "imports": [],
+      "responsibility": "Independent v9 vocabulary, nonrecursive metrics and typed predicates.",
+      "database_dependencies": [],
+      "admin_dependencies": [],
+      "external_services": [],
+      "tests": [],
+      "target": "contracts/ snapshots with parity tests; future consumer-side validation",
+      "phase": "Design only in phase 1; no extraction activated"
+    },
+    {
+      "source": "backend/app/schemas/research.py",
+      "category": "SHARED_CONTRACT",
+      "reason": "Retain wire shape; generated schema snapshot and parity checks, no runtime cross-repository import.",
+      "sha256": "8653b4ad06ec923d053015c5dbe518154626a8a08f5a1a5dac922f94a01a58eb",
+      "imports": [
+        "app.research.area_selection",
+        "app.research.chunk_kinds",
+        "app.schemas.finding",
+        "app.schemas.genre"
+      ],
+      "responsibility": "Research-only contracts. No workflow, account, actor or private contact fields.",
+      "database_dependencies": [],
+      "admin_dependencies": [],
+      "external_services": [],
+      "tests": [
+        "backend/tests/test_research_sql_provenance.py",
+        "backend/tests/test_vector_metadata.py",
+        "backend/tests/test_research_calendar.py",
+        "backend/tests/test_research_internal_plan.py",
+        "backend/tests/test_admin_auth.py",
+        "backend/tests/test_research_area_migration.py",
+        "backend/tests/test_research_v13.py",
+        "backend/tests/test_review_benchmark.py",
+        "backend/tests/test_research_population.py",
+        "backend/tests/test_research_administrative.py",
+        "backend/tests/test_research_resolution.py",
+        "backend/tests/test_research_administrative_areas_batch.py",
+        "backend/tests/test_research_geography.py",
+        "backend/tests/test_project_knowledge.py",
+        "backend/tests/test_administrative_integration_guards.py",
+        "backend/tests/test_administrative_geography.py",
+        "backend/tests/test_research_suggestions.py",
+        "backend/tests/test_research_areas.py",
+        "backend/tests/test_research_scope.py",
+        "backend/tests/test_research_taxonomy.py",
+        "backend/tests/test_taxonomy_index.py",
+        "backend/tests/test_research_v12.py",
+        "backend/tests/test_research_grouping_flow.py",
+        "backend/tests/test_research_catalog.py",
+        "backend/tests/test_research_conversation.py",
+        "backend/tests/test_research_grouping.py",
+        "backend/tests/test_taxonomy_semantic.py",
+        "backend/tests/test_search_gateway.py",
+        "backend/tests/test_admin_upgrade_contracts.py",
+        "backend/tests/test_admin_roles.py",
+        "backend/tests/test_research_domain_contract.py",
+        "backend/tests/test_research_administrative_areas.py",
+        "backend/tests/test_research_answer.py",
+        "backend/tests/test_research_operator_config.py",
+        "backend/tests/test_research_chronology.py",
+        "backend/tests/test_semantic_search.py",
+        "backend/tests/test_operator_diagnostics.py",
+        "backend/tests/test_taxonomy_flow.py",
+        "backend/tests/test_semantic_genres.py",
+        "backend/tests/test_research_plan_execution.py",
+        "backend/tests/test_vector_index.py",
+        "backend/tests/test_research_ordering_contract.py",
+        "backend/tests/test_research_planner.py",
+        "backend/tests/test_research_analytics.py",
+        "backend/tests/test_research_unified.py",
+        "backend/tests/test_research_geocoder.py",
+        "backend/tests/test_semantic_knowledge_index.py",
+        "backend/tests/test_research_v12_postgis.py",
+        "backend/tests/test_research_v9_adapter.py",
+        "backend/tests/test_semantic_relevance.py",
+        "backend/tests/test_research.py",
+        "backend/tests/test_research_semantic_eligibility.py"
+      ],
+      "target": "contracts/ snapshots with parity tests; future consumer-side validation",
+      "phase": "Design only in phase 1; no extraction activated"
+    },
+    {
+      "source": "backend/app/schemas/research_administrative.py",
+      "category": "SHARED_CONTRACT",
+      "reason": "Retain wire shape; generated schema snapshot and parity checks, no runtime cross-repository import.",
+      "sha256": "0ccf2fe19a8d9a3254db78f2dc6f111b7fec1c6a9ac59c27ae9388a705c862ce",
+      "imports": [
+        "app.schemas.research_location",
+        "app.schemas.research_values"
+      ],
+      "responsibility": "Strict internal geocoder metadata and bounded polygon shapes.",
+      "database_dependencies": [],
+      "admin_dependencies": [],
+      "external_services": [],
+      "tests": [
+        "backend/tests/test_research_sql_provenance.py",
+        "backend/tests/test_research_internal_plan.py",
+        "backend/tests/test_research_administrative.py",
+        "backend/tests/test_research_administrative_areas_batch.py",
+        "backend/tests/test_administrative_integration_guards.py",
+        "backend/tests/test_administrative_geography.py",
+        "backend/tests/test_research_v12.py",
+        "backend/tests/test_research_grouping_flow.py",
+        "backend/tests/test_research_analytics.py",
+        "backend/tests/test_research_v9_adapter.py"
+      ],
+      "target": "contracts/ snapshots with parity tests; future consumer-side validation",
+      "phase": "Design only in phase 1; no extraction activated"
+    },
+    {
+      "source": "backend/app/schemas/research_administrative_result.py",
+      "category": "SHARED_CONTRACT",
+      "reason": "Retain wire shape; generated schema snapshot and parity checks, no runtime cross-repository import.",
+      "sha256": "db28aa53ea420c806b9313ca48de53dd1bd07e6cdd351f42c74b944b798b3392",
+      "imports": [
+        "app.schemas.research",
+        "app.schemas.research_sql",
+        "app.schemas.research_values"
+      ],
+      "responsibility": "Public administrative selection results, independent of internal plan types.",
+      "database_dependencies": [],
+      "admin_dependencies": [],
+      "external_services": [],
+      "tests": [
+        "backend/tests/test_administrative_integration_guards.py"
+      ],
+      "target": "contracts/ snapshots with parity tests; future consumer-side validation",
+      "phase": "Design only in phase 1; no extraction activated"
+    },
+    {
+      "source": "backend/app/schemas/research_analytics.py",
+      "category": "SHARED_CONTRACT",
+      "reason": "Retain wire shape; generated schema snapshot and parity checks, no runtime cross-repository import.",
+      "sha256": "2480b3d28324c4fa0c15c4cdb4c4a44ae5cafcafc545c2232d6d4ccb64aa1708",
+      "imports": [],
+      "responsibility": "Closed analytical v5/v10 wire contract; legacy v3/v7 stays frozen.",
+      "database_dependencies": [],
+      "admin_dependencies": [],
+      "external_services": [],
+      "tests": [
+        "backend/tests/test_research_internal_plan.py",
+        "backend/tests/test_research_administrative.py",
+        "backend/tests/test_research_analytics.py",
+        "backend/tests/test_research_v9_adapter.py"
+      ],
+      "target": "contracts/ snapshots with parity tests; future consumer-side validation",
+      "phase": "Design only in phase 1; no extraction activated"
+    },
+    {
+      "source": "backend/app/schemas/research_analytics_guard.py",
+      "category": "SHARED_CONTRACT",
+      "reason": "Retain wire shape; generated schema snapshot and parity checks, no runtime cross-repository import.",
+      "sha256": "4ee81361f9be0a0124b5c2ca261146ffa6cc4f091208a8721e5b4f96824cd318",
+      "imports": [],
+      "responsibility": "Conservative multilingual vetoes, never a replacement planner or SQL generator.",
+      "database_dependencies": [],
+      "admin_dependencies": [],
+      "external_services": [],
+      "tests": [
+        "backend/tests/test_research_analytics.py"
+      ],
+      "target": "contracts/ snapshots with parity tests; future consumer-side validation",
+      "phase": "Design only in phase 1; no extraction activated"
+    },
+    {
+      "source": "backend/app/schemas/research_areas.py",
+      "category": "SHARED_CONTRACT",
+      "reason": "Retain wire shape; generated schema snapshot and parity checks, no runtime cross-repository import.",
+      "sha256": "3323191b56ef0b75babefc79a622cead1d0fc3b632b87c3c64b7c1d94b6ba308",
+      "imports": [
+        "app.schemas.finding",
+        "app.schemas.research"
+      ],
+      "responsibility": "Bounded read-only area projections; polygons are only returned for dossiers.",
+      "database_dependencies": [],
+      "admin_dependencies": [],
+      "external_services": [],
+      "tests": [
+        "backend/tests/test_research_administrative.py",
+        "backend/tests/test_research_areas.py",
+        "backend/tests/test_research_catalog.py",
+        "backend/tests/test_research_administrative_areas.py",
+        "backend/tests/test_research_chronology.py",
+        "backend/tests/test_semantic_search.py",
+        "backend/tests/test_semantic_genres.py",
+        "backend/tests/test_research_plan_execution.py",
+        "backend/tests/test_research_analytics.py",
+        "backend/tests/test_research_semantic_eligibility.py"
+      ],
+      "target": "contracts/ snapshots with parity tests; future consumer-side validation",
+      "phase": "Design only in phase 1; no extraction activated"
+    },
+    {
+      "source": "backend/app/schemas/research_conversation.py",
+      "category": "SHARED_CONTRACT",
+      "reason": "Retain wire shape; generated schema snapshot and parity checks, no runtime cross-repository import.",
+      "sha256": "fe71de8e85f4159945a11881f79b19cde68536105d761874753350d41945409c",
+      "imports": [],
+      "responsibility": "Bounded advisory semantics, never executable plans or result data.",
+      "database_dependencies": [],
+      "admin_dependencies": [],
+      "external_services": [],
+      "tests": [
+        "backend/tests/test_research_v13.py",
+        "backend/tests/test_research_v12.py",
+        "backend/tests/test_research_conversation.py"
+      ],
+      "target": "contracts/ snapshots with parity tests; future consumer-side validation",
+      "phase": "Design only in phase 1; no extraction activated"
+    },
+    {
+      "source": "backend/app/schemas/research_conversation_v12.py",
+      "category": "SHARED_CONTRACT",
+      "reason": "Retain wire shape; generated schema snapshot and parity checks, no runtime cross-repository import.",
+      "sha256": "a7495d30f5a45b7ff36de673f736c1f0f838a55b8e274f43ba5cb9cf546c8bcc",
+      "imports": [
+        "app.research.wire.research_v8_types",
+        "app.schemas.research_conversation"
+      ],
+      "responsibility": "V12 summaries retain lexical administrative expectations, never resolved identities.",
+      "database_dependencies": [],
+      "admin_dependencies": [],
+      "external_services": [],
+      "tests": [
+        "backend/tests/test_research_v13.py",
+        "backend/tests/test_research_v12.py"
+      ],
+      "target": "contracts/ snapshots with parity tests; future consumer-side validation",
+      "phase": "Design only in phase 1; no extraction activated"
+    },
+    {
+      "source": "backend/app/schemas/research_domain.py",
+      "category": "SHARED_CONTRACT",
+      "reason": "Retain wire shape; generated schema snapshot and parity checks, no runtime cross-repository import.",
+      "sha256": "ce7e8ceca3b0dea0733ad9774c6fe0a79a09ccb08a924c23d186723dcb5be983",
+      "imports": [
+        "app.schemas.research_planner"
+      ],
+      "responsibility": "Public planner v4 mirror; compatible addition beside the existing v3 endpoint.",
+      "database_dependencies": [],
+      "admin_dependencies": [],
+      "external_services": [],
+      "tests": [
+        "backend/tests/test_research_sql_provenance.py",
+        "backend/tests/test_project_knowledge.py",
+        "backend/tests/test_research_domain_contract.py",
+        "backend/tests/test_research_unified.py"
+      ],
+      "target": "contracts/ snapshots with parity tests; future consumer-side validation",
+      "phase": "Design only in phase 1; no extraction activated"
+    },
+    {
+      "source": "backend/app/schemas/research_execution.py",
+      "category": "SHARED_CONTRACT",
+      "reason": "Retain wire shape; generated schema snapshot and parity checks, no runtime cross-repository import.",
+      "sha256": "0b86c54c8923eab86ad8753c264152da8352d66318a60b2253ca8c4e70bdcdfa",
+      "imports": [
+        "app.schemas.genre",
+        "app.schemas.research",
+        "app.schemas.research_location",
+        "app.schemas.research_values"
+      ],
+      "responsibility": "Closed execution results and internal filters; never accepted from a browser.",
+      "database_dependencies": [],
+      "admin_dependencies": [],
+      "external_services": [],
+      "tests": [
+        "backend/tests/test_research_sql_provenance.py",
+        "backend/tests/test_research_calendar.py",
+        "backend/tests/test_research_internal_plan.py",
+        "backend/tests/test_research_v13.py",
+        "backend/tests/test_research_administrative.py",
+        "backend/tests/test_research_resolution.py",
+        "backend/tests/test_administrative_integration_guards.py",
+        "backend/tests/test_administrative_geography.py",
+        "backend/tests/test_research_taxonomy.py",
+        "backend/tests/test_research_v12.py",
+        "backend/tests/test_research_grouping.py",
+        "backend/tests/test_research_answer.py",
+        "backend/tests/test_research_chronology.py",
+        "backend/tests/test_taxonomy_flow.py",
+        "backend/tests/test_research_plan_execution.py",
+        "backend/tests/test_research_analytics.py",
+        "backend/tests/test_research_unified.py",
+        "backend/tests/test_research_v9_adapter.py",
+        "backend/tests/test_research_semantic_eligibility.py"
+      ],
+      "target": "contracts/ snapshots with parity tests; future consumer-side validation",
+      "phase": "Design only in phase 1; no extraction activated"
+    },
+    {
+      "source": "backend/app/schemas/research_geography.py",
+      "category": "SHARED_CONTRACT",
+      "reason": "Retain wire shape; generated schema snapshot and parity checks, no runtime cross-repository import.",
+      "sha256": "8ddad8ff1eae40efbf9d225320793f6b96c94f31f245ff59378f48839c9e7d82",
+      "imports": [
+        "app.schemas.research_analytics"
+      ],
+      "responsibility": "Versioned geographic v6/v11 contract; earlier contracts remain frozen.",
+      "database_dependencies": [],
+      "admin_dependencies": [],
+      "external_services": [],
+      "tests": [
+        "backend/tests/test_research_internal_plan.py",
+        "backend/tests/test_research_geography.py",
+        "backend/tests/test_research_v9_adapter.py"
+      ],
+      "target": "contracts/ snapshots with parity tests; future consumer-side validation",
+      "phase": "Design only in phase 1; no extraction activated"
+    },
+    {
+      "source": "backend/app/schemas/research_location.py",
+      "category": "SHARED_CONTRACT",
+      "reason": "Retain wire shape; generated schema snapshot and parity checks, no runtime cross-repository import.",
+      "sha256": "5fa1735e1ba32eceae78929683a43bd3ec1a65fb44b39b6d4166fad5e0a64886",
+      "imports": [
+        "app.schemas.research_conversation",
+        "app.schemas.research_conversation_v12",
+        "app.schemas.research_planner"
+      ],
+      "responsibility": "Untrusted browser context and bounded geocoder output; never persisted.",
+      "database_dependencies": [],
+      "admin_dependencies": [],
+      "external_services": [],
+      "tests": [
+        "backend/tests/test_research_sql_provenance.py",
+        "backend/tests/test_research_geography.py",
+        "backend/tests/test_research_v12.py",
+        "backend/tests/test_research_grouping_flow.py",
+        "backend/tests/test_research_conversation.py",
+        "backend/tests/test_research_geocoder.py",
+        "backend/tests/test_research_v9_adapter.py"
+      ],
+      "target": "contracts/ snapshots with parity tests; future consumer-side validation",
+      "phase": "Design only in phase 1; no extraction activated"
+    },
+    {
+      "source": "backend/app/schemas/research_planner.py",
+      "category": "SHARED_CONTRACT",
+      "reason": "Retain wire shape; generated schema snapshot and parity checks, no runtime cross-repository import.",
+      "sha256": "f1bc3905eb706d813897eb59058e6d3e378f3d3b2847f8db6afaa6e981dd6cda",
+      "imports": [],
+      "responsibility": "Admin mirror of the planner v3/v7 wire contract, not inference or execution logic.",
+      "database_dependencies": [],
+      "admin_dependencies": [],
+      "external_services": [],
+      "tests": [
+        "backend/tests/test_research_sql_provenance.py",
+        "backend/tests/test_research_calendar.py",
+        "backend/tests/test_research_internal_plan.py",
+        "backend/tests/test_research_v13.py",
+        "backend/tests/test_research_geography.py",
+        "backend/tests/test_project_knowledge.py",
+        "backend/tests/test_administrative_integration_guards.py",
+        "backend/tests/test_administrative_geography.py",
+        "backend/tests/test_research_taxonomy.py",
+        "backend/tests/test_research_v12.py",
+        "backend/tests/test_research_grouping_flow.py",
+        "backend/tests/test_research_conversation.py",
+        "backend/tests/test_research_domain_contract.py",
+        "backend/tests/test_research_chronology.py",
+        "backend/tests/test_taxonomy_flow.py",
+        "backend/tests/test_research_plan_execution.py",
+        "backend/tests/test_research_ordering_contract.py",
+        "backend/tests/test_research_planner.py",
+        "backend/tests/test_research_analytics.py",
+        "backend/tests/test_research_unified.py",
+        "backend/tests/test_research_geocoder.py",
+        "backend/tests/test_research_v12_postgis.py"
+      ],
+      "target": "contracts/ snapshots with parity tests; future consumer-side validation",
+      "phase": "Design only in phase 1; no extraction activated"
+    },
+    {
+      "source": "backend/app/schemas/research_response.py",
+      "category": "SHARED_CONTRACT",
+      "reason": "Retain wire shape; generated schema snapshot and parity checks, no runtime cross-repository import.",
+      "sha256": "e15ceb898981dedbb2d8d2df8526d1f6cd48f96f40a47675b1e6133247cfc659",
+      "imports": [
+        "app.research.answer",
+        "app.research.wire.research_v10_schema",
+        "app.research.wire.research_v11_schema",
+        "app.research.wire.research_v12_schema",
+        "app.research.wire.research_v13_schema",
+        "app.research.wire.research_v9_schema",
+        "app.schemas.research_analytics",
+        "app.schemas.research_conversation",
+        "app.schemas.research_conversation_v12",
+        "app.schemas.research_execution",
+        "app.schemas.research_geography",
+        "app.schemas.research_planner",
+        "app.schemas.research_sql",
+        "app.schemas.research_values"
+      ],
+      "responsibility": "HTTP response composition. Planner provenance remains at the API boundary.",
+      "database_dependencies": [],
+      "admin_dependencies": [],
+      "external_services": [],
+      "tests": [
+        "backend/tests/test_research_sql_provenance.py",
+        "backend/tests/test_research_calendar.py",
+        "backend/tests/test_research_v12.py",
+        "backend/tests/test_research_grouping_flow.py",
+        "backend/tests/test_research_answer.py"
+      ],
+      "target": "contracts/ snapshots with parity tests; future consumer-side validation",
+      "phase": "Design only in phase 1; no extraction activated"
+    },
+    {
+      "source": "backend/app/schemas/research_sql.py",
+      "category": "SHARED_CONTRACT",
+      "reason": "Retain wire shape; generated schema snapshot and parity checks, no runtime cross-repository import.",
+      "sha256": "c70e6010f1ff0d2df01fed4964be0d47f8775c95e5307f995fa0a63a9c7824ae",
+      "imports": [
+        "app.schemas.research_values"
+      ],
+      "responsibility": "Bounded, closed, display-only provenance for authoritative Research source SQL.",
+      "database_dependencies": [],
+      "admin_dependencies": [],
+      "external_services": [],
+      "tests": [
+        "backend/tests/test_research_sql_provenance.py",
+        "backend/tests/test_research_calendar.py",
+        "backend/tests/test_research_grouping.py",
+        "backend/tests/test_semantic_search.py",
+        "backend/tests/test_research_analytics.py",
+        "backend/tests/test_research_v9_adapter.py"
+      ],
+      "target": "contracts/ snapshots with parity tests; future consumer-side validation",
+      "phase": "Design only in phase 1; no extraction activated"
+    },
+    {
+      "source": "backend/app/schemas/research_suggestions.py",
+      "category": "KEEP_IN_ADMIN",
+      "reason": "Admin-owned persistence/import/learning; service receives only read-only geographic projection.",
+      "sha256": "f09dd3f2df786977796d4edc6279c185b4ee899029652bfac67c6f1ed6657f17",
+      "imports": [],
+      "responsibility": "Bounded, identity-free suggestion telemetry.",
+      "database_dependencies": [],
+      "admin_dependencies": [],
+      "external_services": [],
+      "tests": [
+        "backend/tests/test_research_suggestions.py"
+      ],
+      "target": "backend/app/schemas/research_suggestions.py",
+      "phase": "Design only in phase 1; no extraction activated"
+    },
+    {
+      "source": "backend/app/schemas/research_unified.py",
+      "category": "DEFER",
+      "reason": "Historical pilot/project-knowledge path, separate from current v9\u2013v13 execution; keep explicit legacy route during phased rollout.",
+      "sha256": "87e417dca094b170c1eb9c61d93576f636b35081bcc879bad140f09b9bae1fbe",
+      "imports": [
+        "app.schemas.project_knowledge",
+        "app.schemas.research_domain",
+        "app.schemas.research_execution",
+        "app.schemas.research_sql"
+      ],
+      "responsibility": "Historical pilot/project-knowledge path, separate from current v9\u2013v13 execution; keep explicit legacy route during phased rollout.",
+      "database_dependencies": [],
+      "admin_dependencies": [],
+      "external_services": [],
+      "tests": [
+        "backend/tests/test_research_sql_provenance.py",
+        "backend/tests/test_project_knowledge.py",
+        "backend/tests/test_research_unified.py"
+      ],
+      "target": "backend/app/schemas/research_unified.py",
+      "phase": "Design only in phase 1; no extraction activated"
+    },
+    {
+      "source": "backend/app/schemas/research_values.py",
+      "category": "SHARED_CONTRACT",
+      "reason": "Retain wire shape; generated schema snapshot and parity checks, no runtime cross-repository import.",
+      "sha256": "facdb41c78e09cd27e02512c23e9b95f6984156fb5541562a42be73e59a27be9",
+      "imports": [],
+      "responsibility": "Shared execution response primitives, independent of Planner wire versions.",
+      "database_dependencies": [],
+      "admin_dependencies": [],
+      "external_services": [],
+      "tests": [],
+      "target": "contracts/ snapshots with parity tests; future consumer-side validation",
+      "phase": "Design only in phase 1; no extraction activated"
+    },
+    {
+      "source": "backend/app/services/research_administrative.py",
+      "category": "MOVE",
+      "reason": "Preserve deterministic Research behavior in the execution service.",
+      "sha256": "0f66fdfbf8140acf585e1714f0e539001806c24c1b245c02d87a5fd9d3758db8",
+      "imports": [
+        "app.config",
+        "app.errors",
+        "app.research.context",
+        "app.research.normalize",
+        "app.research.wire.research_v8_schema",
+        "app.schemas.research_administrative_result",
+        "app.services.research_plan_execution",
+        "app.services.research_planner"
+      ],
+      "responsibility": "Versioned transport edge; execution belongs to the shared ResearchPlanExecutor.",
+      "database_dependencies": [],
+      "admin_dependencies": [
+        "Admin Request/app.state dependency to remove"
+      ],
+      "external_services": [],
+      "tests": [
+        "backend/tests/test_research_sql_provenance.py",
+        "backend/tests/test_research_internal_plan.py",
+        "backend/tests/test_research_administrative.py",
+        "backend/tests/test_research_administrative_areas_batch.py",
+        "backend/tests/test_administrative_integration_guards.py",
+        "backend/tests/test_administrative_geography.py",
+        "backend/tests/test_research_v12.py",
+        "backend/tests/test_research_grouping_flow.py",
+        "backend/tests/test_research_analytics.py",
+        "backend/tests/test_research_v9_adapter.py"
+      ],
+      "target": "src/uranus_research_service/services/research_administrative.py",
+      "phase": "Design only in phase 1; no extraction activated"
+    },
+    {
+      "source": "backend/app/services/research_conversational.py",
+      "category": "MOVE",
+      "reason": "Preserve deterministic Research behavior in the execution service.",
+      "sha256": "6b61c1ec163176efc362fa012b0467a7f5c0dd5e9bbf2279c1998f53786a4c02",
+      "imports": [
+        "app.auth.credentials",
+        "app.auth.service",
+        "app.config",
+        "app.errors",
+        "app.research.answer_facts",
+        "app.research.context",
+        "app.research.conversation",
+        "app.research.conversation_state",
+        "app.research.geography",
+        "app.research.normalize_v12",
+        "app.research.public_result",
+        "app.research.wire.research_v13_schema",
+        "app.schemas.research_conversation_v12",
+        "app.schemas.research_location",
+        "app.schemas.research_response",
+        "app.services.research_plan_execution",
+        "app.services.research_planner"
+      ],
+      "responsibility": "v13 orchestration: semantic routing before any resolver, source or vector access.",
+      "database_dependencies": [],
+      "admin_dependencies": [
+        "app.auth.credentials",
+        "app.auth.service",
+        "Admin Request/app.state dependency to remove"
+      ],
+      "external_services": [
+        "Planner HTTP",
+        "Qdrant HTTP"
+      ],
+      "tests": [
+        "backend/tests/test_research_v13.py"
+      ],
+      "target": "src/uranus_research_service/services/research_conversational.py",
+      "phase": "Design only in phase 1; no extraction activated"
+    },
+    {
+      "source": "backend/app/services/research_domain_client.py",
+      "category": "DEFER",
+      "reason": "Historical pilot/project-knowledge path, separate from current v9\u2013v13 execution; keep explicit legacy route during phased rollout.",
+      "sha256": "62fe83943e132f86ca7cde55adb7b99361648987ce0f5bf04d2d6eb30027c1b3",
+      "imports": [
+        "app.config",
+        "app.errors",
+        "app.schemas.project_knowledge",
+        "app.schemas.research_domain"
+      ],
+      "responsibility": "Fixed server-to-server v4 routes; no browser credentials or routing selectors.",
+      "database_dependencies": [],
+      "admin_dependencies": [],
+      "external_services": [],
+      "tests": [
+        "backend/tests/test_project_knowledge.py",
+        "backend/tests/test_research_domain_contract.py",
+        "backend/tests/test_research_unified.py"
+      ],
+      "target": "backend/app/services/research_domain_client.py",
+      "phase": "Design only in phase 1; no extraction activated"
+    },
+    {
+      "source": "backend/app/services/research_learning.py",
+      "category": "KEEP_IN_ADMIN",
+      "reason": "Admin-owned persistence/import/learning; service receives only read-only geographic projection.",
+      "sha256": "f27806e73f5fff8b3e2dbf899cb498548640ab8b12dd045f8e166da1c8d5230e",
+      "imports": [
+        "app.admin_database",
+        "app.repositories.research_suggestions",
+        "app.research.normalize",
+        "app.research.plan",
+        "app.research.wire.research_v13_schema",
+        "app.schemas.research_response"
+      ],
+      "responsibility": "Best-effort learning after successful execution, isolated from source reads.",
+      "database_dependencies": [],
+      "admin_dependencies": [
+        "app.admin_database"
+      ],
+      "external_services": [],
+      "tests": [
+        "backend/tests/test_research_sql_provenance.py",
+        "backend/tests/test_research_suggestions.py"
+      ],
+      "target": "backend/app/services/research_learning.py",
+      "phase": "Design only in phase 1; no extraction activated"
+    },
+    {
+      "source": "backend/app/services/research_legacy_conversation.py",
+      "category": "MOVE",
+      "reason": "Preserve deterministic Research behavior in the execution service.",
+      "sha256": "b1bab9f56349cadf5c19c07c98d7fbf782e7cb6a7aa87d8d05c8a9761db0c434",
+      "imports": [
+        "app.auth.credentials",
+        "app.auth.service",
+        "app.config",
+        "app.errors",
+        "app.research.conversation_state",
+        "app.schemas.research_conversation",
+        "app.schemas.research_conversation_v12",
+        "app.schemas.research_location",
+        "app.schemas.research_response"
+      ],
+      "responsibility": "Server-owned context for v11/v12 rollback; older browser contracts remain accepted.",
+      "database_dependencies": [],
+      "admin_dependencies": [
+        "app.auth.credentials",
+        "app.auth.service",
+        "Admin Request/app.state dependency to remove"
+      ],
+      "external_services": [],
+      "tests": [],
+      "target": "src/uranus_research_service/services/research_legacy_conversation.py",
+      "phase": "Design only in phase 1; no extraction activated"
+    },
+    {
+      "source": "backend/app/services/research_plan_execution.py",
+      "category": "MOVE",
+      "reason": "Preserve deterministic Research behavior in the execution service.",
+      "sha256": "d3de373257c07bc623283fdb48a9d4c3d77d595e1f918c86770828b93a4ee749",
+      "imports": [
+        "app.config",
+        "app.database",
+        "app.errors",
+        "app.repositories.administrative_execution",
+        "app.repositories.research",
+        "app.repositories.research_execution",
+        "app.repositories.research_grouping",
+        "app.repositories.research_resolution",
+        "app.research.capabilities",
+        "app.research.context",
+        "app.research.geography",
+        "app.research.outcome",
+        "app.research.plan",
+        "app.research.sql_provenance",
+        "app.schemas.research_execution",
+        "app.services.semantic_search"
+      ],
+      "responsibility": "Deterministic execution of validated server-side plans. No inference or persistence.",
+      "database_dependencies": [],
+      "admin_dependencies": [],
+      "external_services": [],
+      "tests": [
+        "backend/tests/test_research_sql_provenance.py",
+        "backend/tests/test_research_calendar.py",
+        "backend/tests/test_research_internal_plan.py",
+        "backend/tests/test_research_administrative.py",
+        "backend/tests/test_research_geography.py",
+        "backend/tests/test_administrative_integration_guards.py",
+        "backend/tests/test_administrative_geography.py",
+        "backend/tests/test_research_suggestions.py",
+        "backend/tests/test_research_taxonomy.py",
+        "backend/tests/test_taxonomy_index.py",
+        "backend/tests/test_research_v12.py",
+        "backend/tests/test_research_grouping_flow.py",
+        "backend/tests/test_research_grouping.py",
+        "backend/tests/test_research_chronology.py",
+        "backend/tests/test_taxonomy_flow.py",
+        "backend/tests/test_research_plan_execution.py",
+        "backend/tests/test_research_ordering_contract.py",
+        "backend/tests/test_research_analytics.py",
+        "backend/tests/test_research_v12_postgis.py",
+        "backend/tests/test_research_v9_adapter.py",
+        "backend/tests/test_research_semantic_eligibility.py"
+      ],
+      "target": "src/uranus_research_service/services/research_plan_execution.py",
+      "phase": "Design only in phase 1; no extraction activated"
+    },
+    {
+      "source": "backend/app/services/research_planner.py",
+      "category": "MOVE",
+      "reason": "Preserve deterministic Research behavior in the execution service.",
+      "sha256": "7472863de1fa2eb521658ec4608b1f90811ec8243326fb3f47de653bae3f5b8b",
+      "imports": [
+        "app.config",
+        "app.errors",
+        "app.research.wire.research_v10_schema",
+        "app.research.wire.research_v11_schema",
+        "app.research.wire.research_v12_schema",
+        "app.research.wire.research_v13_schema",
+        "app.research.wire.research_v8_schema",
+        "app.research.wire.research_v9_schema",
+        "app.schemas.research_analytics",
+        "app.schemas.research_conversation",
+        "app.schemas.research_conversation_v12",
+        "app.schemas.research_geography",
+        "app.schemas.research_planner"
+      ],
+      "responsibility": "Bounded server-to-server language planning. No retrieval, persistence or retries.",
+      "database_dependencies": [],
+      "admin_dependencies": [],
+      "external_services": [
+        "Planner HTTP"
+      ],
+      "tests": [
+        "backend/tests/test_research_sql_provenance.py",
+        "backend/tests/test_research_calendar.py",
+        "backend/tests/test_research_internal_plan.py",
+        "backend/tests/test_research_v13.py",
+        "backend/tests/test_research_geography.py",
+        "backend/tests/test_project_knowledge.py",
+        "backend/tests/test_administrative_integration_guards.py",
+        "backend/tests/test_administrative_geography.py",
+        "backend/tests/test_research_taxonomy.py",
+        "backend/tests/test_research_v12.py",
+        "backend/tests/test_research_grouping_flow.py",
+        "backend/tests/test_research_conversation.py",
+        "backend/tests/test_research_domain_contract.py",
+        "backend/tests/test_research_chronology.py",
+        "backend/tests/test_taxonomy_flow.py",
+        "backend/tests/test_research_plan_execution.py",
+        "backend/tests/test_research_ordering_contract.py",
+        "backend/tests/test_research_planner.py",
+        "backend/tests/test_research_analytics.py",
+        "backend/tests/test_research_unified.py",
+        "backend/tests/test_research_geocoder.py",
+        "backend/tests/test_research_v12_postgis.py"
+      ],
+      "target": "src/uranus_research_service/services/research_planner.py",
+      "phase": "Design only in phase 1; no extraction activated"
+    },
+    {
+      "source": "backend/app/services/research_suggestions.py",
+      "category": "KEEP_IN_ADMIN",
+      "reason": "Admin-owned persistence/import/learning; service receives only read-only geographic projection.",
+      "sha256": "ddaa07fbd3725dc49d39ed644b7b4c20bb82a24e3616900b4b4362b74dc78522",
+      "imports": [],
+      "responsibility": "Deterministic privacy gate and bounded learning weights; no inference services.",
+      "database_dependencies": [],
+      "admin_dependencies": [],
+      "external_services": [],
+      "tests": [
+        "backend/tests/test_research_suggestions.py"
+      ],
+      "target": "backend/app/services/research_suggestions.py",
+      "phase": "Design only in phase 1; no extraction activated"
+    },
+    {
+      "source": "backend/app/services/research_unified.py",
+      "category": "DEFER",
+      "reason": "Historical pilot/project-knowledge path, separate from current v9\u2013v13 execution; keep explicit legacy route during phased rollout.",
+      "sha256": "e8ea72bc2851251a9dd8b5ceaea33e1c7d4207b5e881f2350a76e5f921c26553",
+      "imports": [
+        "app.admin_database",
+        "app.config",
+        "app.database",
+        "app.errors",
+        "app.repositories.research_areas",
+        "app.repositories.research_metrics",
+        "app.repositories.research_resolution",
+        "app.research.sql_provenance",
+        "app.schemas.research_domain",
+        "app.schemas.research_execution",
+        "app.schemas.research_unified",
+        "app.services.research_domain_client"
+      ],
+      "responsibility": "Admin remains the only exact-data executor and public Research orchestrator.",
+      "database_dependencies": [],
+      "admin_dependencies": [
+        "app.admin_database",
+        "Admin Request/app.state dependency to remove"
+      ],
+      "external_services": [],
+      "tests": [
+        "backend/tests/test_research_sql_provenance.py",
+        "backend/tests/test_project_knowledge.py",
+        "backend/tests/test_research_unified.py"
+      ],
+      "target": "backend/app/services/research_unified.py",
+      "phase": "Design only in phase 1; no extraction activated"
+    },
+    {
+      "source": "backend/app/services/semantic_search.py",
+      "category": "MOVE",
+      "reason": "Preserve deterministic Research behavior in the execution service.",
+      "sha256": "52b6b3f8d73d3131cfb8d65cae05af971b20f33b904072f3d01a22b90f1cb429",
+      "imports": [
+        "app.config",
+        "app.database",
+        "app.errors",
+        "app.repositories.entities",
+        "app.repositories.research",
+        "app.repositories.research_areas",
+        "app.research.semantic_evidence",
+        "app.research.semantic_explanations",
+        "app.research.semantic_limits",
+        "app.research.vector_models",
+        "app.research.vector_transport",
+        "app.schemas.research"
+      ],
+      "responsibility": "Fixed-model retrieval with validated evidence and authoritative source rehydration.",
+      "database_dependencies": [],
+      "admin_dependencies": [],
+      "external_services": [
+        "Encoder HTTP",
+        "Qdrant HTTP"
+      ],
+      "tests": [
+        "backend/tests/test_research_sql_provenance.py",
+        "backend/tests/test_research_calendar.py",
+        "backend/tests/test_taxonomy_semantic.py",
+        "backend/tests/test_search_gateway.py",
+        "backend/tests/test_research_domain_contract.py",
+        "backend/tests/test_semantic_search.py",
+        "backend/tests/test_semantic_genres.py",
+        "backend/tests/test_research_plan_execution.py",
+        "backend/tests/test_research_unified.py",
+        "backend/tests/test_research_v9_adapter.py",
+        "backend/tests/test_research_semantic_eligibility.py"
+      ],
+      "target": "src/uranus_research_service/services/semantic_search.py",
+      "phase": "Design only in phase 1; no extraction activated"
+    },
+    {
+      "source": "backend/app/services/taxonomy_resolution.py",
+      "category": "MOVE",
+      "reason": "Preserve deterministic Research behavior in the execution service.",
+      "sha256": "f44c1168bbb6c4b5b8b0515e344fcc4d30de8f6c0ecda7aff550e2247a9cd1f0",
+      "imports": [
+        "app.config",
+        "app.errors",
+        "app.repositories.research_taxonomy",
+        "app.research.taxonomy",
+        "app.research.taxonomy_policy",
+        "app.research.taxonomy_transport",
+        "app.research.vector_transport",
+        "app.schemas.research_execution"
+      ],
+      "responsibility": "Vectors propose vocabulary identities; the current public SQL snapshot authorizes them.",
+      "database_dependencies": [],
+      "admin_dependencies": [],
+      "external_services": [
+        "Encoder HTTP",
+        "Qdrant HTTP"
+      ],
+      "tests": [
+        "backend/tests/test_taxonomy_semantic.py",
+        "backend/tests/test_research_plan_execution.py"
+      ],
+      "target": "src/uranus_research_service/services/taxonomy_resolution.py",
+      "phase": "Design only in phase 1; no extraction activated"
+    },
+    {
+      "source": "backend/app/repositories/administrative_execution.py",
+      "category": "MOVE",
+      "reason": "Deterministic Research execution.",
+      "sha256": "695014f6e706cc56b2b562a7a027fcb790ee9f7dd1110dbfa507e4f38aa045cb",
+      "imports": [
+        "app.config",
+        "app.errors",
+        "app.repositories.research",
+        "app.research.plan",
+        "app.research.sql_provenance",
+        "app.schemas.research_administrative_result",
+        "sqlalchemy",
+        "sqlalchemy.ext.asyncio",
+        "typing"
+      ],
+      "responsibility": "Deterministic PostGIS execution; only resolved identities, polygons and category IDs.",
+      "database_dependencies": [],
+      "admin_dependencies": [],
+      "external_services": [],
+      "tests": [
+        "backend/tests/test_research_sql_provenance.py",
+        "backend/tests/test_administrative_integration_guards.py",
+        "backend/tests/test_administrative_geography.py"
+      ],
+      "target": "src/uranus_research_service/repositories/administrative_execution.py",
+      "phase": "Design only in phase 1; no extraction activated"
+    }
+  ]
+}

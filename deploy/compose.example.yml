@@ -1,0 +1,36 @@
+# Example only. No production service or source database is modified.
+services:
+  research:
+    build:
+      context: ..
+      dockerfile: deploy/Dockerfile
+    ports:
+      - "127.0.0.1:6338:6338"
+    read_only: true
+    user: "10001:10001"
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+    tmpfs: ["/tmp:size=16m,noexec,nosuid"]
+    mem_limit: 256m
+    cpus: 1.0
+    pids_limit: 64
+    environment:
+      RESEARCH_API_KEY_FILE: /run/secrets/research_api_key
+      PLANNER_API_KEY_FILE: /run/secrets/planner_api_key
+      ENCODER_API_KEY_FILE: /run/secrets/encoder_api_key
+      # Real reachable HTTPS service origins are supplied by the operator.
+      # Loopback defaults are for local processes, not other containers.
+      PLANNER_URL: ${PLANNER_URL:-https://planner.internal.invalid}
+      ENCODER_URL: ${ENCODER_URL:-https://encoder.internal.invalid}
+      PLANNER_CONTRACT: v13
+    secrets:
+      - research_api_key
+      - planner_api_key
+      - encoder_api_key
+secrets:
+  research_api_key:
+    file: ${RESEARCH_KEY_PATH:-./secrets/research_api_key}
+  planner_api_key:
+    file: ${PLANNER_KEY_PATH:-./secrets/planner_api_key}
+  encoder_api_key:
+    file: ${ENCODER_KEY_PATH:-./secrets/encoder_api_key}

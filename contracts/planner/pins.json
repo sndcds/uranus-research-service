@@ -1,0 +1,22 @@
+{
+  "v9": {
+    "schema_version": "research-query-plan-v9",
+    "response_schema_sha256": "3b8238903808571709eb300ba6ac6b15ef7936f8b76819abb16c6e9c1db7c575"
+  },
+  "v10": {
+    "schema_version": "research-query-plan-v10",
+    "response_schema_sha256": "328564b7eaaed650837c95cb88435e5551dd071e2a7658773972f72211463234"
+  },
+  "v11": {
+    "schema_version": "research-query-plan-v11",
+    "response_schema_sha256": "0ec23f305c4e9e7bdfb921022efeb4de4bb1f2fd7456c0b314ace05e530f7903"
+  },
+  "v12": {
+    "schema_version": "research-query-plan-v12",
+    "response_schema_sha256": "aafdbb7009d2e319549dd11f9862d264851c3aa3b0b3ea004ddc26248dd13231"
+  },
+  "v13": {
+    "schema_version": "research-query-plan-v13",
+    "response_schema_sha256": "40ea10418d3f53d3173398644ef69ab5e62bf8318598ef61979e88eeaf0a7ae2"
+  }
+}

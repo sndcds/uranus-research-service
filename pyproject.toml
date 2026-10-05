@@ -1,0 +1,23 @@
+[project]
+name = "uranus-research-service"
+version = "0.1.0"
+description = "Internal Research orchestration boundary for Kulturbytes/Uranus (phase 1)"
+requires-python = ">=3.13,<3.14"
+license = "AGPL-3.0-only"
+readme = "README.md"
+dependencies = ["fastapi>=0.115,<1", "pydantic>=2.11,<3", "httpx>=0.28,<0.29", "uvicorn>=0.53,<1"]
+[project.scripts]
+uranus-research-service = "uranus_research_service.__main__:main"
+[build-system]
+requires = ["hatchling>=1.27,<2"]
+build-backend = "hatchling.build"
+[dependency-groups]
+dev = ["pytest>=8.3,<10", "pytest-asyncio>=0.25,<2", "ruff>=0.12,<1", "jsonschema>=4.23,<5"]
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+[tool.ruff]
+target-version = "py313"
+line-length = 100
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "ASYNC"]

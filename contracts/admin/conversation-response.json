@@ -1,0 +1,120 @@
+{
+  "$defs": {
+    "ConversationInteractionV13": {
+      "additionalProperties": false,
+      "properties": {
+        "conversation": {
+          "$ref": "#/$defs/ConversationV13"
+        },
+        "kind": {
+          "enum": [
+            "acknowledgement",
+            "clarification",
+            "clarification_response",
+            "correction",
+            "greeting",
+            "help",
+            "social"
+          ],
+          "title": "Kind",
+          "type": "string"
+        }
+      },
+      "required": [
+        "kind",
+        "conversation"
+      ],
+      "title": "ConversationInteractionV13",
+      "type": "object"
+    },
+    "ConversationV13": {
+      "additionalProperties": false,
+      "properties": {
+        "act": {
+          "enum": [
+            "acknowledge",
+            "clarify",
+            "explain_previous",
+            "greet",
+            "greet_morning",
+            "help",
+            "pleased",
+            "repeat_previous",
+            "simplify_previous",
+            "social",
+            "unsupported"
+          ],
+          "title": "Act",
+          "type": "string"
+        },
+        "reason": {
+          "anyOf": [
+            {
+              "enum": [
+                "insufficient_structured_data",
+                "needs_context",
+                "needs_criteria",
+                "needs_date",
+                "needs_definition",
+                "needs_location",
+                "outside_research",
+                "unsupported_constraint"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Reason"
+        }
+      },
+      "required": [
+        "act",
+        "reason"
+      ],
+      "title": "ConversationV13",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "answer_text": {
+      "maxLength": 1000,
+      "minLength": 1,
+      "title": "Answer Text",
+      "type": "string"
+    },
+    "conversation_id": {
+      "pattern": "^[A-Za-z0-9_-]{43}$",
+      "title": "Conversation Id",
+      "type": "string"
+    },
+    "interaction": {
+      "$ref": "#/$defs/ConversationInteractionV13"
+    },
+    "kind": {
+      "const": "conversation",
+      "default": "conversation",
+      "title": "Kind",
+      "type": "string"
+    },
+    "language": {
+      "enum": [
+        "da",
+        "de",
+        "en"
+      ],
+      "title": "Language",
+      "type": "string"
+    }
+  },
+  "required": [
+    "answer_text",
+    "language",
+    "conversation_id",
+    "interaction"
+  ],
+  "title": "ConversationResponse",
+  "type": "object"
+}

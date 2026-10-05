@@ -1,0 +1,20 @@
+import sys
+
+import uvicorn
+
+from uranus_research_service.app import create_app
+from uranus_research_service.logging import configure_logging, logger
+
+
+def main():
+    configure_logging()
+    try:
+        app = create_app()
+    except (ValueError, OSError):
+        logger.error("startup_failed", extra={"error_type": "invalid_configuration"})
+        sys.exit(1)
+    uvicorn.run(app, host="0.0.0.0", port=6338, access_log=False, log_config=None)
+
+
+if __name__ == "__main__":
+    main()

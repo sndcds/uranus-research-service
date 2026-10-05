@@ -1,0 +1,67 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "chunk_version": {
+      "default": "sections-480-overlap64-v2",
+      "title": "Chunk Version",
+      "type": "string"
+    },
+    "contract_version": {
+      "default": "uranus-research-service-v1",
+      "title": "Contract Version",
+      "type": "string"
+    },
+    "dimensions": {
+      "default": 1024,
+      "title": "Dimensions",
+      "type": "integer"
+    },
+    "embedding_model": {
+      "default": "jina-v5",
+      "title": "Embedding Model",
+      "type": "string"
+    },
+    "embedding_revision": {
+      "default": "dd76d535f5447ca3897a9c893fb1e612ead98192",
+      "title": "Embedding Revision",
+      "type": "string"
+    },
+    "embedding_version": {
+      "default": "dd76d535f5447ca3897a9c893fb1e612ead98192:native-qwen3-torch2.11.0-transformers5.17.0-peft0.21.1-cpu-eager-retrieval-query-document-last-token-l2-f32-d1024:sections-480-overlap64-v2",
+      "title": "Embedding Version",
+      "type": "string"
+    },
+    "encoder_contract": {
+      "default": "uranus-research-encoder-v1",
+      "title": "Encoder Contract",
+      "type": "string"
+    },
+    "planner_contract": {
+      "enum": [
+        "v10",
+        "v11",
+        "v12",
+        "v13",
+        "v9"
+      ],
+      "title": "Planner Contract",
+      "type": "string"
+    },
+    "query_enabled": {
+      "const": false,
+      "default": false,
+      "title": "Query Enabled",
+      "type": "boolean"
+    },
+    "service_version": {
+      "default": "0.1.0",
+      "title": "Service Version",
+      "type": "string"
+    }
+  },
+  "required": [
+    "planner_contract"
+  ],
+  "title": "VersionResponse",
+  "type": "object"
+}
