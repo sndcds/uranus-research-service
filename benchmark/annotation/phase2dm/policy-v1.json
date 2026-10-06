@@ -1,0 +1,31 @@
+{
+  "bias_length_bins_utf8": [
+    2000,
+    8000
+  ],
+  "confidence": "self-reported-uncalibrated",
+  "dry_run": "one-seeded-candidate-per-language-and-within-language-length-quartile;12-candidates;3-passes;never-reused-as-full-results",
+  "dry_seed": "phase2dm-pilot-v1",
+  "evaluation_cohort": "original-105;original-exclusions-remain",
+  "full_run": "requires-external-cost-approval-bound-to-plan-and-dry-report",
+  "historical_conflicts": "retain-historical-grade;record-disagreement;add-only-previously-unjudged-pairs",
+  "independence": "separate-stateless-requests;fixed-different-check-orders;not-statistical-independence;no-seed-support-claimed",
+  "majority": "three-graded;two-equal;range<=1;minimum-confidence>=0.8;unanimous-included",
+  "majority_min_confidence": 0.8,
+  "max_attempts": 3,
+  "max_output_tokens": 1200,
+  "no_hit": "six-original-hypotheses-excluded",
+  "passes": [
+    "machine-a",
+    "machine-b",
+    "machine-c"
+  ],
+  "reasoning_effort": "none",
+  "schema_version": "phase2dm-policy-v1",
+  "status": "preregistered-exploratory-machine-only",
+  "strict": "three-graded-identical",
+  "temperature": 0,
+  "timeout_seconds": 60,
+  "triage": "material;unresolved;gate-sensitive-endpoint-screen;total-loss;failed-category;low-confidence-majority;remainder",
+  "triage_blind_subset": "all-material-or-unresolved-or-gate-sensitive-plus-total-loss-and-failed-category-nonunanimous-or-low-confidence"
+}

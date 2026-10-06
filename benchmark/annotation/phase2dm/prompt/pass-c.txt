@@ -1,0 +1,1 @@
+Fixed independent procedure C: first separate event-wide claims from occurrence-specific evidence, then check each query requirement and hard eligibility against that evidence, then choose the supported rubric grade or uncertainty state. Do not assume another judge exists or infer another answer.

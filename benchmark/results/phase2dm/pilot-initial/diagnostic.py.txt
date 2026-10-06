@@ -1,0 +1,24 @@
+import asyncio,os
+from pathlib import Path
+from pydantic import ValidationError
+from uranus_research_service.machine_judge import *
+async def main():
+ path=Path('/tmp/uranus-phase2dm-20261006-pilot')
+ plan,packet=load_blind(path/'blind')
+ candidate=next(p for p in packet if p['annotation_id']=='719be58975081ee3144577baba99fd69')
+ prompt=prompt_text(path/'blind','machine-b')
+ payload=api_payload(candidate,plan,prompt,read(path/'blind/judge-v1.schema.json'))
+ client=OpenAIJudge(os.environ['OPENAI_API_KEY'])
+ try:
+  body,rid=await client.request('POST','responses',payload)
+  report={'purpose':'single-pilot-validation-diagnostic-not-full-result','annotation_id':candidate['annotation_id'],'request_sha256':digest(payload),'request_id':rid,'response_id':safe_id(body.get('id')),'model':plan['model'],'plan_sha256':digest(plan),'usage':usage_of(body),'script_sha256':sha(Path(__file__).read_bytes())}
+  try:
+   parse_response(body,candidate,plan['model']);report['validation']='valid-on-independent-diagnostic-request'
+  except ValidationError as e:
+   report['validation']=[{'loc':list(x['loc']),'type':x['type']} for x in e.errors(include_input=False,include_context=False)]
+  except ValueError as e:
+   report['validation']=str(e) if str(e).isalnum() or str(e).replace('_','').isalnum() else 'validation_failed'
+  atomic_new(path/'validation-diagnostic.json',report)
+  print(encoded(report).decode())
+ finally:await client.close()
+asyncio.run(main())
