@@ -2,9 +2,10 @@
 
 Status: **calibration-policy**, weiterhin **draft / machine-proposed**. Keine menschliche Benchmark-Freigabe.
 
-Basis: `430c1a3f23e356405ed60dc4abcca3465235e5e0`. 275 kalibrierte Paare in 14 Cases (historical-q01 bis q14).
-Geänderte Scores: **65**, davon **52 Upgrades**, **13 Downgrades**; **210 unverändert**.
-Verteilung 0/1/2/3 vorher: **{0: 1674, 1: 444, 2: 127, 3: 107}**; nachher: **{0: 1640, 1: 461, 2: 134, 3: 117}**.
+Basis: `430c1a3f23e356405ed60dc4abcca3465235e5e0`. 280 kalibrierte Paare in 14 Cases (historical-q01 bis q14).
+Geänderte Scores: **52**, davon **40 Upgrades**, **12 Downgrades**; **228 unverändert**.
+Verteilung 0/1/2/3 vorher: **{0: 1674, 1: 444, 2: 127, 3: 107}**; nachher: **{0: 1650, 1: 452, 2: 133, 3: 117}**.
+Der separate [Final Review](final-calibration-review-v1.md) dokumentiert ausschließlich die 21 nachgeprüften Paare gegenüber Head `29c8527`; die folgenden Driftzahlen vergleichen weiterhin mit der ursprünglichen Basis `430c1a3`.
 
 ## Architektur und Bindung
 
@@ -13,7 +14,7 @@ Verteilung 0/1/2/3 vorher: **{0: 1674, 1: 444, 2: 127, 3: 107}**; nachher: **{0:
 aus `expected_relevance` genommen, unabhängig vom heuristischen Score. Die Policy gilt nicht automatisch
 für Übersetzungen oder q15+. Dort bleiben Vorschläge unverändert und alle Grade 3 prioritär reviewpflichtig.
 
-Kalibrierungsdatei: [manual-calibration-v1.json](../benchmark/annotation/manual-calibration-v1.json), SHA256 `f0f72a735987fafdc12031ba1e19808b29e4f0babb1e851c6379fd0fd5df8ab8`.
+Kalibrierungsdatei: [manual-calibration-v1.json](../benchmark/annotation/manual-calibration-v1.json), SHA256 `179376bf2f01e6fcd2df447e0085a6cd340dd96b9eabeffc37f2f67f25f44ba5`.
 Jede angewandte Policy ist im Proposal durch Version, Hash und `calibration_applied` gebunden.
 
 Resolution verwendet exakten Snapshot-Titel und Case-Kandidatenmitgliedschaft. Die vom Auftrag gekürzten
@@ -47,7 +48,7 @@ Unaufgelöste Titelmehrdeutigkeiten: **0**. Ohne eindeutige Resolution stoppt de
 
 ## Kalibrierung/Evidenz-Konflikte
 
-**16** Konflikte werden ausdrücklich markiert; der kalibrierte Score bleibt erhalten.
+**0** Konflikte werden ausdrücklich markiert; der kalibrierte Score bleibt erhalten.
 Ein tatsächliches öffentliches Zitat belegt hier den beschriebenen Sachverhalt, nicht zwingend den
 vollen kalibrierten Relevanzgrad. Der Konflikttext nennt die fehlende oder stärkere Eigenschaft ausdrücklich.
 Es werden keine fehlenden Eigenschaften in Zitate hineingelesen. Alle kalibrierten Grade 3 besitzen
@@ -55,33 +56,11 @@ konkrete Evidenz und High Confidence; keiner dieser Grade-3-Fälle steht auf der
 
 | Case | Event | Konflikt |
 | --- | --- | --- |
-| historical-q03 | Reading Party "Let's Get Cosy" | Öffentlicher Text nennt barrierearmen Zugang plus barrierefreie Toilette; könnte stärker als Grad 1 gewertet werden. Kalibrierung bleibt 1. |
-| historical-q05 | La.tina | Programm nennt ausdrücklich QUECHUA SPRACHKURS; Kalibrierung bleibt trotzdem 0. |
-| historical-q06 | Parkfest im Christiansenpark | Botanischer Rundgang und historische Handwerke belegt; ausdrücklicher Nachhaltigkeitsbezug fehlt. |
-| historical-q06 | Liquid Bodies | Wasser/Fürsorge sind belegt, Nachhaltigkeit nicht ausdrücklich. Kalibrierter Teilbezug 1 bleibt erhalten. |
-| historical-q07 | Cultural Pearl Kulturtag | Kultur für alle, aber keine ausdrücklich genannte Kinderzielgruppe im Snapshot. |
-| historical-q07 | Skandaløs Festival | Allgemeines Festivalprogramm, aber kein ausdrücklicher Kinderbezug im erfassten Text. |
-| historical-q07 | KulturRotation 143 | Offenes allgemeines Kulturangebot; Kinderzielgruppe nicht ausdrücklich belegt. |
-| historical-q08 | Disco für alle | Inklusion/Behinderung ist belegt, Seniorenbezug nicht ausdrücklich. |
-| historical-q08 | Gesteins- und Fossiliensprechstunde | Allgemeine offene Sprechstunde; Seniorenbezug nicht ausdrücklich belegt. |
-| historical-q08 | DI.DAY | Allgemeine Kurse für Erwachsene erwähnt, kein ausdrücklicher Seniorenbezug des konkreten Termins. |
-| historical-q12 | Digitale Teilhabe – gemeinsam vernetzt | Ein eigener Programmbeitrag nennt digitale Teilhabe von Menschen mit Migrationsgeschichte; könnte stärker als 1 bewertet werden. |
-| historical-q12 | Der (rote) Faden | Soziale Rollen/Familie belegt, Migration bzw. interkulturelle Teilhabe nicht ausdrücklich. |
-| historical-q14 | DenkMal! | Allgemeine Denkmal-/Geschichtsvermittlung belegt, konkrete lokale Geschichte nicht ausdrücklich. |
-| historical-q14 | Aalkreih | Regionale Sprache/kulturelle Wurzeln belegt, historische Vermittlung nicht explizit; Policy hält 2 fest. |
-| historical-q14 | triaden tiraden | Lokaler Bibliotheksalltag und regionale Biografien belegt, kein klarer geschichtlicher Programminhalt. |
-| historical-q14 | Schnupperkurs Plattdeutsch | Plattdeutsche Sprache und kulturelle Hintergründe belegt, explizite Geschichtsvermittlung nicht zugesichert. |
 
 ## Offene Policy-Paare — kein Score erzwungen
 
-Diese Fälle sind keine Titelmehrdeutigkeiten. Für sie fehlt im Auftrag ein eindeutiger Score;
-bestehende Maschinenvorschläge bleiben bestehen, mit Low Confidence und obligatorischem Review.
+**0** offene Policy-Paare. Die fünf zuvor offenen Paare wurden im Final Review anhand der vollständigen Snapshot-Evidenz aufgelöst. Das ist keine menschliche Benchmark-Freigabe.
 
-- `historical-q02` / `019e63f7-ebeb-7952-9304-e496b02e3588` — Cultural Pearl Kulturtag: Explizit manuelle Prüfung angefordert; kein Kalibrierungsscore vorgegeben.
-- `historical-q03` / `019daf9b-da9a-7524-9b5c-0f77457ab198` — Deich ohne Schafe?: Positive Pilkentafel-Zugangsevidenz vorhanden, aber Paar nicht in der positiven Kalibrierungsliste; Null-Regel für fehlende Evidenz nicht anwendbar.
-- `historical-q03` / `019e2bbb-892a-7482-a463-bb1da6b27ee5` — SHOWER: Positive Pilkentafel-Zugangsevidenz vorhanden, aber Paar nicht in der positiven Kalibrierungsliste; Null-Regel für fehlende Evidenz nicht anwendbar.
-- `historical-q07` / `01a042e9-cf5a-7252-aff4-043771488e9c` — Kulturtag: Glücksburger Tiny House – Kurzführung & Besichtigung: In der vollständigen expliziten Bewertungsaufzählung nicht enthalten.
-- `historical-q11` / `01a06b28-2fd0-7080-93ee-c732aba7077d` — Lange Nacht der Demokratie: In der expliziten Bewertungsaufzählung nicht enthalten.
 
 ## Alle kalibrierten Paare
 
@@ -126,6 +105,7 @@ bestehende Maschinenvorschläge bleiben bestehen, mit Low Confidence und obligat
 | historical-q02 | Urbane Klangwelten (`019ddabc-ebea-7a24-acb1-06eedc2373ac`) | 0 | 0 |
 | historical-q02 | MOSAIK Themen-Treffen (`01a01e94-3034-7d8b-8e1b-e26c0b926d25`) | 0 | 1 |
 | historical-q02 | HOFkulTOUR 2026 (`019f16f0-7bc7-796c-abee-a299672e1fb4`) | 0 | 3 |
+| historical-q02 | Cultural Pearl Kulturtag (`019e63f7-ebeb-7952-9304-e496b02e3588`) | 0 | 0 |
 | historical-q03 | Silent Disco (`019f1767-6e7e-7183-b14c-14f2f635eafc`) | 0 | 0 |
 | historical-q03 | Schachtreff Flensburg (`019eb717-3e02-713f-aa20-280ea93ff69f`) | 0 | 0 |
 | historical-q03 | triaden tiraden (`019df20e-4efc-7c01-8c4a-8880af01f14a`) | 2 | 1 |
@@ -142,8 +122,10 @@ bestehende Maschinenvorschläge bleiben bestehen, mit Low Confidence und obligat
 | historical-q03 | La.tina (`019e6df1-b798-7db1-bd65-ca7bd04e91bc`) | 0 | 0 |
 | historical-q03 | Take Care & Stay Safe (`019eac66-4cca-7934-aeae-1dfcf2b5990d`) | 2 | 2 |
 | historical-q03 | Die kleine Hausapotheke (`019f9a1c-4f5d-74fd-ae85-7b347a278631`) | 0 | 0 |
-| historical-q03 | Reading Party "Let's Get Cosy" (`01a0c369-117f-7172-aed1-c50b052af59d`) | 0 | 1 |
+| historical-q03 | Reading Party "Let's Get Cosy" (`01a0c369-117f-7172-aed1-c50b052af59d`) | 0 | 2 |
 | historical-q03 | Liquid Bodies (`019e84a4-d625-79fa-99f6-ca653015e6e1`) | 2 | 2 |
+| historical-q03 | Deich ohne Schafe? (`019daf9b-da9a-7524-9b5c-0f77457ab198`) | 2 | 2 |
+| historical-q03 | SHOWER (`019e2bbb-892a-7482-a463-bb1da6b27ee5`) | 2 | 2 |
 | historical-q04 | Gemeinsam Schach (`019daaf4-ec73-785c-9b93-fdef83ecc9f2`) | 0 | 0 |
 | historical-q04 | Faire Woche 2026 Flensburg (`01a0201f-5f06-7983-9497-62b4745a36a4`) | 2 | 2 |
 | historical-q04 | Lange Nacht der Demokratie (`01a06c08-e652-7f4e-a471-a6c0a712f7fa`) | 2 | 2 |
@@ -177,7 +159,7 @@ bestehende Maschinenvorschläge bleiben bestehen, mit Low Confidence und obligat
 | historical-q05 | Sonntags Signale (`019d73fb-0e46-78f0-9287-04037cea026e`) | 0 | 0 |
 | historical-q05 | Speed-Dating - Kultur trifft Politik (`019eb719-75cb-749e-be9c-fab9c5b5636f`) | 0 | 0 |
 | historical-q05 | Die kleine Hausapotheke (`019f9a1c-4f5d-74fd-ae85-7b347a278631`) | 0 | 0 |
-| historical-q05 | La.tina (`019e6df1-b798-7db1-bd65-ca7bd04e91bc`) | 0 | 0 |
+| historical-q05 | La.tina (`019e6df1-b798-7db1-bd65-ca7bd04e91bc`) | 0 | 1 |
 | historical-q05 | Russisch lernen (`019fe1dc-d55d-7fb4-96ff-5bd5c1441978`) | 2 | 2 |
 | historical-q05 | Träumer und Genies (`019e7d92-523d-7302-a74d-3b0d96f74a66`) | 0 | 0 |
 | historical-q05 | Circus Ubuntu (`019e00e2-c2d9-7717-8d5f-f79f870e81cb`) | 0 | 0 |
@@ -186,7 +168,7 @@ bestehende Maschinenvorschläge bleiben bestehen, mit Low Confidence und obligat
 | historical-q05 | Dänisch für leicht Fortgeschrittene (`019fe206-af8d-7f3a-acf8-f8d4650642c6`) | 3 | 3 |
 | historical-q06 | Klimapark (`019ed180-c4b5-7e7c-8bb2-04fc477659a5`) | 3 | 3 |
 | historical-q06 | Tag der Städtebauförderung (`019dd805-5eef-7120-afba-14e688b30b50`) | 0 | 1 |
-| historical-q06 | Parkfest im Christiansenpark (`019eba56-fe7d-79dc-9683-d2eac4ebb2f1`) | 0 | 1 |
+| historical-q06 | Parkfest im Christiansenpark (`019eba56-fe7d-79dc-9683-d2eac4ebb2f1`) | 0 | 0 |
 | historical-q06 | Faire Woche 2026 Flensburg (`01a0201f-5f06-7983-9497-62b4745a36a4`) | 3 | 3 |
 | historical-q06 | Veredeln statt Verschwenden (`01a05c25-eda0-7271-a363-bd05c959f5ef`) | 3 | 3 |
 | historical-q06 | De Steensöker (`01a0f046-5be9-73d7-a7be-c9d0941348ad`) | 0 | 0 |
@@ -198,7 +180,7 @@ bestehende Maschinenvorschläge bleiben bestehen, mit Low Confidence und obligat
 | historical-q06 | Filmische Perspektiven auf Fairness (`01a02003-c5f1-718f-b656-0802c3a122c5`) | 3 | 2 |
 | historical-q06 | Flensburger Kurzfilmstreifzug (`019e4137-be25-77b3-9d3b-4661b547e1ba`) | 0 | 0 |
 | historical-q06 | 1. Bundessiegerkonzert Duo Pianoforte Klavier vierhändig (`019da5ae-5d78-7d0b-a4e5-5bf7e818a886`) | 0 | 0 |
-| historical-q06 | Liquid Bodies (`019e84a4-d625-79fa-99f6-ca653015e6e1`) | 0 | 1 |
+| historical-q06 | Liquid Bodies (`019e84a4-d625-79fa-99f6-ca653015e6e1`) | 0 | 0 |
 | historical-q06 | Kreativ im Skizzenbuch - Malen zur Entspannung (`01a019af-9251-780c-9c4a-b1e7d40b88eb`) | 0 | 0 |
 | historical-q06 | Gemeinschaftliches Hoffnungssingen mit Patrick Zinndorf (`01a0c98b-dcfd-7a9b-8649-a9177071023e`) | 0 | 0 |
 | historical-q06 | Recorder Recorder / ZOOK (`019dcafe-0b23-7751-981b-92400d38d2c9`) | 0 | 0 |
@@ -207,22 +189,23 @@ bestehende Maschinenvorschläge bleiben bestehen, mit Low Confidence und obligat
 | historical-q07 | Geschichtenzirkus (`019e742f-7543-7ec1-bcdb-28e3d8124600`) | 3 | 3 |
 | historical-q07 | Jonglierworkshop (`019e1574-ab7e-70a9-804b-28c513a1b141`) | 0 | 1 |
 | historical-q07 | Du, ich, wir! (`019e5590-85ea-7912-b1bc-294a2950d78e`) | 3 | 3 |
-| historical-q07 | Cultural Pearl Kulturtag (`019e63f7-ebeb-7952-9304-e496b02e3588`) | 0 | 1 |
+| historical-q07 | Cultural Pearl Kulturtag (`019e63f7-ebeb-7952-9304-e496b02e3588`) | 0 | 0 |
 | historical-q07 | Knallwut (`019e034e-dbcf-7a5f-b77e-17d4866f0e2d`) | 3 | 3 |
 | historical-q07 | Silvestergala (`01a069ed-7ebe-7987-b7cf-f900854d7b49`) | 0 | 0 |
-| historical-q07 | Skandaløs Festival (`019daf20-38e6-7283-9746-c604f6523e33`) | 0 | 1 |
+| historical-q07 | Skandaløs Festival (`019daf20-38e6-7283-9746-c604f6523e33`) | 0 | 0 |
 | historical-q07 | Where The Waves Took Her (`019f51e0-900d-71f9-bbef-6f0ec884fc13`) | 0 | 0 |
 | historical-q07 | Spieletreff (`019daafb-5a19-7560-8dea-c1104a05fc2b`) | 2 | 2 |
 | historical-q07 | Förde Vibes mit Lucie Glang (`019e1dce-5351-7ee6-85b9-fc262bf42e59`) | 0 | 0 |
 | historical-q07 | Circus Ubuntu (`019e00e2-c2d9-7717-8d5f-f79f870e81cb`) | 0 | 2 |
 | historical-q07 | Parkfest im Christiansenpark (`019eba56-fe7d-79dc-9683-d2eac4ebb2f1`) | 0 | 2 |
 | historical-q07 | Kinderatelier (`01a0a8e7-94ad-7c44-9fcc-d782a8c28ede`) | 3 | 3 |
-| historical-q07 | KulturRotation 143 (`019e262e-5660-76c8-93cc-c7736848b4d3`) | 0 | 1 |
+| historical-q07 | KulturRotation 143 (`019e262e-5660-76c8-93cc-c7736848b4d3`) | 0 | 0 |
 | historical-q07 | Mittwochsdisco (`019e4012-88b5-7213-904a-654dd9f1bb42`) | 0 | 0 |
 | historical-q07 | Julius Fischer (`019f17df-e1c2-7f4d-88a8-bfc1816d9711`) | 0 | 0 |
 | historical-q07 | Pfoten hoch! (`019e55cc-5709-7978-b35b-6ae037bee9ff`) | 3 | 3 |
 | historical-q07 | WILD LIGHTS (`01a0d253-65c0-7e84-b05b-95474577a274`) | 2 | 2 |
 | historical-q07 | Maskenball der Tiere (`019e55b1-f420-790b-8390-3c563cce6612`) | 2 | 3 |
+| historical-q07 | Kulturtag: Glücksburger Tiny House – Kurzführung & Besichtigung (`01a042e9-cf5a-7252-aff4-043771488e9c`) | 0 | 0 |
 | historical-q08 | Seniorennachmittag - "Einfach mal raus: Treffen, reden, lachen" - Herzliche Einladung! (`019fefd9-0306-7639-ae29-c9cc196e1720`) | 3 | 3 |
 | historical-q08 | Lange Nacht der Demokratie (`01a06b28-2fd0-7080-93ee-c732aba7077d`) | 0 | 0 |
 | historical-q08 | Seniorennachmittag - "Einfach mal raus: Treffen, reden, lachen" - Herzliche Einladung! (`019fefdb-e8a2-781a-af3a-9e7a5a44674e`) | 3 | 3 |
@@ -233,14 +216,14 @@ bestehende Maschinenvorschläge bleiben bestehen, mit Low Confidence und obligat
 | historical-q08 | folkBALTICA Herbstkonzert im Slesvighus (`01a08f5e-a50b-7f81-83d4-f328ba124429`) | 0 | 0 |
 | historical-q08 | Space Tour (`019e3ca8-3698-7f00-822d-7233ebe257d9`) | 0 | 0 |
 | historical-q08 | Chaos Comedy Club (`019db8ff-3bb0-789b-a21f-c5d810fdfb01`) | 0 | 0 |
-| historical-q08 | Disco für alle (`01a05c60-d7d5-7197-84da-a18469bce542`) | 0 | 1 |
+| historical-q08 | Disco für alle (`01a05c60-d7d5-7197-84da-a18469bce542`) | 0 | 0 |
 | historical-q08 | Seniorenbeirat, 6. Sitzung (`019e6367-8acf-7911-9a21-fa3b34e1f389`) | 1 | 1 |
 | historical-q08 | Oktoberfest mit Livemusik vom Geestland Trio 🍻🎶 (`01a018be-3c48-7292-a0a4-90ce7ea90fb3`) | 0 | 2 |
-| historical-q08 | Gesteins- und Fossiliensprechstunde (`01a0f032-2002-72db-8819-57013c0b40b8`) | 0 | 1 |
+| historical-q08 | Gesteins- und Fossiliensprechstunde (`01a0f032-2002-72db-8819-57013c0b40b8`) | 0 | 0 |
 | historical-q08 | Seniorennachmittag - "Einfach mal raus: Treffen, reden, lachen" - Herzliche Einladung! (`019fefcb-f888-7db1-94c7-4a8780f67e8f`) | 3 | 3 |
 | historical-q08 | Seniorennachmittag - "Einfach mal raus: Treffen, reden, lachen" - Herzliche Einladung! (`019feff3-23c3-7f80-902d-4793d56d6934`) | 3 | 3 |
 | historical-q08 | Seniorennachmittag - "Einfach mal raus: Treffen, reden, lachen" - Herzliche Einladung! (`019feffb-1e38-7aac-8b56-d5bb841bd67f`) | 3 | 3 |
-| historical-q08 | DI.DAY (`019ddd54-2a60-76c7-8ccb-8d67862e6c95`) | 0 | 1 |
+| historical-q08 | DI.DAY (`019ddd54-2a60-76c7-8ccb-8d67862e6c95`) | 0 | 0 |
 | historical-q08 | Herbstzauber im Garten & Tag der offenen Tür unserer neuen ambulanten Tagespflege (`019ff029-2694-7bc6-ab86-d114c4b215a0`) | 1 | 2 |
 | historical-q08 | Seniorennachmittag - "Einfach mal raus: Treffen, reden, lachen" - Herzliche Einladung! (`019feff6-d7b3-74d1-af77-0358d6808104`) | 3 | 3 |
 | historical-q09 | Tag der Städtebauförderung (`019dd805-5eef-7120-afba-14e688b30b50`) | 2 | 2 |
@@ -302,6 +285,7 @@ bestehende Maschinenvorschläge bleiben bestehen, mit Low Confidence und obligat
 | historical-q11 | Das blaue kaninchen öffnet seine Türen! (`019f642a-6008-797e-8ac8-d09b77deddc9`) | 0 | 0 |
 | historical-q11 | Wildkräuterwanderung (`01a0c366-8dbc-7a1b-aaf4-383a8cf4042f`) | 3 | 3 |
 | historical-q11 | Faire Woche 2026 Flensburg (`01a0201f-5f06-7983-9497-62b4745a36a4`) | 2 | 2 |
+| historical-q11 | Lange Nacht der Demokratie (`01a06b28-2fd0-7080-93ee-c732aba7077d`) | 0 | 0 |
 | historical-q12 | MOSAIK Themen-Treffen (`01a0f13d-a497-7133-9a27-ba89c246ad60`) | 3 | 3 |
 | historical-q12 | Hautnah (`019f1cc7-18f1-778d-89c5-5d6bd29717f4`) | 0 | 0 |
 | historical-q12 | Where The Waves Took Her (`019f51e0-900d-71f9-bbef-6f0ec884fc13`) | 3 | 3 |
@@ -318,10 +302,10 @@ bestehende Maschinenvorschläge bleiben bestehen, mit Low Confidence und obligat
 | historical-q12 | Flensburg fühlt die Mobilitätswende (`019fd167-b370-71f5-9e3b-53cc95f5262a`) | 0 | 0 |
 | historical-q12 | BAM 밤 – für violette Nächte - TachoTinta (`01a09f4a-d945-7f5b-a0c2-7d0bbfa36ff4`) | 3 | 3 |
 | historical-q12 | Faire Woche 2026 Flensburg (`01a0201f-5f06-7983-9497-62b4745a36a4`) | 0 | 1 |
-| historical-q12 | Digitale Teilhabe – gemeinsam vernetzt (`019db91a-89d5-7c5a-90ae-7596e488a1eb`) | 2 | 1 |
+| historical-q12 | Digitale Teilhabe – gemeinsam vernetzt (`019db91a-89d5-7c5a-90ae-7596e488a1eb`) | 2 | 2 |
 | historical-q12 | Naturkosmetik und Kräuter (`019f9a39-9cd8-717c-9369-300e01a33082`) | 0 | 0 |
 | historical-q12 | Rumregatta (`019daa4c-cdfc-7895-8c03-855852da0ed5`) | 0 | 0 |
-| historical-q12 | Der (rote) Faden (`019f1c76-eb40-79ea-88e1-4ee976848158`) | 0 | 1 |
+| historical-q12 | Der (rote) Faden (`019f1c76-eb40-79ea-88e1-4ee976848158`) | 0 | 0 |
 | historical-q13 | 1. Bundessiegerkonzert Duo Pianoforte Klavier vierhändig (`019da5ae-5d78-7d0b-a4e5-5bf7e818a886`) | 0 | 0 |
 | historical-q13 | Speed-Dating - Kultur trifft Politik (`019eb719-75cb-749e-be9c-fab9c5b5636f`) | 0 | 0 |
 | historical-q13 | Zeichnen im Museum (`01a067af-dddf-733c-aaf7-833c05c7c126`) | 0 | 0 |
@@ -343,10 +327,10 @@ bestehende Maschinenvorschläge bleiben bestehen, mit Low Confidence und obligat
 | historical-q13 | Julekoncert med Árstíðir (`019dcefa-5fd1-703e-b3a1-7d05e5f62298`) | 0 | 0 |
 | historical-q13 | Konzert Pouya Abdi (`01a067f8-af99-72e1-80ce-b90ca7396e37`) | 0 | 0 |
 | historical-q14 | After Work in der Alten Post (`019f1cb7-39b6-7177-a129-5c20f1a3e958`) | 0 | 0 |
-| historical-q14 | DenkMal! (`01a0b3aa-28bf-7a09-9295-6c17ab731dc5`) | 0 | 2 |
+| historical-q14 | DenkMal! (`01a0b3aa-28bf-7a09-9295-6c17ab731dc5`) | 0 | 0 |
 | historical-q14 | kunstkur.park (`01a0bad2-8447-79e3-bca8-108384330135`) | 0 | 0 |
 | historical-q14 | Pink & White Sunset BBQ (`019eb0af-94d0-728f-8f11-1e6d7d17c835`) | 0 | 0 |
-| historical-q14 | Aalkreih (`019fa7f6-e5bd-78a2-8f48-2806521951b8`) | 1 | 2 |
+| historical-q14 | Aalkreih (`019fa7f6-e5bd-78a2-8f48-2806521951b8`) | 1 | 1 |
 | historical-q14 | Filmvorführung: Verwundene Fäden (`019eb5e3-5e29-72dc-8cac-3fcbceb3307b`) | 0 | 0 |
 | historical-q14 | La.tina (`019e6df1-b798-7db1-bd65-ca7bd04e91bc`) | 0 | 1 |
 | historical-q14 | Cultural Pearl Kulturtag (`019e63f7-ebeb-7952-9304-e496b02e3588`) | 0 | 1 |
@@ -355,8 +339,8 @@ bestehende Maschinenvorschläge bleiben bestehen, mit Low Confidence und obligat
 | historical-q14 | Ginevra Lamberti: Das Wasser wiegt schwerer als die Zeit (`019eb5f2-356f-72b2-9bf0-5967d0fd97e6`) | 0 | 0 |
 | historical-q14 | Steps in Time (`019e897f-3791-7ae7-baa4-0c239e013031`) | 0 | 0 |
 | historical-q14 | Glücksburger Biermeile (`019ed14b-72a4-74ba-bc05-315d59801d86`) | 0 | 0 |
-| historical-q14 | triaden tiraden (`019df20e-4efc-7c01-8c4a-8880af01f14a`) | 0 | 1 |
-| historical-q14 | Schnupperkurs Plattdeutsch (`01a06ade-f5ed-7571-9630-854d88fec839`) | 1 | 2 |
+| historical-q14 | triaden tiraden (`019df20e-4efc-7c01-8c4a-8880af01f14a`) | 0 | 0 |
+| historical-q14 | Schnupperkurs Plattdeutsch (`01a06ade-f5ed-7571-9630-854d88fec839`) | 1 | 1 |
 | historical-q14 | Kapa Tult (`019e0e4a-1f62-7c17-b361-8a5499e3267a`) | 0 | 0 |
 | historical-q14 | ORDRIG (`019e5e75-be89-78b2-b574-cf5f9fa4b090`) | 2 | 3 |
 | historical-q14 | Conversations (`019dc3b0-94d4-7ce6-9b7c-15ee0e19e6c8`) | 0 | 0 |
@@ -365,13 +349,10 @@ bestehende Maschinenvorschläge bleiben bestehen, mit Low Confidence und obligat
 
 ## Prüfungen und Grenzen
 
-Tests prüfen alle 275 Paare gegen jeden hypothetischen heuristischen Score 0–3, eindeutige
+Tests prüfen alle 280 Paare gegen jeden hypothetischen heuristischen Score 0–3, eindeutige
 Resolution, echte Feld-/Zitatreferenzen, fehlende/falsche Evidenz, Approval-Ausschluss, unveränderte
-Originalquellen, Occurrence-Grenzen, Queue-Priorität und Fortbestand offener Entscheidungen.
+Originalquellen, Occurrence-Grenzen, Queue-Priorität und die 21 finalen Entscheidungen und unveränderte Vorschläge außerhalb dieses Umfangs.
 Die vier Originaldateien werden vor/nach Verarbeitung anhand der gepinnten Byte-SHA256 geprüft.
 Alle sechs No-Hit-Fälle bleiben ungeklärt; `expected_no_hit` wird nicht geändert.
 Kein Live-Zugriff, keine Inferenz, kein Deployment, kein Merge, keine Aktivierung. `semantic_query=false`.
-Lokale Ausführung: `uv sync --locked --offline`, Ruff, Format und `git diff --check` grün.
-`pytest -q`: **409 bestanden, 24 übersprungen** (22 Integration, zwei optionale Real-Encoder-Tests).
-Annotationsprüfungen: **27 bestanden**. Keine Live-Provider für diese Prüfungen verwendet.
-Remote-CI wird hier nicht als für den neuen Head beobachtet behauptet; der Auftrag verbietet Webrequests.
+Lokale Prüfresultate stehen im [Final Review](final-calibration-review-v1.md). Remote-CI ist separat am jeweiligen PR-Head zu prüfen; Artefakt-Regeneration behauptet kein CI-Ergebnis.

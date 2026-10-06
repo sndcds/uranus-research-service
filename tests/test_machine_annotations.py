@@ -2,6 +2,7 @@
 
 import copy
 import csv
+import hashlib
 import importlib.util
 import json
 from collections import Counter
@@ -173,7 +174,7 @@ def test_access_restriction_is_retained_and_not_transferred(data):
 def test_all_calibration_pairs_dominate_any_heuristic(data):
     proposals, cases, events = data
     calibration = a.load_manual_calibration(cases, events)
-    assert len(calibration["decisions"]) == 275
+    assert len(calibration["decisions"]) == 280
     by_case = {c["id"]: c for c in cases}
     by_pair = {(p["case_id"], p["event_id"]): p for p in proposals}
     for (cid, eid), decision in calibration["decisions"].items():
@@ -238,26 +239,39 @@ def test_invalid_calibration_stops_before_output(data, tmp_path, mutation):
 def test_unresolved_pairs_never_force_a_score(data):
     proposals, cases, events = data
     calibration = a.load_manual_calibration(cases, events)
-    by_case = {c["id"]: c for c in cases}
-    for p in proposals:
-        key = p["case_id"], p["event_id"]
-        if key in calibration["pending"]:
-            score = a.assess(events[key[1]]["event"], by_case[key[0]], p["rubric_id"])[0]
-            assert p["proposed_relevance"] == score
-            assert p["manual_calibration_review_required"] and p["review_required"]
-            assert not p.get("calibration_applied")
+    assert not calibration["pending"]
+    # Exercise the unresolved safety path without keeping resolved artifacts pending.
+    p = next(p for p in proposals if p["case_id"] == "historical-q05")
+    key = p["case_id"], p["event_id"]
+    calibration["decisions"].pop(key)
+    calibration["pending"][key] = {"reason": "Unresolved test policy"}
+    case = next(c for c in cases if c["id"] == key[0])
+    result = a.apply_calibration(*key, p, calibration, case, events[key[1]]["event"])
+    assert result["proposed_relevance"] == p["proposed_relevance"]
+    assert result["manual_calibration_review_required"] and result["review_required"]
+    assert result["confidence"] == "low" and not result["calibration_applied"]
 
 
 def test_conflict_preserves_explicit_zero_and_genuine_counterevidence(data):
-    proposals, _, _ = data
+    proposals, cases, events = data
     p = next(
         p
         for p in proposals
         if p["case_id"] == "historical-q05" and p["event_id"].endswith("d04e91bc")
     )
-    assert p["proposed_relevance"] == 0
-    assert p["calibration_evidence_conflict"] and p["review_required"]
-    assert any("QUECHUA SPRACHKURS" in e["quote"] for e in p["evidence"])
+    assert p["proposed_relevance"] == 1 and not p["calibration_evidence_conflict"]
+    calibration = a.load_manual_calibration(cases, events)
+    key = p["case_id"], p["event_id"]
+    calibration["decisions"][key].update(
+        expected_relevance=0,
+        calibration_evidence_conflict=True,
+        conflict_reason="Synthetic conflicting policy for final-layer regression only",
+    )
+    case = next(c for c in cases if c["id"] == key[0])
+    result = a.apply_calibration(*key, p, calibration, case, events[key[1]]["event"])
+    assert result["proposed_relevance"] == 0
+    assert result["calibration_evidence_conflict"] and result["review_required"]
+    assert any("QUECHUA SPRACHKURS" in e["quote"] for e in result["evidence"])
 
 
 def test_calibration_review_order():
@@ -279,3 +293,83 @@ def test_calibration_review_order():
         base,
     ]
     assert [a.priority(p)[0] for p in levels] == list(range(7))
+
+
+# Exact pairs reviewed against full frozen evidence, relative to PR head 29c8527.
+FINAL_REVIEW_PAIRS = [
+    ("historical-q03", "01a0c369-117f-7172-aed1-c50b052af59d", 2),
+    ("historical-q05", "019e6df1-b798-7db1-bd65-ca7bd04e91bc", 1),
+    ("historical-q06", "019eba56-fe7d-79dc-9683-d2eac4ebb2f1", 0),
+    ("historical-q06", "019e84a4-d625-79fa-99f6-ca653015e6e1", 0),
+    ("historical-q07", "019e63f7-ebeb-7952-9304-e496b02e3588", 0),
+    ("historical-q07", "019daf20-38e6-7283-9746-c604f6523e33", 0),
+    ("historical-q07", "019e262e-5660-76c8-93cc-c7736848b4d3", 0),
+    ("historical-q08", "01a05c60-d7d5-7197-84da-a18469bce542", 0),
+    ("historical-q08", "01a0f032-2002-72db-8819-57013c0b40b8", 0),
+    ("historical-q08", "019ddd54-2a60-76c7-8ccb-8d67862e6c95", 0),
+    ("historical-q12", "019db91a-89d5-7c5a-90ae-7596e488a1eb", 2),
+    ("historical-q12", "019f1c76-eb40-79ea-88e1-4ee976848158", 0),
+    ("historical-q14", "01a0b3aa-28bf-7a09-9295-6c17ab731dc5", 0),
+    ("historical-q14", "019fa7f6-e5bd-78a2-8f48-2806521951b8", 1),
+    ("historical-q14", "019df20e-4efc-7c01-8c4a-8880af01f14a", 0),
+    ("historical-q14", "01a06ade-f5ed-7571-9630-854d88fec839", 1),
+    ("historical-q02", "019e63f7-ebeb-7952-9304-e496b02e3588", 0),
+    ("historical-q03", "019daf9b-da9a-7524-9b5c-0f77457ab198", 2),
+    ("historical-q03", "019e2bbb-892a-7482-a463-bb1da6b27ee5", 2),
+    ("historical-q07", "01a042e9-cf5a-7252-aff4-043771488e9c", 0),
+    ("historical-q11", "01a06b28-2fd0-7080-93ee-c732aba7077d", 0),
+]
+
+
+@pytest.mark.parametrize(("case_id", "event_id", "score"), FINAL_REVIEW_PAIRS)
+def test_final_review_decision_is_fixed_and_evidence_bound(data, case_id, event_id, score):
+    proposals, cases, events = data
+    calibration = a.load_manual_calibration(cases, events)
+    decision = calibration["decisions"][case_id, event_id]
+    proposal = next(p for p in proposals if (p["case_id"], p["event_id"]) == (case_id, event_id))
+    assert decision["expected_relevance"] == proposal["proposed_relevance"] == score
+    assert decision["policy_source"] == "frozen-evidence-final-review"
+    assert not decision["calibration_evidence_conflict"]
+    assert not proposal["calibration_evidence_conflict"]
+    assert (case_id, event_id) not in calibration["pending"]
+    assert not proposal.get("manual_calibration_review_required")
+    if score:
+        assert proposal["reason"] and proposal["supporting_fields"] and proposal["evidence"]
+        for item in proposal["evidence"]:
+            value = a.resolve(events[event_id]["event"], item["field"])
+            assert item["quote"] == value or item["quote"] in value
+    if case_id == "historical-q03":
+        assert proposal["requires_occurrence_review"] and proposal["occurrence_ids"]
+        event = events[event_id]["event"]
+        assert set(proposal["occurrence_ids"]) == {o["id"] for o in event["occurrences"]}
+        if not event["title"].startswith("Reading Party"):
+            for i, occurrence in enumerate(event["occurrences"]):
+                item = next(
+                    x
+                    for x in proposal["evidence"]
+                    if x["field"] == f"occurrences.{i}.space_accessibility"
+                )
+                assert "stufenlos" in item["quote"] and "nicht barrierefrei" in item["quote"]
+                assert item["quote"] == occurrence["space_accessibility"]
+
+
+def test_final_review_scope_and_no_unresolved_conflicts(data):
+    proposals, cases, events = data
+    calibration = a.load_manual_calibration(cases, events)
+    keys = {(cid, eid) for cid, eid, _ in FINAL_REVIEW_PAIRS}
+    reviewed = {key for key, d in calibration["decisions"].items() if "final_review" in d}
+    assert reviewed == keys and len(keys) == 21
+    assert not calibration["pending"]
+    assert all(not d["calibration_evidence_conflict"] for d in calibration["decisions"].values())
+    assert all(not p.get("calibration_evidence_conflict") for p in proposals)
+    # Preserve all 2,331 other proposal contents, including every q15+ proposal. Only the
+    # shared calibration file digest necessarily changes on other calibrated q01–q14 rows.
+    unchanged = [
+        {key: value for key, value in p.items() if key != "manual_calibration_sha256"}
+        for p in proposals
+        if (p["case_id"], p["event_id"]) not in keys
+    ]
+    digest = hashlib.sha256(
+        json.dumps(unchanged, sort_keys=True, ensure_ascii=False).encode()
+    ).hexdigest()
+    assert digest == "1e8fc2f6aa34cb7c7a1257852e987ac7f3764c07bd61da511d963d8eb5b4d7c8"

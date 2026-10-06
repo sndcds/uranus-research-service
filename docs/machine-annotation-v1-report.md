@@ -3,12 +3,12 @@
 **draft / machine-proposed**, kein human-approved Ground Truth.
 
 - Cases: **120**; Kandidatenpaare: **2352**, jedes genau einmal.
-- Scores 0/1/2/3: **{0: 1640, 1: 461, 2: 134, 3: 117}**.
-- Confidence: **{'medium': 1701, 'high': 117, 'low': 534}**.
+- Scores 0/1/2/3: **{0: 1650, 1: 452, 2: 133, 3: 117}**.
+- Confidence: **{'medium': 1722, 'high': 117, 'low': 513}**.
 - Cases mit Grad 3: **45**.
 - Occurrence-Review: **632** Paare.
 - Mehrdeutige Query-Auslegung: **13** Cases.
-- Prioritäre menschliche Prüfung: **1370** Paare (`review_required=True`).
+- Prioritäre menschliche Prüfung: **1354** Paare (`review_required=True`).
 
 ## Artefakte
 

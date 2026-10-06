@@ -1055,7 +1055,10 @@ def load_manual_calibration(cases, events, path=CALIBRATION_PATH):
             assert matches == [eid], ("Ambiguous calibration title; STOP", case_id, eid)
             score = decision["expected_relevance"]
             assert type(score) is int and score in range(4)
-            assert decision["policy_source"] == "manual-review-session"
+            assert decision["policy_source"] in {
+                "manual-review-session",
+                "frozen-evidence-final-review",
+            }
             assert type(decision["calibration_evidence_conflict"]) is bool
             assert bool(decision["conflict_reason"]) == decision["calibration_evidence_conflict"]
             if score > 0:
@@ -1278,6 +1281,9 @@ def write_reports(stats, calibration, proposals):
         f"**{len(decisions) - len(changes)} unverändert**.",
         f"Verteilung 0/1/2/3 vorher: **{dict(sorted(before.items()))}**; "
         f"nachher: **{stats['score_counts']}**.",
+        "Der separate [Final Review](final-calibration-review-v1.md) dokumentiert "
+        "ausschließlich die 21 nachgeprüften Paare gegenüber Head `29c8527`; "
+        "die folgenden Driftzahlen vergleichen weiterhin mit der ursprünglichen Basis `430c1a3`.",
         "",
         "## Architektur und Bindung",
         "",
@@ -1342,10 +1348,9 @@ def write_reports(stats, calibration, proposals):
         "",
         "## Offene Policy-Paare — kein Score erzwungen",
         "",
-        "Diese Fälle sind keine Titelmehrdeutigkeiten. Für sie fehlt im "
-        "Auftrag ein eindeutiger Score;",
-        "bestehende Maschinenvorschläge bleiben bestehen, mit Low "
-        "Confidence und obligatorischem Review.",
+        f"**{len(calibration['pending'])}** offene Policy-Paare. "
+        "Die fünf zuvor offenen Paare wurden im Final Review anhand der vollständigen "
+        "Snapshot-Evidenz aufgelöst. Das ist keine menschliche Benchmark-Freigabe.",
         "",
     ]
     for item in calibration["policy"]["unresolved_pairs"]:
@@ -1361,25 +1366,20 @@ def write_reports(stats, calibration, proposals):
         "",
         "## Prüfungen und Grenzen",
         "",
-        "Tests prüfen alle 275 Paare gegen jeden hypothetischen "
+        f"Tests prüfen alle {len(decisions)} Paare gegen jeden hypothetischen "
         "heuristischen Score 0–3, eindeutige",
         "Resolution, echte Feld-/Zitatreferenzen, fehlende/falsche "
         "Evidenz, Approval-Ausschluss, unveränderte",
         "Originalquellen, Occurrence-Grenzen, Queue-Priorität und "
-        "Fortbestand offener Entscheidungen.",
+        "die 21 finalen Entscheidungen und unveränderte Vorschläge außerhalb dieses Umfangs.",
         "Die vier Originaldateien werden vor/nach Verarbeitung anhand der "
         "gepinnten Byte-SHA256 geprüft.",
         "Alle sechs No-Hit-Fälle bleiben ungeklärt; `expected_no_hit` wird nicht geändert.",
         "Kein Live-Zugriff, keine Inferenz, kein Deployment, kein Merge, "
         "keine Aktivierung. `semantic_query=false`.",
-        "Lokale Ausführung: `uv sync --locked --offline`, Ruff, Format "
-        "und `git diff --check` grün.",
-        "`pytest -q`: **409 bestanden, 24 übersprungen** (22 Integration, "
-        "zwei optionale Real-Encoder-Tests).",
-        "Annotationsprüfungen: **27 bestanden**. Keine Live-Provider "
-        "für diese Prüfungen verwendet.",
-        "Remote-CI wird hier nicht als für den neuen Head beobachtet "
-        "behauptet; der Auftrag verbietet Webrequests.",
+        "Lokale Prüfresultate stehen im [Final Review](final-calibration-review-v1.md). "
+        "Remote-CI ist separat am jeweiligen PR-Head zu prüfen; "
+        "Artefakt-Regeneration behauptet kein CI-Ergebnis.",
         "",
     ]
     (ROOT / "docs/manual-calibration-v1-report.md").write_text("\n".join(lines))
