@@ -357,6 +357,26 @@ def compare(v3, v5):
             }
         )
     return {
+        **{
+            key: v3[key]
+            for key in (
+                "benchmark_schema_version",
+                "source_snapshot_hash",
+                "query_set_hash",
+                "judgment_source_hash",
+                "reference_time",
+                "input_sha256",
+                "policy",
+            )
+        },
+        "run_provenance": {
+            name: {
+                "model": run["model"],
+                "build_id": run["build_id"],
+                "manifest_digest": run["manifest_digest"],
+            }
+            for name, run in (("v3", v3), ("v5", v5))
+        },
         "caveat": CAVEAT,
         "evaluator_version": EVALUATOR,
         "gates": gates,

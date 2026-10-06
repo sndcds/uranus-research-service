@@ -1,3 +1,12 @@
+# Phase 2B.2c controlled draft comparison
+
+An explicitly authorized provisional comparison now has a separate
+[operator and frozen protocol](v3-v5-benchmark-report.md). It uses the machine-proposal
+artifact plus scoring policy, never converts the original null human judgments to zero,
+and does not grant human approval. The old synthetic evaluator below is unchanged.
+
+This benchmark uses a frozen draft relevance dataset containing machine proposals plus manually calibrated scoring policy. It is suitable for provisional comparative evaluation, not final production approval.
+
 # Human-reviewed evaluation preparation (Phase 2B.2b)
 
 The new [public snapshot and annotation workflow](phase2b2b-ground-truth.md) is

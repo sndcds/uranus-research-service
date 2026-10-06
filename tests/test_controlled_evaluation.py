@@ -51,6 +51,8 @@ def report(model):
         "input_sha256": {},
         "policy": e.POLICY,
         "documents": {"a": "hash"},
+        "build_id": "test_001",
+        "manifest_digest": "manifest-" + model,
         "model": {"model": "jina-" + model},
         "cases": [case(lang, lang) for lang in ("de", "da", "en")],
     }
@@ -143,6 +145,8 @@ def test_gate_calculations_and_identical_topk_semantics():
     same = e.compare(a, b)
     assert all(g["pass"] for g in same["gates"])
     assert same["v3"]["overall"] == same["v5"]["overall"]
+    assert same["source_snapshot_hash"] == a["source_snapshot_hash"]
+    assert same["run_provenance"]["v5"]["manifest_digest"] == b["manifest_digest"]
     b["cases"][0]["ranking"] = [hit("c", 0.5)]
     b["cases"][0]["best_relevant_rank"] = None
     result = e.compare(a, b)
