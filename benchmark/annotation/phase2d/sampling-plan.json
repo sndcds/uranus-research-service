@@ -1,0 +1,49 @@
+{
+  "adjudication": "all-disagreements-including-0-vs-2;existing-grade-conflicts-also-required",
+  "algorithm": "sha256-sort-v1",
+  "boundary_ties": "exact-stored-score-extend-entire-block",
+  "control_k": 10,
+  "control_per_language_direction": 2,
+  "controls": "disjoint-from-diagnostic;sha256-within-language-and-original-Recall@10-direction",
+  "disagreement": "symmetric-v3-v5",
+  "failed_categories": [
+    "atmosphere",
+    "outdoor",
+    "theatre",
+    "venue"
+  ],
+  "known_positive_rank_gap_min": 10,
+  "neutral_recall_delta_max": 0.02,
+  "official_cohort": "original-105;retain-original-exclusions;fail-if-positive-denominator-disappears",
+  "positives": "include-all-existing-grade>0",
+  "priority1_k": 20,
+  "priority2_k": 10,
+  "priority3_per_language": 4,
+  "rubric": "existing-0-3;uncertain-and-needs_more_context-are-not-grades",
+  "rubric_clarifications": {
+    "concerts": {
+      "decision": "confirm-existing-single-event-rubric",
+      "human_judgment_approval": false,
+      "source": "explicit-user-response-in-phase2d-preparation",
+      "text": "Bestehende Einzel-Event-Auslegung bestätigen"
+    }
+  },
+  "schema_version": "phase2d-sampling-v1",
+  "seed": "kulturbytes-phase2d-blind-v1",
+  "stopping_rule": {
+    "desired_top20_coverage_each_model": 0.8,
+    "first_round": "complete-entire-preregistered-pool-including-boundary-ties",
+    "further_expansion": "not-automatic;new-version-preregistered-before-new-grades",
+    "minimum_top10_coverage_each_model": 0.9
+  },
+  "strong_disagreement_k": 20,
+  "top10_jaccard_max": 0.25,
+  "top5_other_rank_min": 30,
+  "total_loss": [
+    "historical-q29",
+    "wheelchair-da",
+    "dance-en",
+    "concerts-en"
+  ],
+  "unjudged_top10_min": 8
+}
