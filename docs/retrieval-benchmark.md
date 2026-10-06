@@ -3,7 +3,7 @@
 An explicitly authorized provisional comparison now has a separate
 [operator and frozen protocol](v3-v5-benchmark-report.md). It uses the machine-proposal
 artifact plus scoring policy, never converts the original null human judgments to zero,
-and does not grant human approval. The old synthetic evaluator below is unchanged.
+and does not grant human approval. Both exact-model runs are complete: v5 provisionally fails the gates despite higher aggregate metrics. See the [completion report](phase2b2c-completion-report.md), [case inspection](v3-v5-case-analysis.md), [exploratory thresholds](v5-threshold-analysis.md) and [reproduction guide](controlled-benchmark-reproduction.md). The old synthetic evaluator below is unchanged.
 
 This benchmark uses a frozen draft relevance dataset containing machine proposals plus manually calibrated scoring policy. It is suitable for provisional comparative evaluation, not final production approval.
 
@@ -17,9 +17,9 @@ events and 120 reviewable query proposals, with **zero approved cases**. It is a
 `benchmark/ground-truth-v1.jsonl` uses the new snapshot-bound human-review schema.
 Do not feed it into the old synthetic `index benchmark` evaluator, convert null grades
 to zero, or infer relevance from pooled rankings. The approval gate and coverage report
-must pass before a later explicit evaluator adapter/controlled comparison is introduced.
-No such adapter, model comparison, threshold tuning or semantic activation is part of
-this phase. [Annotation guidelines](retrieval-annotation-guidelines.md) define review,
+are still required for a human-ground-truth claim. No adapter, model comparison,
+threshold tuning or semantic activation was part of Phase 2B.2b. Phase 2B.2c separately
+authorizes the explicitly provisional draft comparison described above. [Annotation guidelines](retrieval-annotation-guidelines.md) define review,
 no-hit confirmation, hard eligibility, grouping and unjudged-result handling.
 
 The nine cases below are classified **synthetic_pipeline_goldens**. Historical
@@ -42,7 +42,7 @@ explicit input file and is never logged.
 Metrics are macro-averaged Recall@5/10, HitRate@5/10, MRR@10 and nDCG@10 (gain 2^grade−1,
 log2(rank+1) discount). Unjudged results have zero gain; expected IDs default to grade 1.
 Duplicate result IDs fail. Each run records candidate/returned counts, best score,
-end-to-end, embedding, Qdrant (including compatibility scan), and rehydration latency.
+end-to-end, embedding, Qdrant (request-time generation verification), and rehydration latency.
 The current internal retrieval uses the preserved v3 relevance threshold.
 
 ## Registered comparison gates
@@ -67,11 +67,12 @@ chunk hashes/counts and average/max token counts. Different chunk hashes are rep
 not hidden by an equal chunk-version label. `benchmark.run_benchmark` verifies the
 source hash against the collection and checks it again after the run.
 
-A controlled v3 report must be exported by a separately isolated v3 benchmark runner
-using the same public documents, SQL filters and report fields. This repository does
-not run a v3 encoder or access production v3 vectors. Existing live v3 collection
-scores are not a valid comparison baseline. **No measured v3/v5 comparison result is
-available yet**; the comparison's unit tests use explicitly artificial rankings.
+At the end of Phase 2B.1, no measured v3/v5 result or exact isolated v3 runner was
+available; those unit tests use artificial rankings. The separate Phase 2B.2c runner
+now indexes the same frozen public snapshot for both models and applies identical
+snapshot predicates; it does not access production v3 vectors or load model weights
+in the Research Service. Its reports use a separate versioned schema. Existing live
+v3 collection scores remain an invalid comparison baseline.
 
 ## Measurement limits
 

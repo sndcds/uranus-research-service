@@ -1,0 +1,17 @@
+{
+  "caveat": "This benchmark uses a frozen draft relevance dataset containing machine proposals plus manually calibrated scoring policy. It is suitable for provisional comparative evaluation, not final production approval.",
+  "final_build": "20261006_8cpu_001",
+  "identical_chunk_mapping": true,
+  "identical_document_mapping": true,
+  "identical_ranking_metrics": true,
+  "identical_rankings_and_scores": true,
+  "input_run_sha256": {
+    "v3-20261006_001.json": "9979d8c4c866351aa75bc1119a0501822c783cbd9372fdb43b24e3887972c813",
+    "v3-20261006_8cpu_001.json": "242b7c3c31537942ba960f009962ba2a48dae5ffb14a12360a57f4086f6eb8f2"
+  },
+  "pilot_build": "20261006_001",
+  "query_set_hash": "a72b04ca44655ca4e8ba456e8d9698ff6ebbe47e1dde54f075780c9e6e4a8b53",
+  "scope": "v3 pilot vs final resource profile; not the v3/v5 quality comparison",
+  "source_snapshot_hash": "295d51592050b67be40d7a4de8dd3ac5885fbe2562700b3e3578f8b107785029",
+  "status": "passed"
+}

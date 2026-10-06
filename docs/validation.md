@@ -7,11 +7,14 @@ frozen hashes, comparison identity, event/occurrence eligibility, no-hit exclusi
 graded metrics, aggregation/ties, gates, threshold curves, report determinism and v3
 response-contract parity. Ruff, format and diff checks pass.
 
-The [CI run for 1e63a3e](https://github.com/sndcds/uranus-research-service/actions/runs/37421801731)
+The [CI run for d9d30ac](https://github.com/sndcds/uranus-research-service/actions/runs/37427265384)
 passed both jobs: unit/contracts/offline Docker build and disposable
 PostGIS/Qdrant/pinned Admin differential parity. Runtime and deployment files are
 unchanged. Real model inference is a separate manual isolated benchmark; it is not
-required by CI and does not replace these integration tests.
+required by CI and does not replace these integration tests. Both real runs completed
+all 611 documents and 120 queries on eight CPUs/eight intra-op threads. Complete
+Qdrant validation passed; a separate offline audit rechecked all 240 case identities,
+rankings, occurrence contexts, frozen byte hashes and deterministic evaluator outputs.
 
 See the [controlled protocol/results](v3-v5-benchmark-report.md) and
 [reproduction guide](controlled-benchmark-reproduction.md). The draft relevance

@@ -129,7 +129,10 @@ runs occur after complete corpus inference. No cold-start inference claim is mad
 
 The exact external launcher is reproduced below for review. Copy it to the isolated
 Encoder workspace, mount the frozen `thread-parity-probes-v1.json` at `/profile`, and
-mount a dedicated writable benchmark report directory at `/profile-output`. Run it
+mount a dedicated writable benchmark report directory at `/profile-output`, owned
+by the container UID 10001 (mode 0755). The first isolated startup exposed a report-
+directory ownership mismatch; only that dedicated directory was corrected and the
+benchmark container restarted before inference results were accepted. Run it
 with the exact v5 environment and unchanged source, never a production Encoder.
 
 ```python

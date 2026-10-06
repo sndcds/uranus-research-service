@@ -102,7 +102,8 @@ benchmark endpoints and new `benchmark_events_jina_v3_*` / `benchmark_events_jin
 collections. It does not enter `/query` or change production thresholds.
 See the [preregistered protocol and results](docs/v3-v5-benchmark-report.md).
 Machine-proposed/calibrated labels provide provisional evidence only; the dataset
-remains draft and `semantic_query=false`.
+remains draft and `semantic_query=false`. The completed 611-document / 105-evaluable-case
+run provisionally fails the preregistered gates; see the [completion report](docs/phase2b2c-completion-report.md).
 
 ## Validation
 

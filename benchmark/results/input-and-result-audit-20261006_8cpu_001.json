@@ -1,0 +1,36 @@
+{
+  "baseline_commit": "dfa9f58ac8f22129ef4bf6aebf0c26f679bea517",
+  "caveat": "This benchmark uses a frozen draft relevance dataset containing machine proposals plus manually calibrated scoring policy. It is suitable for provisional comparative evaluation, not final production approval.",
+  "checks": [
+    "frozen_bytes_match_merged_baseline",
+    "exact_model_pins",
+    "same_eight_cpu_profile",
+    "all_case_fields_match_frozen_inputs",
+    "complete_unique_eligible_event_rankings",
+    "occurrence_evidence_eligibility",
+    "deterministic_point_ids_and_content_hashes",
+    "document_hashes",
+    "manifest_and_corpus_digests",
+    "recomputed_metrics_and_thresholds",
+    "recomputed_comparison",
+    "executed_sources_match_repository",
+    "successful_drivers",
+    "isolated_containers_stopped_without_oom"
+  ],
+  "input_sha256": {
+    "benchmark/annotation/machine-proposals-v1.jsonl": "ecf09f60fb6a31a96f5ecd21b39a7686df6f12726a814e7d764e443e54fbbc48",
+    "benchmark/annotation/machine-rubrics-v1.json": "ef0ea425dc00ffcf9471573a9e76304faebfbb75ee3aa674c64d6555c6e273f3",
+    "benchmark/annotation/manual-calibration-v1.json": "179376bf2f01e6fcd2df447e0085a6cd340dd96b9eabeffc37f2f67f25f44ba5",
+    "benchmark/ground-truth-v1.jsonl": "a72b04ca44655ca4e8ba456e8d9698ff6ebbe47e1dde54f075780c9e6e4a8b53",
+    "benchmark/snapshots/public-events-20261005/events.jsonl": "2de49bc71942926e953f4de76d4b5dbcfe1780a6a2a20ee2b0feb6fa97cbf7f1"
+  },
+  "result_sha256": {
+    "chunks-v3-20261006_8cpu_001.json": "dbf69c9909104e619ec616024e75d19726ac5851dc37181bd902b85885ca7531",
+    "chunks-v5-20261006_8cpu_001.json": "cfcfdfaa9c2ed30400f86affe16036b6967a66b19055737de133d07665885ce4",
+    "v3-20261006_8cpu_001.json": "242b7c3c31537942ba960f009962ba2a48dae5ffb14a12360a57f4086f6eb8f2",
+    "v3-v5-comparison-20261006_8cpu_001.json": "53efa9fbb1bcd293450aed49e677038d6c48fd7d0c93e10352af72b29dcb5ef5",
+    "v5-20261006_8cpu_001.json": "e0ef32e5dba8d51d3a8086d73557e2f2b3418ee729b6e4863cf1c0a9f9f2760b"
+  },
+  "status": "passed",
+  "verified_case_executions": 240
+}
