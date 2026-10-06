@@ -9,3 +9,6 @@ dist/
 *.egg-info/
 wheelhouse/
 .reference-admin/
+
+# Isolated benchmark model caches and transient runtime data
+.benchmark-runtime/

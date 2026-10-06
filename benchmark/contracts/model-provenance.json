@@ -1,0 +1,38 @@
+{
+  "baseline_merge": "dfa9f58ac8f22129ef4bf6aebf0c26f679bea517",
+  "benchmark_document_projection": "benchmark-public-snapshot-sections-v1",
+  "encoder_source_changes": false,
+  "response_contract_provenance": {
+    "encoder-v3/ChunkResponse.json": "48ce71550d5dad8c697facd3767aef8b4be97cc1",
+    "encoder-v3/EmbedResponse.json": "48ce71550d5dad8c697facd3767aef8b4be97cc1"
+  },
+  "v3": {
+    "artifact_manifest": "jina-v3-merged-artifacts.json",
+    "backend": "onnx-merged",
+    "encoder_commit": "48ce71550d5dad8c697facd3767aef8b4be97cc1",
+    "graph_optimization": "ORT_ENABLE_BASIC",
+    "inter_op_threads": 1,
+    "intra_op_threads": 8,
+    "max_input_tokens": 8192,
+    "normalization": "one L2 after pooling",
+    "passage_adapter": "retrieval_passage",
+    "pooling": "attention-mask-weighted mean, float32",
+    "prefixes": "none",
+    "production_compatible_image_id": "sha256:6834c50c52bd7e60f6a6d25772102198dd9638b3dc33859e6bf05df9a67b2c1b",
+    "query_adapter": "retrieval_query",
+    "runtime": "onnxruntime-1.30.0-cpu"
+  },
+  "v5": {
+    "adapter": "adapters/retrieval",
+    "artifact_manifest": "jina-v5-artifacts.json",
+    "attention": "eager",
+    "backend": "torch",
+    "encoder_commit": "1938c72caa6102452ae0afa18ef86d9a95ead878",
+    "max_input_tokens": 32768,
+    "normalization": "one L2 after pooling",
+    "passage_prefix": "Document: ",
+    "pooling": "last non-padding token, float32",
+    "query_prefix": "Query: ",
+    "runtime": "torch-2.11.0+cpu-transformers-5.17.0-peft-0.21.1-cpu"
+  }
+}
