@@ -3,15 +3,15 @@
   "cases_processed": 120,
   "candidates_processed": 2352,
   "score_counts": {
-    "0": 1674,
-    "1": 444,
-    "2": 127,
-    "3": 107
+    "0": 1640,
+    "1": 461,
+    "2": 134,
+    "3": 117
   },
   "confidence_distribution": {
-    "medium": 1732,
-    "high": 107,
-    "low": 513
+    "medium": 1701,
+    "high": 117,
+    "low": 534
   },
   "cases_with_grade_3": [
     "chamber-da",
@@ -34,6 +34,7 @@
     "historical-q06",
     "historical-q07",
     "historical-q08",
+    "historical-q09",
     "historical-q11",
     "historical-q12",
     "historical-q13",
@@ -70,7 +71,7 @@
     "harpsichord-en"
   ],
   "human_approval_created": false,
-  "required_review_pairs": 1343,
+  "required_review_pairs": 1370,
   "no_hit_review_pairs": 120,
   "source_byte_hashes": {
     "benchmark/ground-truth-v1.jsonl": "a72b04ca44655ca4e8ba456e8d9698ff6ebbe47e1dde54f075780c9e6e4a8b53",
@@ -78,5 +79,54 @@
     "benchmark/annotation/evidence.md": "282525301580328c6c2e10e02d878d1339a139612839471c816fefd6012afa77",
     "docs/retrieval-annotation-guidelines.md": "149573227a99c3122efd6c8108818b727467ee4329514d6e84a1ff055d8ed4f1"
   },
-  "rubric_sha256": "ef0ea425dc00ffcf9471573a9e76304faebfbb75ee3aa674c64d6555c6e273f3"
+  "rubric_sha256": "ef0ea425dc00ffcf9471573a9e76304faebfbb75ee3aa674c64d6555c6e273f3",
+  "manual_calibration_sha256": "f0f72a735987fafdc12031ba1e19808b29e4f0babb1e851c6379fd0fd5df8ab8",
+  "manual_calibration_version": "manual-calibration-v1",
+  "calibrated_pairs": 275,
+  "calibration_evidence_conflicts": 16,
+  "unresolved_calibration_pairs": [
+    {
+      "case_id": "historical-q02",
+      "event_id": "019e63f7-ebeb-7952-9304-e496b02e3588",
+      "event_title": "Cultural Pearl Kulturtag",
+      "reason": "Explizit manuelle Prüfung angefordert; kein Kalibrierungsscore vorgegeben."
+    },
+    {
+      "case_id": "historical-q03",
+      "event_id": "019daf9b-da9a-7524-9b5c-0f77457ab198",
+      "event_title": "Deich ohne Schafe?",
+      "reason": "Positive Pilkentafel-Zugangsevidenz vorhanden, aber Paar nicht in der positiven Kalibrierungsliste; Null-Regel für fehlende Evidenz nicht anwendbar."
+    },
+    {
+      "case_id": "historical-q03",
+      "event_id": "019e2bbb-892a-7482-a463-bb1da6b27ee5",
+      "event_title": "SHOWER",
+      "reason": "Positive Pilkentafel-Zugangsevidenz vorhanden, aber Paar nicht in der positiven Kalibrierungsliste; Null-Regel für fehlende Evidenz nicht anwendbar."
+    },
+    {
+      "case_id": "historical-q07",
+      "event_id": "01a042e9-cf5a-7252-aff4-043771488e9c",
+      "event_title": "Kulturtag: Glücksburger Tiny House – Kurzführung & Besichtigung",
+      "reason": "In der vollständigen expliziten Bewertungsaufzählung nicht enthalten."
+    },
+    {
+      "case_id": "historical-q11",
+      "event_id": "01a06b28-2fd0-7080-93ee-c732aba7077d",
+      "event_title": "Lange Nacht der Demokratie",
+      "reason": "In der expliziten Bewertungsaufzählung nicht enthalten."
+    }
+  ],
+  "calibration_drift": {
+    "baseline_head": "430c1a3f23e356405ed60dc4abcca3465235e5e0",
+    "score_distribution_before": {
+      "0": 1674,
+      "1": 444,
+      "2": 127,
+      "3": 107
+    },
+    "changed": 65,
+    "upgrades": 52,
+    "downgrades": 13,
+    "unchanged": 210
+  }
 }
