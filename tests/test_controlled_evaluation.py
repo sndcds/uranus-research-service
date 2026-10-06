@@ -44,6 +44,7 @@ def report(model):
     return {
         "benchmark_schema_version": "controlled-retrieval-v1",
         "evaluator_version": e.EVALUATOR,
+        "execution_profile": "8cpu-8threads",
         "source_snapshot_hash": "snapshot",
         "query_set_hash": "queries",
         "judgment_source_hash": "labels",
@@ -74,7 +75,9 @@ def test_frozen_inputs_and_included_cases():
     "name", json.loads((ROOT / "benchmark/contracts/phase2b2c-input-sha256.json").read_text())
 )
 def test_frozen_input_change_stops(name, tmp_path):
-    shutil.copytree(ROOT / "benchmark", tmp_path / "benchmark")
+    shutil.copytree(
+        ROOT / "benchmark", tmp_path / "benchmark", ignore=shutil.ignore_patterns("results")
+    )
     p = tmp_path / name
     p.write_bytes(p.read_bytes() + b"\n")
     with pytest.raises(ValueError, match="frozen_input_changed"):
@@ -88,6 +91,7 @@ def test_frozen_input_change_stops(name, tmp_path):
         "source_snapshot_hash",
         "reference_time",
         "evaluator_version",
+        "execution_profile",
         "judgment_source_hash",
         "policy",
         "documents",

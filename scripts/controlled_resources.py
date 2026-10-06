@@ -23,13 +23,21 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--model", choices=["v3", "v5"], required=True)
     parser.add_argument("--build", required=True)
+    parser.add_argument("--cpus", type=int, choices=[2, 8], default=2)
     args = parser.parse_args()
-    name = f"kulturbytes-benchmark-{args.model}-20261006"
+    suffix = "8cpu-" if args.cpus == 8 else ""
+    name = f"kulturbytes-benchmark-{args.model}-{suffix}20261006"
+    profile = "8cpu-8threads" if args.cpus == 8 else "2cpu-original-threads"
     pid = int(
         subprocess.check_output(
             ["sudo", "-n", "docker", "inspect", "--format", "{{.State.Pid}}", name], text=True
         )
     )
+    config = json.loads(
+        subprocess.check_output(["sudo", "-n", "docker", "inspect", name], text=True)
+    )[0]["HostConfig"]
+    if config["NanoCpus"] != args.cpus * 10**9:
+        raise SystemExit("benchmark_cpu_limit_mismatch")
     before = sample(pid)
     started = time.perf_counter()
     child = subprocess.Popen(
@@ -42,7 +50,8 @@ def main():
             args.model,
             "--build",
             args.build,
-        ]
+        ],
+        env={**os.environ, "CONTROLLED_BENCHMARK_PROFILE": profile},
     )
     rss = []
     while child.poll() is None:
@@ -65,8 +74,10 @@ def main():
         "sample_interval_seconds": 1,
         "driver_cpu_included": False,
         "driver_exit_code": child.returncode,
-        "container_cpu_limit": 2,
-        "container_memory_limit_bytes": 6 * 1024**3,
+        "execution_profile": profile,
+        "container_cpu_limit": args.cpus,
+        "container_memory_limit_bytes": config["Memory"],
+        "container_memory_plus_swap_bytes": config["MemorySwap"],
         "startup_definition": "loaded process before corpus build; not pre-load RSS",
         "steady_state_definition": "resident set after all queries; includes allocator state",
     }

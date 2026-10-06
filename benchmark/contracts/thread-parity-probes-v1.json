@@ -1,0 +1,44 @@
+{
+  "input_sha256": {
+    "benchmark/annotation/machine-proposals-v1.jsonl": "ecf09f60fb6a31a96f5ecd21b39a7686df6f12726a814e7d764e443e54fbbc48",
+    "benchmark/annotation/machine-rubrics-v1.json": "ef0ea425dc00ffcf9471573a9e76304faebfbb75ee3aa674c64d6555c6e273f3",
+    "benchmark/annotation/manual-calibration-v1.json": "179376bf2f01e6fcd2df447e0085a6cd340dd96b9eabeffc37f2f67f25f44ba5",
+    "benchmark/ground-truth-v1.jsonl": "a72b04ca44655ca4e8ba456e8d9698ff6ebbe47e1dde54f075780c9e6e4a8b53",
+    "benchmark/snapshots/public-events-20261005/events.jsonl": "2de49bc71942926e953f4de76d4b5dbcfe1780a6a2a20ee2b0feb6fa97cbf7f1"
+  },
+  "passages": [
+    {
+      "content_hash": "c3b2f7b5d91993e8ac3598036c374e30b5d2b5e4419f78dc82f4a15b639e7839",
+      "event_id": "019fe1f8-79fa-7ccf-af26-935c68985969",
+      "text": "Dänisch für Anfänger\n\nDänisch lernen – ganz hyggelig!\n\n### Kom godt i gang! Herzlich willkommen zum Dänischkurs für Anfänger ab Freitag, den 04.09.26, und dann wöchentlich, insgesamt 6 Mal für 48 Euro.\nDu möchtest dich im Urlaub, beim Einkaufen oder im Gespräch mit unseren dänischen Nachbarn einfach und sicher verständigen? Dann ist dieser Kurs genau richtig!\nIn entspannter Atmosphäre lernst du Schritt für Schritt die Grundlagen der dänischen Sprache – ohne Vorkenntnisse und mit viel Gelegenheit zum Sprechen und Üben.\nFür alle, die Lust haben, Dänisch zu entdecken – ganz ohne Leistungsdruck, aber mit Freude am Lernen.\n### 🌊 Hjertelig velkommen til dansk!\n**Anmeldung gerne per WhatsApp, Telefon oder E-Mail**\n📞 · ✉️ []()"
+    },
+    {
+      "content_hash": "797d427683db9faa2f67d2ea201309b80714fd8f07194a72efea8a16969cf062",
+      "event_id": "019dbded-ece7-783d-8d5f-562cd9680deb",
+      "text": "tuition mit psychologischer Tiefe. Ihre Werke entstehen an der Schnittstelle von Natur, Symbolik und innerer Orientierung – Kunst, die stärkt, berührt und begleitet.\nKunst erleben in Kiel‑Gaarden\nDie Galerie K34 bietet den idealen Rahmen für diese besondere Ausstellung. Besucher\\*innen können die Werke direkt vor Ort entdecken, mit der Künstlerin ins Gespräch kommen und Kunst erwerben, die lange nachwirkt – für Zuhause, als Geschenk oder als inspirierender Begleiter auf dem eigenen Weg.\n„Innere Gefährten“ – eine Einladung, dein Krafttier zu finden.\n\nVeranstaltungsarten / Genres: Ausstellung, Kunst\n\nSchlagworte: aquarell, kompasskunst, krafttiere"
+    },
+    {
+      "content_hash": "53149b7b8d57615cc95a2950b6fc5eebf96548b3289adfa1d358f131a6363f30",
+      "event_id": "019edfce-97fd-7c57-ac8e-9b79bb8c6095",
+      "text": "Open Stage Night Vol 2\n\nJede\\*r ist herzlich willkommen!\n**Open Stage Night**\nEure Bühne für: Gesang - Gedichte - Poetry Slam - Stand Up - Comedy - Politische Rede - Essays!\nKommt auf die Bühne der NORDER147 und seid euch eines begeisterten Publikums sicher. Wir freuen uns sehr, jungen Talente, alten Haudegen und allen anderen, die ihre wortschöpferischen Werke präsentieren wollen, bei uns zu begrüßen. Lea Straatmann, selbst ebenfalls Wort-Künstlerin, wird charmant und eloquent durch den Abend begleiten.\nJede\\*r Teilnehmer:in stehen 10 Minuten zur Verfügung.\nKostenfrei für Teilnehmende und Zuschauer:innen\n19 - 20 Uhr Anmeldung vor Ort\n20 Uhr Beginn\nAnmeldung via Mail: []()"
+    }
+  ],
+  "queries": [
+    {
+      "case_id": "historical-q01",
+      "language": "de",
+      "text": "kostenlose Veranstaltungen für Familien"
+    },
+    {
+      "case_id": "historical-q21",
+      "language": "da",
+      "text": "Gratis arrangementer for familier"
+    },
+    {
+      "case_id": "historical-q26",
+      "language": "en",
+      "text": "Free family activities in Germany and Denmark"
+    }
+  ],
+  "source_snapshot_hash": "295d51592050b67be40d7a4de8dd3ac5885fbe2562700b3e3578f8b107785029"
+}

@@ -2,6 +2,7 @@
   "baseline_merge": "dfa9f58ac8f22129ef4bf6aebf0c26f679bea517",
   "benchmark_document_projection": "benchmark-public-snapshot-sections-v1",
   "encoder_source_changes": false,
+  "execution_profile": "8cpu-8threads",
   "response_contract_provenance": {
     "encoder-v3/ChunkResponse.json": "48ce71550d5dad8c697facd3767aef8b4be97cc1",
     "encoder-v3/EmbedResponse.json": "48ce71550d5dad8c697facd3767aef8b4be97cc1"
@@ -33,6 +34,13 @@
     "passage_prefix": "Document: ",
     "pooling": "last non-padding token, float32",
     "query_prefix": "Query: ",
-    "runtime": "torch-2.11.0+cpu-transformers-5.17.0-peft-0.21.1-cpu"
+    "runtime": "torch-2.11.0+cpu-transformers-5.17.0-peft-0.21.1-cpu",
+    "source_default_torch_threads": 1,
+    "thread_launcher_sha256": "3d76905df23430fbcd031a1275b6d82ecafddfd86f93d691ef3f9e9283114921",
+    "thread_probe_sha256": "febfb8ddd39e748b7c8982f0e3b5c09617d63da046922ab53747f7b5ba46846d",
+    "thread_profile_authorization": "explicit user request: use all eight CPUs and eight threads",
+    "thread_profile_implementation": "external benchmark backend injection; unchanged Encoder source",
+    "torch_interop_threads": 1,
+    "torch_threads": 8
   }
 }

@@ -240,6 +240,9 @@ async def full_validate(qdrant, path, manifest, points):
 
 async def run(root, model, build):
     identity, cases, events = inputs(root)
+    profile = os.environ.get("CONTROLLED_BENCHMARK_PROFILE", "2cpu-original-threads")
+    require(profile in {"2cpu-original-threads", "8cpu-8threads"}, "execution_profile")
+    identity["execution_profile"] = profile
     docs = documents(events)
     expected = V3 if model == "v3" else V5
     collection = collection_name(model, build)

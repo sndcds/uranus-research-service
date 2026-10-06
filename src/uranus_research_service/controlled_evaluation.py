@@ -263,6 +263,7 @@ def compare(v3, v5):
     for key in (
         "benchmark_schema_version",
         "evaluator_version",
+        "execution_profile",
         "source_snapshot_hash",
         "query_set_hash",
         "judgment_source_hash",
@@ -361,6 +362,7 @@ def compare(v3, v5):
             key: v3[key]
             for key in (
                 "benchmark_schema_version",
+                "execution_profile",
                 "source_snapshot_hash",
                 "query_set_hash",
                 "judgment_source_hash",
