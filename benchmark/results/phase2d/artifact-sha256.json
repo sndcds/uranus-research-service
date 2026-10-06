@@ -1,0 +1,23 @@
+{
+  "algorithm": "sha256",
+  "files": {
+    "benchmark/annotation/phase2d/adjudication-schema.json": "bb01b5bc51690bce13c086521ee3d08bd625dcab1692a11310b675dd4aaade73",
+    "benchmark/annotation/phase2d/annotation-package.json": "dc3d7d9c0646795edfc323cb93bccadeaa65aa8bdc6ce2912d933a789c262c9c",
+    "benchmark/annotation/phase2d/annotation-schema.json": "3a8c02d1657107235e53e1df7d90b278b3d73b650081a80b4f566554ffec2f44",
+    "benchmark/annotation/phase2d/approval-schema.json": "68ea09ea806d85bf2bfc4e79b8d25cf5d7bd1bf65cfdb68319e010e2c8d0c8ea",
+    "benchmark/annotation/phase2d/blind-candidates.jsonl": "6a80c49648cdf32e2d457adf3c4a3ca618afc5e66def0abb0e967ba22b2a229d",
+    "benchmark/annotation/phase2d/blind-mapping.json": "bfc14ed2dd9015d4f319c1930a7329bd04805060767a568ab07162deeeb517c4",
+    "benchmark/annotation/phase2d/manifest.json": "78cb3a881534cf30c107fd009c35d8c4390952af9ea227579c9a2697ff9ce7a5",
+    "benchmark/annotation/phase2d/review.html": "8bcd9207d22f5fdb8afe0ab8b8ac4a016cfe472b210562a968c76918c1d572a8",
+    "benchmark/annotation/phase2d/sampling-plan.json": "35a6a7cb8943021dc2403c48c3d0b780e73fc46c7473f8df66a911e7fc145b27",
+    "benchmark/contracts/phase2d-input-sha256.json": "35789109e88d35f587bf3b26e28a92519c52003294979a1fce7cb4c6ad711998",
+    "benchmark/results/phase2d/judgment-coverage.json": "27b11348bc7f0a1c74ebc47c694585ec1c8f52cf9ec507514bd42fb6096c3899",
+    "docs/phase2d-blind-judgment-expansion.md": "ce22385de72ef1873c4e94b23e591914fc2249f35540ec10d4b358ee16308263",
+    "src/uranus_research_service/blind_cli.py": "1b4beb6be48c5bb35c5bd84ccfe087a87d7f0b570536555da61962c56bd65997",
+    "src/uranus_research_service/blind_expansion.py": "bfcab5675dce8131894a0bb729fffe10731d43221f995d1da40f084823081d9d",
+    "src/uranus_research_service/blind_review.py": "2d3cac3d4744bce89758d0c35ccb5c42c290ea7f05324cd389c507ed5c5a473d",
+    "tests/test_blind_expansion.py": "d4b3af1839057655cd9138ab74807117061cb5c0957a58b118a6f75bb5caf3d0"
+  },
+  "schema_version": "phase2d-preparation-artifacts-v1",
+  "status": "draft-no-human-judgments"
+}
