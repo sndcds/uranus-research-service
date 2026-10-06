@@ -1,0 +1,2 @@
+# Retain raw benchmark evidence; collapse generated JSON in review by default.
+benchmark/results/*.json linguist-generated=true

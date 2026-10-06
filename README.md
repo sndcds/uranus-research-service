@@ -94,6 +94,17 @@ See [operator guide](docs/phase2b1-semantic-index.md), [reindex plan](docs/v5-re
 Set `SEMANTIC_BUILD_ID` to probe a configured event build separately during `/ready`.
 `semantic_index_ready` can become true; `semantic_query` stays false.
 
+## Controlled draft retrieval comparison
+
+The separate operator `python -m uranus_research_service.controlled_runner` compares
+exact v3/v5 Encoders on the frozen public snapshot. It accepts only dedicated loopback
+benchmark endpoints and new `benchmark_events_jina_v3_*` / `benchmark_events_jina_v5_*`
+collections. It does not enter `/query` or change production thresholds.
+See the [preregistered protocol and results](docs/v3-v5-benchmark-report.md).
+Machine-proposed/calibrated labels provide provisional evidence only; the dataset
+remains draft and `semantic_query=false`. The completed 611-document / 105-evaluable-case
+run provisionally fails the preregistered gates; see the [completion report](docs/phase2b2c-completion-report.md).
+
 ## Validation
 
 ```sh

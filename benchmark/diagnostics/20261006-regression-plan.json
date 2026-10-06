@@ -1,0 +1,302 @@
+{
+  "artifact_sha256": {
+    "case-inspection-20261006_8cpu_001.json": "70df4dd8bb5538c8091972aa3735705b43671afd6d39747587e3746529e82b6c",
+    "chunk-differences-20261006_8cpu_001.json": "e249718da882271c02bbf3ce1be89b56878fb333c6a2cfa8b08f5395cb2f6c3a",
+    "chunks-v3-20261006_001.json": "dbf69c9909104e619ec616024e75d19726ac5851dc37181bd902b85885ca7531",
+    "chunks-v3-20261006_8cpu_001.json": "dbf69c9909104e619ec616024e75d19726ac5851dc37181bd902b85885ca7531",
+    "chunks-v5-20261006_8cpu_001.json": "cfcfdfaa9c2ed30400f86affe16036b6967a66b19055737de133d07665885ce4",
+    "environment-20261006_001.json": "4f6cbe817b8d157fea592dee3320683ad299a3d3239e55e518cc2ce057cc24f1",
+    "environment-20261006_8cpu_001.json": "a78b8fe2e7428951a7365a15593b7b8a06545879776fb31de31e3a59974560d2",
+    "input-and-result-audit-20261006_8cpu_001.json": "1655b1d29beadc5cf35f371ab003516b725b66fd7c61f58b6133c9c8c6e6f3b8",
+    "resources-v3-20261006_001.json": "8847b95a01f155e0142182ffab2337bba5550500c45ba76cff6ad299a746e87d",
+    "resources-v3-20261006_8cpu_001.json": "8c71b472c67f6c94cf06e25e1a9bdbc454a940e3a187d06a56026f0d2db61be2",
+    "resources-v5-20261006_001.json": "9a25a9d6d9eda73bbfdaee82112aa77ca0067cd3a4259c7dece8e9b5bcff6403",
+    "resources-v5-20261006_8cpu_001.json": "3294044469fb27a0c8605d86ca3683f4862fb5f1297dc928180c4f8b1a5b48bf",
+    "v3-20261006_001.json": "9979d8c4c866351aa75bc1119a0501822c783cbd9372fdb43b24e3887972c813",
+    "v3-20261006_8cpu_001.json": "242b7c3c31537942ba960f009962ba2a48dae5ffb14a12360a57f4086f6eb8f2",
+    "v3-resource-profile-repeatability-20261006.json": "a0c439c57f751f7bb4548c8ed24e76291d96e8f7c2dc8385c2ec3c4325591c11",
+    "v3-v5-comparison-20261006_8cpu_001.json": "53efa9fbb1bcd293450aed49e677038d6c48fd7d0c93e10352af72b29dcb5ef5",
+    "v5-20261006_8cpu_001.json": "e0ef32e5dba8d51d3a8086d73557e2f2b3418ee729b6e4863cf1c0a9f9f2760b",
+    "v5-thread-parity-20261006_8cpu_001.json": "2104e64577b15ec90a94d8f68721cf8d97423f28717ff6c3f1888e0e7538bc5b"
+  },
+  "benchmark_build": "20261006_8cpu_001",
+  "cases": [
+    {
+      "case_id": "historical-q29",
+      "competitor_text_id": "979bd62a30aad6eeec8b4a41be6b707f2187483b6a37599fd83d2fcfaf4f78a9",
+      "documents": [
+        {
+          "event_id": "019da011-1802-7924-8a24-821066242bba",
+          "grade": 1,
+          "point_id": "1e82db3f-4251-57b1-8237-ace1a2665c2c",
+          "role": "relevant",
+          "source_model": "v3",
+          "text_id": "a1ac95b376aa22eb5d0eb6b5213bdbadeeba4f0825c9b5dc8c886fb4531a40cf"
+        },
+        {
+          "event_id": "019da011-1802-7924-8a24-821066242bba",
+          "grade": 1,
+          "point_id": "5dd1ebcf-a4dd-5a20-b743-815e6ff85017",
+          "role": "relevant",
+          "source_model": "v5",
+          "text_id": "50a5294d9ff142b4d318d9a2fdbf12160c263b280daa947cf6318477bffb28ea"
+        },
+        {
+          "event_id": "01a0a921-f23e-7e72-be8f-bdf44719f914",
+          "grade": null,
+          "point_id": "14e0f701-6122-51af-a347-fbeb1b0acecc",
+          "role": "unjudged_competitor",
+          "source_model": "v3",
+          "text_id": "979bd62a30aad6eeec8b4a41be6b707f2187483b6a37599fd83d2fcfaf4f78a9"
+        },
+        {
+          "event_id": "019db91a-89d5-7c5a-90ae-7596e488a1eb",
+          "grade": 0,
+          "point_id": "c213a8db-1d08-5ec8-803d-0d8401424918",
+          "role": "known_zero",
+          "source_model": "v5",
+          "text_id": "c594c16f1543c5474a408e6b8a0a6ee978f861e00a7872fe744302f574b1971e"
+        }
+      ],
+      "evidence_span": {
+        "end": 894,
+        "start": 386,
+        "text": "Under mottoet „Kulturh(a)us Utopia“ inviterer et grænseoverskridende projekt mennesker fra Tyskland og Danmark til at være kreative sammen, udveksle ideer og opdage nye perspektiver for samlivet i grænseregionen. Projektet »Kulturh(a)us Utopia« støttes af Kulturbüro Flensburg og Sonderburg Kommune og ønsker at skabe et åbent rum, hvor kultur og fællesskab kan opleves og blive synligt – aktivt, farverigt og med mulighed for at deltage. Projektet støttes af Borgerprojektfonds (Interreg Tyskland-Danmark).\n"
+      },
+      "german_query": "Mitmach-Kunstworkshops für junge Menschen",
+      "query": "Participatory art workshops for young people",
+      "target_text_id": "a1ac95b376aa22eb5d0eb6b5213bdbadeeba4f0825c9b5dc8c886fb4531a40cf"
+    },
+    {
+      "case_id": "wheelchair-da",
+      "competitor_text_id": "5c42befb93cbb0f796b6934e50a767244671813b801b140d8231e4c7839a23b7",
+      "documents": [
+        {
+          "event_id": "01a05cc3-f200-72ad-99cf-db5ad55a3a56",
+          "grade": 2,
+          "point_id": "85cc8387-2498-56a0-97a6-9c4213776c16",
+          "role": "relevant",
+          "source_model": "v3",
+          "text_id": "0b09ad77ad2c1da8262ad328c055eddc95b32f72dbcbf8c7dddac9ddf3d67b72"
+        },
+        {
+          "event_id": "01a013db-afe2-7c3a-a2c2-dd9c3bdde3ce",
+          "grade": null,
+          "point_id": "a1a4b3d6-a734-58ae-b01d-217b5cce93e5",
+          "role": "unjudged_competitor",
+          "source_model": "v5",
+          "text_id": "5c42befb93cbb0f796b6934e50a767244671813b801b140d8231e4c7839a23b7"
+        },
+        {
+          "event_id": "019da011-1802-7924-8a24-821066242bba",
+          "grade": 0,
+          "point_id": "5b678553-af90-5b30-8843-a9a58411c5e2",
+          "role": "known_zero",
+          "source_model": "v5",
+          "text_id": "ebab2f9732938b6bca0490a00240b03a26ed700c03f64dda8406d5a40005f793"
+        }
+      ],
+      "evidence_span": {
+        "end": 279,
+        "start": 65,
+        "text": "Der Zugang zum Foyer und in den Theatersaal sind ebenerdig und stufenlos erreichbar. Die Eingangstüren sind ausreichend breit. Die sanitären Anlagen sind leider nicht barrierefrei mit einem Rollstuhl zu erreichen. "
+      },
+      "german_query": "Kulturangebote mit dokumentiertem Zugang für Rollstühle",
+      "query": "Kulturtilbud med dokumenteret adgang for kørestole",
+      "target_text_id": "0b09ad77ad2c1da8262ad328c055eddc95b32f72dbcbf8c7dddac9ddf3d67b72"
+    },
+    {
+      "case_id": "dance-en",
+      "competitor_text_id": "3d2d22e76573946bbf2b3dab318071723a20c42bcdb51a55e0442ba6abc3206b",
+      "documents": [
+        {
+          "event_id": "019e1d20-4160-770d-aacc-0427d867f8cb",
+          "grade": 2,
+          "point_id": "8a0fdb27-5cbe-5f97-997a-9835ec09960a",
+          "role": "relevant",
+          "source_model": "v3",
+          "text_id": "92882edb1de4f6cb2648a6217effa5f3993cdf841397780b6abbf29bd796ac31"
+        },
+        {
+          "event_id": "01a0cd8c-e45f-75d2-945c-630009ae1d28",
+          "grade": null,
+          "point_id": "962defad-7b84-5135-a435-2ef3e13505eb",
+          "role": "unjudged_competitor",
+          "source_model": "v5",
+          "text_id": "3d2d22e76573946bbf2b3dab318071723a20c42bcdb51a55e0442ba6abc3206b"
+        },
+        {
+          "event_id": "019e1fc9-166f-73bd-92f7-8e9343d9eaf4",
+          "grade": 0,
+          "point_id": "a1b2e024-cc7d-57f1-9127-8b81f9c21165",
+          "role": "known_zero",
+          "source_model": "v5",
+          "text_id": "81bbebf59a60c170d27f1befb6141ab050a593cb24742a8940df5c9fe178330a"
+        }
+      ],
+      "evidence_span": {
+        "end": 1039,
+        "start": 879,
+        "text": "Ein sommerlicher Abend zwischen Rhythmus, Tanz, Live-Kultur und entspannten Drinks – offen für alle, die Lust auf Musik, Bewegung und gute Gesellschaft haben.\n\n"
+      },
+      "german_query": "Ein lebhafter Abend zum Tanzen",
+      "query": "A lively evening for dancing",
+      "target_text_id": "92882edb1de4f6cb2648a6217effa5f3993cdf841397780b6abbf29bd796ac31"
+    },
+    {
+      "case_id": "concerts-en",
+      "competitor_text_id": "7e5e719b563673022e6dc4fd8d2ef773b1db88c32dd96824c7763164b0e1d54e",
+      "documents": [
+        {
+          "event_id": "019e1d7d-5af9-7490-9c51-33f8d7a051b4",
+          "grade": 1,
+          "point_id": "4c88be7e-89d4-5653-b18d-8c69ebcdbada",
+          "role": "relevant",
+          "source_model": "v3",
+          "text_id": "e9b3cea06bc2bd7b238b54e06a9d4fcd25252f63e390e147c95b6b9fa779369d"
+        },
+        {
+          "event_id": "019e4022-4f8d-72c6-9f8f-00ec7cc065dd",
+          "grade": 2,
+          "point_id": "b411814d-8099-5b10-8b84-90a081ac4152",
+          "role": "relevant",
+          "source_model": "v3",
+          "text_id": "c0f939965f3b200f7569be97ae498ee41c54989ec98a37fe52490f25b3799523"
+        },
+        {
+          "event_id": "019e4022-4f8d-72c6-9f8f-00ec7cc065dd",
+          "grade": 2,
+          "point_id": "8e131d3e-fe5f-5134-b397-ea5fd5aada81",
+          "role": "relevant",
+          "source_model": "v5",
+          "text_id": "ef93f262994d9334df17225d2357e5fe45cc251a7adefeae22fc70525caa4fbb"
+        },
+        {
+          "event_id": "019fb249-fd92-73b6-ac35-861c5b8b4bdf",
+          "grade": null,
+          "point_id": "cd058e6b-a8ed-5b85-9ff3-506188591848",
+          "role": "unjudged_competitor",
+          "source_model": "v5",
+          "text_id": "7e5e719b563673022e6dc4fd8d2ef773b1db88c32dd96824c7763164b0e1d54e"
+        },
+        {
+          "event_id": "019fad8e-eb0d-7d27-8674-bc33ffcd3fab",
+          "grade": 0,
+          "point_id": "1e8d1344-d54e-5cb0-963f-8b701770e60d",
+          "role": "known_zero",
+          "source_model": "v3",
+          "text_id": "f4f94d0aefcfe954e3311db199a025b5b1cb606c4437d46db8439a69f0010a32"
+        }
+      ],
+      "evidence_span": {
+        "end": 419,
+        "start": 60,
+        "text": "David, Ben und Finn laden zu einer Konzert-Show ein, die Musik, Freude und Lachen zu einem lebendigen Erlebnis verbindet. Swing, Pop, Filmmusik und Evergreens verschmelzen in einer Geschichte voller Energie und feinem Humor: David arbeitet als Teilzeit-Hausmeister an der Musikhochschule, ist jedoch eigentlich Pianist und sehnt sich nach früheren Erfolgen.\n\n"
+      },
+      "german_query": "Konzerte mit unterschiedlichen Musikrichtungen",
+      "query": "Concerts spanning different musical genres",
+      "target_text_id": "e9b3cea06bc2bd7b238b54e06a9d4fcd25252f63e390e147c95b6b9fa779369d"
+    }
+  ],
+  "parity_inputs": [
+    {
+      "id": "query-0",
+      "purpose": "query",
+      "text": "Veranstaltungen im Freien"
+    },
+    {
+      "id": "query-1",
+      "purpose": "query",
+      "text": "Participatory art workshops for young people"
+    },
+    {
+      "id": "query-2",
+      "purpose": "query",
+      "text": "Kulturtilbud med dokumenteret adgang for kørestole"
+    },
+    {
+      "id": "query-3",
+      "purpose": "query",
+      "text": "A lively evening for dancing"
+    },
+    {
+      "id": "query-4",
+      "purpose": "query",
+      "text": "Concerts spanning different musical genres"
+    },
+    {
+      "id": "passage-0",
+      "purpose": "candidate",
+      "text": "One – nu auf Petuh“.\n**Ein gemeinsames Projekt des Kulturbüros Flensburg und des Kulturbüro Sonderburg.**\n---\n## **Participativ dansk-tysk workshopdag i Kulturh(a)us Utopia**\nEn dag fyldt med musik, kunst og møder venter den 25. april 2026 alle kulturinteresserede i Kulturh(a)us Utopia, den gamle Kobbermølle Danske Skole ved den tysk-danske grænse i Wassersleben 32, 24955 Harrislee.\nUnder mottoet „Kulturh(a)us Utopia“ inviterer et grænseoverskridende projekt mennesker fra Tyskland og Danmark til at være kreative sammen, udveksle ideer og opdage nye perspektiver for samlivet i grænseregionen. Projektet »Kulturh(a)us Utopia« støttes af Kulturbüro Flensburg og Sonderburg Kommune og ønsker at skabe et åbent rum, hvor kultur og fællesskab kan opleves og blive synligt – aktivt, farverigt og med mulighed for at deltage. Projektet støttes af Borgerprojektfonds (Interreg Tyskland-Danmark).\nI flere tidligere workshops er borgernes ønsker til udformningen af fremtidens grænseregion og til Kulturh(a)us Utopia blevet indsamlet på en deltagende måde, og nu bliver Utopia en realitet for en dag: Fra kl. 11.00 til 18.00 kan besøgende nyde et alsidigt program:\n- Fællessang med musikeren Jule Sösemann Lav\n- Visionboards med kunstneren Christiane Limper\n- Lyd og interview: »Sounds of Utopia« med kulturaktørerne Juliane Hanssen og Matthias Runge\n- Storytelling-workshop med workshoplederen Eva Ritter\n- Urban Sketching med illustratoren Ulrike König\n- Lego-trykworkshop med kunstneren Sarah Kürzinger\nKl. 15.00 inviterer Hilke Rudolph til „Klönschnack op Petuh“. Også for børn er der meget at opdage: Flensborgs „Spielmobil” er på stedet hele dagen.\nDer er særlig fokus på aktiv deltagelse: Alle gæster er inviteret til at prøve kræfter, være med til at forme arrangementet og blive en del af en grænseoverskridende fællesskabso\\[1\\]plevelse."
+    },
+    {
+      "id": "passage-1",
+      "purpose": "candidate",
+      "text": "Jugendatelier\n\nDein Style, deine Farben, deine Leinwand\n\nIm Jugendatelier können Jugendliche ab 11 Jahren zeichnen, malen und eigene kreative Ideen verwirklichen. Unterschiedliche Techniken, individuelle Motive und viel Raum zum Experimentieren stehen im Mittelpunkt. Vorkenntnisse sind nicht erforderlich. Das Jugendatelier findet wöchentlich mittwochs statt. Eine vorherige Anmeldung ist erforderlich.\n\nDu möchtest deine eigenen Bildideen entwickeln, neue Techniken ausprobieren und gemeinsam mit anderen Jugendlichen kreativ sein? Im Jugendatelier bekommst du den Raum dafür.\nOb Zeichnung, Malerei, abstrakte Farbwelten oder ein ganz persönliches Motiv. Du entscheidest, woran du arbeiten möchtest. Dabei kannst du unterschiedliche gestalterische Möglichkeiten kennenlernen, deinen eigenen Stil entdecken und deine Projekte in deinem individuellen Tempo umsetzen. Im Mittelpunkt stehen deine Ideen, die Freude am Ausprobieren und der kreative Austausch in der Gruppe.\nDas Jugendatelier richtet sich an Jugendliche ab 11 Jahren. Vorkenntnisse sind nicht erforderlich. Wichtig sind nur Neugier und Lust am Gestalten. Alle Materialien sind mit enthalten.\nDas Jugendatelier findet wöchentlich mittwochs von 16:30 bis 18:00 Uhr im Atelier Kreativecke in Glücksburg bei Flensburg statt. Die Teilnahme kostet 72 Euro monatlich und ist nur mit vorheriger Anmeldung möglich.\nDas erwartet dich:\n- Zeichnen, Malen und kreatives Gestalten\n- Raum für eigene Motive und persönliche Projekte\n- Kennenlernen und Ausprobieren verschiedener Techniken\n- Entwicklung deines eigenen künstlerischen Ausdrucks\n- Kreativer Austausch mit anderen Jugendlichen\n\nVeranstaltungsarten / Genres: Bildung, Handwerk, Kunst, Kursus, Malen"
+    },
+    {
+      "id": "passage-2",
+      "purpose": "candidate",
+      "text": "Die Theaterwerkstatt Pilkentafel ist eingeschränkt barrierefrei. Der Zugang zum Foyer und in den Theatersaal sind ebenerdig und stufenlos erreichbar. Die Eingangstüren sind ausreichend breit. Die sanitären Anlagen sind leider nicht barrierefrei mit einem Rollstuhl zu erreichen. Bei Fragen oder Hilfestellungen sind wir über unsere erreichbar."
+    },
+    {
+      "id": "passage-3",
+      "purpose": "candidate",
+      "text": "Der Maschinensaal kann barrierearm über den Eingang des Kulturzentrums erreicht werden."
+    },
+    {
+      "id": "passage-4",
+      "purpose": "candidate",
+      "text": "Midsommar Splash!\n\nWenn der längste Tag des Jahres nach draußen ruft, wird der Kranhausgarten zur sommerlichen Open-Air-Bühne für Reggae, African Disco, Ska, Dub und Dancehall. **Midsommar Splash!** bringt Live-Musik, Toasting, Soundsystem-Vibes und Workshop-Elemente zusammen.\n\nWenn der längste Tag des Jahres nach draußen ruft, wird der Kranhausgarten zur sommerlichen Open-Air-Bühne für Reggae, African Disco, Ska, Dub und Dancehall. **Midsommar Splash!** bringt Live-Musik, Toasting, Soundsystem-Vibes und Workshop-Elemente zusammen.\nLive auf der Bühne steht **Djiarkaarlo Band Roots Reggae**, dazu kommen DJ-Sets, Toasting-Performances und die **Monroes**, **General Linser**, **Mamadou & his Alongsiders** sowie Stimmen aus dem **Mama Africa Soundsystem**. Ergänzt wird das Programm durch einen **afrikanischen Tanz-Workshop** und einen **Djembe-Crashkurs** zum Mitmachen.\nEin sommerlicher Abend zwischen Rhythmus, Tanz, Live-Kultur und entspannten Drinks – offen für alle, die Lust auf Musik, Bewegung und gute Gesellschaft haben.\n\nVeranstaltungsarten / Genres: Musik, Party\n\nSchlagworte: Djembe Rythmen, Midtsommer, Open Air, Tanzworkshop"
+    },
+    {
+      "id": "passage-5",
+      "purpose": "candidate",
+      "text": "ne Tanz-Vorerfahrung)\n- Alle die nicht nur den klassischen Disco-Fox auf Partys tanzen wollen\n- Alle die am Sonntag den 27.9. Zeit haben!\n**Die Inhalte** werden vorerst der Grundschritt und Basis-Figuren sein. Dabei wird auf die Grundlagen des Boogie Woogies eingegangen: Was ist eigentlich Boogie Woogie und zu welcher Musik kann ich Boogie Woogie tanzen?\nWir freuen uns auf einen erfolgreichen Tag!\nWir bitten um rechtzeitige Anmeldung! (Siehe Flyer/Ende dieser Seite)\nBei zu geringer Anmeldezahl wird der Termin leider abgesagt/verschoben.\nTermin: 27. September 2026; 15:30-17:00 Uhr\nOrt: TC Rot Gold Casino Neumünster\nBaumschulenweg 2\n24537 Neumünster\nTeilnahmegebühr 7,50€/Person; 5€/Mitglied\nEuer Ansprechpartner für Fragen und Anmeldungen ist:\nChristopher Hagen\n[]()\n(Auch per WhatsApp)\n\nVeranstaltungsarten / Genres: Tanz"
+    },
+    {
+      "id": "passage-6",
+      "purpose": "candidate",
+      "text": "Strandgut: David, Ben und Finn\n\nDie humorvolle Konzertshow\n\nDavid, Ben und Finn laden zu einer Konzert-Show ein, die Musik, Freude und Lachen zu einem lebendigen Erlebnis verbindet. Swing, Pop, Filmmusik und Evergreens verschmelzen in einer Geschichte voller Energie und feinem Humor: David arbeitet als Teilzeit-Hausmeister an der Musikhochschule, ist jedoch eigentlich Pianist und sehnt sich nach früheren Erfolgen.\n\nDavid, Ben und Finn laden zu einer Konzert-Show ein, die Musik, Freude und Lachen zu einem lebendigen Erlebnis verbindet. Swing, Pop, Filmmusik und Evergreens verschmelzen in einer Geschichte voller Energie und feinem Humor: David arbeitet als Teilzeit-Hausmeister an der Musikhochschule, ist jedoch eigentlich Pianist und sehnt sich nach früheren Erfolgen. Ben begeistert mit seiner Posaune, Finn entfacht am Schlagzeug eine Kraft, die alle in Staunen versetzt. Eine zufällige Begegnung führt die drei zusammen und eröffnet einen Weg, der sie von kleinen Bühnen bis in große Säle trägt. Das Trio geht einen dynamischen Weg und entfacht dabei eine Spielfreude, die ansteckt. Ihre Leidenschaft führt sie vom Kreuzfahrtschiff zum Musical an Land, bis sich eine Chance ergibt ...\n\nVeranstaltungsarten / Genres: Konzert"
+    },
+    {
+      "id": "passage-7",
+      "purpose": "candidate",
+      "text": "mal sanft und verträumt. Manche Tracks entwickeln sich fließend, andere nehmen scharfe Kurven. Auf diesen Pfaden begegnen uns finstere Riffs, rollende Drums, saftige Basslines und ungezähmter Gesang.\nFühl dich wie zu Hause in unserem wilden Geräuschgarten.\n\nVeranstaltungsarten / Genres: Konzert, Rock\n\nSchlagworte: heavy rock, psychedelic"
+    }
+  ],
+  "parity_selection": "Before execution: DE outdoor query, DA wheelchair query, EN dance/art/concert queries; first total-loss relevant v3 chunk plus v5 leader per case. Shortest and longest of those passages supplement median-length example naturally. All texts in both roles.",
+  "schema": "isolated-diagnostics-v1",
+  "snapshot_input_sha256": {
+    "benchmark/annotation/machine-proposals-v1.jsonl": "ecf09f60fb6a31a96f5ecd21b39a7686df6f12726a814e7d764e443e54fbbc48",
+    "benchmark/annotation/machine-rubrics-v1.json": "ef0ea425dc00ffcf9471573a9e76304faebfbb75ee3aa674c64d6555c6e273f3",
+    "benchmark/annotation/manual-calibration-v1.json": "179376bf2f01e6fcd2df447e0085a6cd340dd96b9eabeffc37f2f67f25f44ba5",
+    "benchmark/ground-truth-v1.jsonl": "a72b04ca44655ca4e8ba456e8d9698ff6ebbe47e1dde54f075780c9e6e4a8b53",
+    "benchmark/snapshots/public-events-20261005/events.jsonl": "2de49bc71942926e953f4de76d4b5dbcfe1780a6a2a20ee2b0feb6fa97cbf7f1"
+  },
+  "status": "exploratory; not benchmark; no changed judgments/gates",
+  "texts": {
+    "0b09ad77ad2c1da8262ad328c055eddc95b32f72dbcbf8c7dddac9ddf3d67b72": "Die Theaterwerkstatt Pilkentafel ist eingeschränkt barrierefrei. Der Zugang zum Foyer und in den Theatersaal sind ebenerdig und stufenlos erreichbar. Die Eingangstüren sind ausreichend breit. Die sanitären Anlagen sind leider nicht barrierefrei mit einem Rollstuhl zu erreichen. Bei Fragen oder Hilfestellungen sind wir über unsere erreichbar.",
+    "3d2d22e76573946bbf2b3dab318071723a20c42bcdb51a55e0442ba6abc3206b": "ne Tanz-Vorerfahrung)\n- Alle die nicht nur den klassischen Disco-Fox auf Partys tanzen wollen\n- Alle die am Sonntag den 27.9. Zeit haben!\n**Die Inhalte** werden vorerst der Grundschritt und Basis-Figuren sein. Dabei wird auf die Grundlagen des Boogie Woogies eingegangen: Was ist eigentlich Boogie Woogie und zu welcher Musik kann ich Boogie Woogie tanzen?\nWir freuen uns auf einen erfolgreichen Tag!\nWir bitten um rechtzeitige Anmeldung! (Siehe Flyer/Ende dieser Seite)\nBei zu geringer Anmeldezahl wird der Termin leider abgesagt/verschoben.\nTermin: 27. September 2026; 15:30-17:00 Uhr\nOrt: TC Rot Gold Casino Neumünster\nBaumschulenweg 2\n24537 Neumünster\nTeilnahmegebühr 7,50€/Person; 5€/Mitglied\nEuer Ansprechpartner für Fragen und Anmeldungen ist:\nChristopher Hagen\n[]()\n(Auch per WhatsApp)\n\nVeranstaltungsarten / Genres: Tanz",
+    "50a5294d9ff142b4d318d9a2fdbf12160c263b280daa947cf6318477bffb28ea": "shops er borgernes ønsker til udformningen af fremtidens grænseregion og til Kulturh(a)us Utopia blevet indsamlet på en deltagende måde, og nu bliver Utopia en realitet for en dag: Fra kl. 11.00 til 18.00 kan besøgende nyde et alsidigt program:\n- Fællessang med musikeren Jule Sösemann Lav\n- Visionboards med kunstneren Christiane Limper\n- Lyd og interview: »Sounds of Utopia« med kulturaktørerne Juliane Hanssen og Matthias Runge\n- Storytelling-workshop med workshoplederen Eva Ritter\n- Urban Sketching med illustratoren Ulrike König\n- Lego-trykworkshop med kunstneren Sarah Kürzinger\nKl. 15.00 inviterer Hilke Rudolph til „Klönschnack op Petuh“. Også for børn er der meget at opdage: Flensborgs „Spielmobil” er på stedet hele dagen.\nDer er særlig fokus på aktiv deltagelse: Alle gæster er inviteret til at prøve kræfter, være med til at forme arrangementet og blive en del af en grænseoverskridende fællesskabso\\[1\\]plevelse. De besøgende kan blot komme forbi og løbende deltage i tilbuddene. Flensburger Petuhs afslutter dagen med deres teaterforestilling: „Dinner for One – nu på Petuh“. Der er sørget for drikkevarer, snacks og endda en dansk-tysk kagekreation.\n**Et fælles projekt mellem Kulturbüro Flensburg og Sønderborg Kommune.**\n\nVeranstaltungsarten / Genres: Community Event, Workshop\n\nSchlagworte: europa, interreg, kulturhausutopia, madewithinterreg, zukunftgestalten",
+    "5c42befb93cbb0f796b6934e50a767244671813b801b140d8231e4c7839a23b7": "Der Maschinensaal kann barrierearm über den Eingang des Kulturzentrums erreicht werden.",
+    "7e5e719b563673022e6dc4fd8d2ef773b1db88c32dd96824c7763164b0e1d54e": "mal sanft und verträumt. Manche Tracks entwickeln sich fließend, andere nehmen scharfe Kurven. Auf diesen Pfaden begegnen uns finstere Riffs, rollende Drums, saftige Basslines und ungezähmter Gesang.\nFühl dich wie zu Hause in unserem wilden Geräuschgarten.\n\nVeranstaltungsarten / Genres: Konzert, Rock\n\nSchlagworte: heavy rock, psychedelic",
+    "81bbebf59a60c170d27f1befb6141ab050a593cb24742a8940df5c9fe178330a": "midt blandt publikum og åbner for en intens, kropslig lytteoplevelse, hvor grænsen mellem scene og sal opløses.\nGennem flere år har Anja Jacobsen udviklet sin egen kompositionsmetode. De såkaldte “diamant-rytmer” er visuelle, intuitive strukturer af farvede prikker arrangeret i mønstre, der kan fortolkes fra flere retninger. Resultatet er musik i konstant bevægelse, hvor gentagelser forskydes, brydes og opstår på ny. Indimellem træder hendes stemme frem – fløjtelignende, let og svævende – som små poetiske og glimt af noget uhåndgribeligt og sanseligt. Vi ser frem til endnu en uforglemmelig koncertoplevelse med Anja Jacobsen på ALICE til sommer.\n**Lineup**\nLars Bech Pilgaard – guitar\nAnders Bach – percussion, objekter\nAnja Jacobsen – percussion, objekter, stemme\n\\+ special guest !\nKoncerten er en del af Copenhagen Jazz Festival 2026, der finder sted fra 3. Juli til 12. juli på over 120 venues i hele hovedstaden. Se programmet på [www.jazz.dk](http://www.jazz.dk)\n\nVeranstaltungsarten / Genres: Experimental, Konzert",
+    "92882edb1de4f6cb2648a6217effa5f3993cdf841397780b6abbf29bd796ac31": "Midsommar Splash!\n\nWenn der längste Tag des Jahres nach draußen ruft, wird der Kranhausgarten zur sommerlichen Open-Air-Bühne für Reggae, African Disco, Ska, Dub und Dancehall. **Midsommar Splash!** bringt Live-Musik, Toasting, Soundsystem-Vibes und Workshop-Elemente zusammen.\n\nWenn der längste Tag des Jahres nach draußen ruft, wird der Kranhausgarten zur sommerlichen Open-Air-Bühne für Reggae, African Disco, Ska, Dub und Dancehall. **Midsommar Splash!** bringt Live-Musik, Toasting, Soundsystem-Vibes und Workshop-Elemente zusammen.\nLive auf der Bühne steht **Djiarkaarlo Band Roots Reggae**, dazu kommen DJ-Sets, Toasting-Performances und die **Monroes**, **General Linser**, **Mamadou & his Alongsiders** sowie Stimmen aus dem **Mama Africa Soundsystem**. Ergänzt wird das Programm durch einen **afrikanischen Tanz-Workshop** und einen **Djembe-Crashkurs** zum Mitmachen.\nEin sommerlicher Abend zwischen Rhythmus, Tanz, Live-Kultur und entspannten Drinks – offen für alle, die Lust auf Musik, Bewegung und gute Gesellschaft haben.\n\nVeranstaltungsarten / Genres: Musik, Party\n\nSchlagworte: Djembe Rythmen, Midtsommer, Open Air, Tanzworkshop",
+    "979bd62a30aad6eeec8b4a41be6b707f2187483b6a37599fd83d2fcfaf4f78a9": "Jugendatelier\n\nDein Style, deine Farben, deine Leinwand\n\nIm Jugendatelier können Jugendliche ab 11 Jahren zeichnen, malen und eigene kreative Ideen verwirklichen. Unterschiedliche Techniken, individuelle Motive und viel Raum zum Experimentieren stehen im Mittelpunkt. Vorkenntnisse sind nicht erforderlich. Das Jugendatelier findet wöchentlich mittwochs statt. Eine vorherige Anmeldung ist erforderlich.\n\nDu möchtest deine eigenen Bildideen entwickeln, neue Techniken ausprobieren und gemeinsam mit anderen Jugendlichen kreativ sein? Im Jugendatelier bekommst du den Raum dafür.\nOb Zeichnung, Malerei, abstrakte Farbwelten oder ein ganz persönliches Motiv. Du entscheidest, woran du arbeiten möchtest. Dabei kannst du unterschiedliche gestalterische Möglichkeiten kennenlernen, deinen eigenen Stil entdecken und deine Projekte in deinem individuellen Tempo umsetzen. Im Mittelpunkt stehen deine Ideen, die Freude am Ausprobieren und der kreative Austausch in der Gruppe.\nDas Jugendatelier richtet sich an Jugendliche ab 11 Jahren. Vorkenntnisse sind nicht erforderlich. Wichtig sind nur Neugier und Lust am Gestalten. Alle Materialien sind mit enthalten.\nDas Jugendatelier findet wöchentlich mittwochs von 16:30 bis 18:00 Uhr im Atelier Kreativecke in Glücksburg bei Flensburg statt. Die Teilnahme kostet 72 Euro monatlich und ist nur mit vorheriger Anmeldung möglich.\nDas erwartet dich:\n- Zeichnen, Malen und kreatives Gestalten\n- Raum für eigene Motive und persönliche Projekte\n- Kennenlernen und Ausprobieren verschiedener Techniken\n- Entwicklung deines eigenen künstlerischen Ausdrucks\n- Kreativer Austausch mit anderen Jugendlichen\n\nVeranstaltungsarten / Genres: Bildung, Handwerk, Kunst, Kursus, Malen",
+    "a1ac95b376aa22eb5d0eb6b5213bdbadeeba4f0825c9b5dc8c886fb4531a40cf": "One – nu auf Petuh“.\n**Ein gemeinsames Projekt des Kulturbüros Flensburg und des Kulturbüro Sonderburg.**\n---\n## **Participativ dansk-tysk workshopdag i Kulturh(a)us Utopia**\nEn dag fyldt med musik, kunst og møder venter den 25. april 2026 alle kulturinteresserede i Kulturh(a)us Utopia, den gamle Kobbermølle Danske Skole ved den tysk-danske grænse i Wassersleben 32, 24955 Harrislee.\nUnder mottoet „Kulturh(a)us Utopia“ inviterer et grænseoverskridende projekt mennesker fra Tyskland og Danmark til at være kreative sammen, udveksle ideer og opdage nye perspektiver for samlivet i grænseregionen. Projektet »Kulturh(a)us Utopia« støttes af Kulturbüro Flensburg og Sonderburg Kommune og ønsker at skabe et åbent rum, hvor kultur og fællesskab kan opleves og blive synligt – aktivt, farverigt og med mulighed for at deltage. Projektet støttes af Borgerprojektfonds (Interreg Tyskland-Danmark).\nI flere tidligere workshops er borgernes ønsker til udformningen af fremtidens grænseregion og til Kulturh(a)us Utopia blevet indsamlet på en deltagende måde, og nu bliver Utopia en realitet for en dag: Fra kl. 11.00 til 18.00 kan besøgende nyde et alsidigt program:\n- Fællessang med musikeren Jule Sösemann Lav\n- Visionboards med kunstneren Christiane Limper\n- Lyd og interview: »Sounds of Utopia« med kulturaktørerne Juliane Hanssen og Matthias Runge\n- Storytelling-workshop med workshoplederen Eva Ritter\n- Urban Sketching med illustratoren Ulrike König\n- Lego-trykworkshop med kunstneren Sarah Kürzinger\nKl. 15.00 inviterer Hilke Rudolph til „Klönschnack op Petuh“. Også for børn er der meget at opdage: Flensborgs „Spielmobil” er på stedet hele dagen.\nDer er særlig fokus på aktiv deltagelse: Alle gæster er inviteret til at prøve kræfter, være med til at forme arrangementet og blive en del af en grænseoverskridende fællesskabso\\[1\\]plevelse.",
+    "c0f939965f3b200f7569be97ae498ee41c54989ec98a37fe52490f25b3799523": " in March 2025, and their second album due to be released in June, the flying circus expands as a prolific artist catalogue of musical experimentation and creative variety.\nReflecting the absurdity of the modern world and celebrating artistic freedom of expression is what the flying circus is.\n**Support: Krachym**\nKrachym creates an Experimental Noise Pop Symphony with some synthesizers and a wireless Midi Guitar. The Leipzig (Germany) based basement crooner’s influences varies from 80s japanese electronics over psych pop and rock music which get interrupted by spontaneous actions and improvisations resulting in ambient moments or an overall diy punk spirit. Influenced by acts like Animal Collective, David Bowie, LCD Soundsystem, Yapoos, Envy and various other stuff…\n\nVeranstaltungsarten / Genres: Konzert, Pop, Punk, Rock",
+    "c594c16f1543c5474a408e6b8a0a6ee978f861e00a7872fe744302f574b1971e": "digital aktiv, Anila Eid (nettekieler)**\nDigitale Technik ist Alltag – für Ältere aber oft eine Hürde. Im Projekt Patenenkel\\*in unterstützen junge Menschen Senior\\*innen im 1:1 beim Umgang mit Geräten und Apps.\n**12.00 – 12.45 Uhr**\n**S(ch)nackPause & Markt der Möglichkeiten**\nZum Entdecken, Mitmachen, Netzwerken\n**Digitale Teilhabe zum Anfassen mit:**\n**Stadtbücherei Kiel, nettekieler, Offener Kanal SH, mein.Kiel Stadt-App, SeniorenNet** [**mobil.digital**](http://mobil.digital)**, anna Web App**\n**12.45 – 14.00 Uhr – Themenblock: Bildung & Digitales**\n**Future Skills für alle: Wie der DLC-Lernort Förde-vhs digitale Teilhabe stärkt, Christian Vogel (DLC)**\nVorstellung des Digital Learning Campus (DLC) als landesweites Netzwerk vielfältiger Lernorte und der dahinterstehenden Mission. Im Mittelpunkt stehen niedrigschwellige Grundlagenangebote, die den digitalen Kompetenzerwerb für alle fördern.\n**Digitale Teilhabe leben: Wie Peer-Learning und zielgrup-penspezifische Ansätze Trainer\\*innen stärken, Björn Kuhlenkamp (Stiftung Digitale Chancen)**\nDie digitale Welt prägt den Alltag, ist aber oft schwer zugänglich. Das Projekt “Digitale Kompetenzen und Bildung für Menschen 60+” zeigt, wie Ehrenamtliche mit Peer Learning Medienkompetenz alltagsnah vermitteln.\n**Von den Nachbarn lernen, Christian Galonska (Landesverband der Volkshochschulen)**\nDigitale Teilhabe im internationalen Vergleich: Wie gelingt digitale Teilhabe in anderen Ländern – und was können wir davon übernehmen?",
+    "e9b3cea06bc2bd7b238b54e06a9d4fcd25252f63e390e147c95b6b9fa779369d": "Strandgut: David, Ben und Finn\n\nDie humorvolle Konzertshow\n\nDavid, Ben und Finn laden zu einer Konzert-Show ein, die Musik, Freude und Lachen zu einem lebendigen Erlebnis verbindet. Swing, Pop, Filmmusik und Evergreens verschmelzen in einer Geschichte voller Energie und feinem Humor: David arbeitet als Teilzeit-Hausmeister an der Musikhochschule, ist jedoch eigentlich Pianist und sehnt sich nach früheren Erfolgen.\n\nDavid, Ben und Finn laden zu einer Konzert-Show ein, die Musik, Freude und Lachen zu einem lebendigen Erlebnis verbindet. Swing, Pop, Filmmusik und Evergreens verschmelzen in einer Geschichte voller Energie und feinem Humor: David arbeitet als Teilzeit-Hausmeister an der Musikhochschule, ist jedoch eigentlich Pianist und sehnt sich nach früheren Erfolgen. Ben begeistert mit seiner Posaune, Finn entfacht am Schlagzeug eine Kraft, die alle in Staunen versetzt. Eine zufällige Begegnung führt die drei zusammen und eröffnet einen Weg, der sie von kleinen Bühnen bis in große Säle trägt. Das Trio geht einen dynamischen Weg und entfacht dabei eine Spielfreude, die ansteckt. Ihre Leidenschaft führt sie vom Kreuzfahrtschiff zum Musical an Land, bis sich eine Chance ergibt ...\n\nVeranstaltungsarten / Genres: Konzert",
+    "ebab2f9732938b6bca0490a00240b03a26ed700c03f64dda8406d5a40005f793": "lönschnack op Petuh“ ein. Auch für Kinder gibt es viel zu entdecken: Das Spielmobil der Stadt Flensburg ist den ganzen Tag vor Ort.\nDie Besucher\\*innen können einfach vorbeikommen und fortlaufend bei den Angeboten mitmachen. Die Flensburger Petuhs beschließen den Tag mit ihrer Theateraufführung „Dinner for One – nu auf Petuh“.\n**Ein gemeinsames Projekt des Kulturbüros Flensburg und des Kulturbüro Sonderburg.**\n---\n## **Participativ dansk-tysk workshopdag i Kulturh(a)us Utopia**\nEn dag fyldt med musik, kunst og møder venter den 25. april 2026 alle kulturinteresserede i Kulturh(a)us Utopia, den gamle Kobbermølle Danske Skole ved den tysk-danske grænse i Wassersleben 32, 24955 Harrislee.\nUnder mottoet „Kulturh(a)us Utopia“ inviterer et grænseoverskridende projekt mennesker fra Tyskland og Danmark til at være kreative sammen, udveksle ideer og opdage nye perspektiver for samlivet i grænseregionen. Projektet »Kulturh(a)us Utopia« støttes af Kulturbüro Flensburg og Sonderburg Kommune og ønsker at skabe et åbent rum, hvor kultur og fællesskab kan opleves og blive synligt – aktivt, farverigt og med mulighed for at deltage. Projektet støttes af Borgerprojektfonds (Interreg Tyskland-Danmark).\nI flere tidligere workshops er borgernes ønsker til udformningen af fremtidens grænseregion og til Kulturh(a)us Utopia blevet indsamlet på en deltagende måde, og nu bliver Utopia en realitet for en dag: Fra kl.",
+    "ef93f262994d9334df17225d2357e5fe45cc251a7adefeae22fc70525caa4fbb": "ds as a prolific artist catalogue of musical experimentation and creative variety.\nReflecting the absurdity of the modern world and celebrating artistic freedom of expression is what the flying circus is.\n**Support: Krachym**\nKrachym creates an Experimental Noise Pop Symphony with some synthesizers and a wireless Midi Guitar. The Leipzig (Germany) based basement crooner’s influences varies from 80s japanese electronics over psych pop and rock music which get interrupted by spontaneous actions and improvisations resulting in ambient moments or an overall diy punk spirit. Influenced by acts like Animal Collective, David Bowie, LCD Soundsystem, Yapoos, Envy and various other stuff…\n\nVeranstaltungsarten / Genres: Konzert, Pop, Punk, Rock",
+    "f4f94d0aefcfe954e3311db199a025b5b1cb606c4437d46db8439a69f0010a32": "Django Galore Quartett\n\nAuthentischer Sound im akustischen Modus, only Amps. Das geht im ex-Sultanmarkt sehr gut.\nDas extra für diese Tourkonzerte gebildete Quintett spielt Musik im Stil von Django Reinhardt und seinen Erben.\n\nAuthentischer Sound im akustischen Modus, only Amps. Das geht im ex-Sultanmarkt sehr gut.\nDas extra für diese Tourkonzerte gebildete Quartett spielt Musik im Stil von Django Reinhardt und seinen Erben. Nicht nur das Repertoire, auch die instrumentale Besetzung geht auf Großmeister Reinhardt zurück. Dessen Lieblingsset bestand aus drei Gitarren, Violine und Kontrabass. Auch der besondere Klang und der sympathische Sound einer Klarinette waren gerne gesehen und gehört, damals aber noch nichts so attraktiv und verlangt wie heute.\nGenau diese instrumentale Besetzung hat nun das Django Galore Quartett.\nDie Rhythmusgitarre und der Kontrabass bilden den swingenden Teppich für virtuose Themen und Gitarren-Soli. Mit Carlo Krause, (Selmer Bauweise) Vincent Judith (Jazz-Gitarrist aus Hamburg) und Finn Strothmann (Kontrabass aus Flensburg, der weltweit tourt) fügen sich authentisch ein und steuern noch ihren persönlichen Sound bei. Der Gastmusiker Stefan Back macht das Quartett mit der Klarinette komplett.\nSo wird der ohnehin besondere Abend zu einem ganz besonderen Abend.\nIm ex-Sultanmarkt wird unplugged gespielt, das gibt der Raum her und das ist wunderschön echt und nah.\nMit 40 Plätzen ist es gemütlich und großzügig zugleich.\nDie Eintrittspreise sind moderat und die Gage entspricht dem Tarif der Jazz-Union.\nFörderer:\nVerein 8001\nVerband deutsche Sinti und Roma e.V."
+  },
+  "tolerances": {
+    "max_absolute_difference": 1e-06,
+    "mean_absolute_difference": 1e-07,
+    "min_cosine_similarity": 0.9999999999,
+    "norm_absolute_error": 1e-06,
+    "ranking": "identical full ordering and top-3; deterministic ID tie-break"
+  }
+}

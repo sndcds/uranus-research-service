@@ -1,0 +1,47 @@
+{
+  "baseline_merge": "dfa9f58ac8f22129ef4bf6aebf0c26f679bea517",
+  "benchmark_document_projection": "benchmark-public-snapshot-sections-v1",
+  "encoder_source_changes": false,
+  "execution_profile": "8cpu-8threads",
+  "response_contract_provenance": {
+    "encoder-v3/ChunkResponse.json": "48ce71550d5dad8c697facd3767aef8b4be97cc1",
+    "encoder-v3/EmbedResponse.json": "48ce71550d5dad8c697facd3767aef8b4be97cc1"
+  },
+  "v3": {
+    "artifact_manifest": "jina-v3-merged-artifacts.json",
+    "backend": "onnx-merged",
+    "encoder_commit": "48ce71550d5dad8c697facd3767aef8b4be97cc1",
+    "graph_optimization": "ORT_ENABLE_BASIC",
+    "inter_op_threads": 1,
+    "intra_op_threads": 8,
+    "max_input_tokens": 8192,
+    "normalization": "one L2 after pooling",
+    "passage_adapter": "retrieval_passage",
+    "pooling": "attention-mask-weighted mean, float32",
+    "prefixes": "none",
+    "production_compatible_image_id": "sha256:6834c50c52bd7e60f6a6d25772102198dd9638b3dc33859e6bf05df9a67b2c1b",
+    "query_adapter": "retrieval_query",
+    "runtime": "onnxruntime-1.30.0-cpu"
+  },
+  "v5": {
+    "adapter": "adapters/retrieval",
+    "artifact_manifest": "jina-v5-artifacts.json",
+    "attention": "eager",
+    "backend": "torch",
+    "encoder_commit": "1938c72caa6102452ae0afa18ef86d9a95ead878",
+    "encoder_model_source_sha256": "84791df7e936f69ea61ccbdd974be8f6ad6e00217acd5969f709ef1cfc6e4ca8",
+    "max_input_tokens": 32768,
+    "normalization": "one L2 after pooling",
+    "passage_prefix": "Document: ",
+    "pooling": "last non-padding token, float32",
+    "query_prefix": "Query: ",
+    "runtime": "torch-2.11.0+cpu-transformers-5.17.0-peft-0.21.1-cpu",
+    "source_default_torch_threads": 1,
+    "thread_launcher_sha256": "3d76905df23430fbcd031a1275b6d82ecafddfd86f93d691ef3f9e9283114921",
+    "thread_probe_sha256": "febfb8ddd39e748b7c8982f0e3b5c09617d63da046922ab53747f7b5ba46846d",
+    "thread_profile_authorization": "explicit user request: use all eight CPUs and eight threads",
+    "thread_profile_implementation": "external benchmark backend injection; unchanged Encoder source",
+    "torch_interop_threads": 1,
+    "torch_threads": 8
+  }
+}

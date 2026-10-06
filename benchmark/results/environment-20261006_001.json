@@ -1,0 +1,31 @@
+{
+  "build_id": "20261006_001",
+  "caveat": "This benchmark uses a frozen draft relevance dataset containing machine proposals plus manually calibrated scoring policy. It is suitable for provisional comparative evaluation, not final production approval.",
+  "encoder_cpu_limit": 2,
+  "encoder_memory_bytes": 6442450944,
+  "encoder_memory_plus_swap_bytes": 8589934592,
+  "host_available_ram_bytes_at_sample": 5869596672,
+  "host_ram_bytes": 16775344128,
+  "host_swap_bytes": 17179865088,
+  "host_used_swap_bytes_at_sample": 14453092352,
+  "limitations": [
+    "shared host; other workloads uncontrolled",
+    "OS caches not flushed",
+    "host swap activity present",
+    "host CPU utilization is not encoder process CPU",
+    "frozen eligibility precomputed; no PostgreSQL timing",
+    "no production capacity or latency claim"
+  ],
+  "logical_cpus": 8,
+  "model_concurrency": 1,
+  "model_order": [
+    "v3",
+    "v5"
+  ],
+  "observed_at": "2026-10-06T06:00:53Z",
+  "os": "Linux 6.12.107+deb13-amd64 x86_64 GNU/Linux",
+  "qdrant_cpu_limit": 1,
+  "qdrant_image": "sha256:0699e7733a6fa7fa7f6b95dcbed84ebb04584110da525cdfdef9f305c4f57738",
+  "qdrant_memory_bytes": 536870912,
+  "v3_image": "sha256:6834c50c52bd7e60f6a6d25772102198dd9638b3dc33859e6bf05df9a67b2c1b"
+}

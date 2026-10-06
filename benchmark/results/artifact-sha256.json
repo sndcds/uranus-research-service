@@ -1,0 +1,24 @@
+{
+  "algorithm": "sha256",
+  "caveat": "This benchmark uses a frozen draft relevance dataset containing machine proposals plus manually calibrated scoring policy. It is suitable for provisional comparative evaluation, not final production approval.",
+  "files": {
+    "case-inspection-20261006_8cpu_001.json": "70df4dd8bb5538c8091972aa3735705b43671afd6d39747587e3746529e82b6c",
+    "chunk-differences-20261006_8cpu_001.json": "e249718da882271c02bbf3ce1be89b56878fb333c6a2cfa8b08f5395cb2f6c3a",
+    "chunks-v3-20261006_001.json": "dbf69c9909104e619ec616024e75d19726ac5851dc37181bd902b85885ca7531",
+    "chunks-v3-20261006_8cpu_001.json": "dbf69c9909104e619ec616024e75d19726ac5851dc37181bd902b85885ca7531",
+    "chunks-v5-20261006_8cpu_001.json": "cfcfdfaa9c2ed30400f86affe16036b6967a66b19055737de133d07665885ce4",
+    "environment-20261006_001.json": "4f6cbe817b8d157fea592dee3320683ad299a3d3239e55e518cc2ce057cc24f1",
+    "environment-20261006_8cpu_001.json": "a78b8fe2e7428951a7365a15593b7b8a06545879776fb31de31e3a59974560d2",
+    "input-and-result-audit-20261006_8cpu_001.json": "1655b1d29beadc5cf35f371ab003516b725b66fd7c61f58b6133c9c8c6e6f3b8",
+    "resources-v3-20261006_001.json": "8847b95a01f155e0142182ffab2337bba5550500c45ba76cff6ad299a746e87d",
+    "resources-v3-20261006_8cpu_001.json": "8c71b472c67f6c94cf06e25e1a9bdbc454a940e3a187d06a56026f0d2db61be2",
+    "resources-v5-20261006_001.json": "9a25a9d6d9eda73bbfdaee82112aa77ca0067cd3a4259c7dece8e9b5bcff6403",
+    "resources-v5-20261006_8cpu_001.json": "3294044469fb27a0c8605d86ca3683f4862fb5f1297dc928180c4f8b1a5b48bf",
+    "v3-20261006_001.json": "9979d8c4c866351aa75bc1119a0501822c783cbd9372fdb43b24e3887972c813",
+    "v3-20261006_8cpu_001.json": "242b7c3c31537942ba960f009962ba2a48dae5ffb14a12360a57f4086f6eb8f2",
+    "v3-resource-profile-repeatability-20261006.json": "a0c439c57f751f7bb4548c8ed24e76291d96e8f7c2dc8385c2ec3c4325591c11",
+    "v3-v5-comparison-20261006_8cpu_001.json": "53efa9fbb1bcd293450aed49e677038d6c48fd7d0c93e10352af72b29dcb5ef5",
+    "v5-20261006_8cpu_001.json": "e0ef32e5dba8d51d3a8086d73557e2f2b3418ee729b6e4863cf1c0a9f9f2760b",
+    "v5-thread-parity-20261006_8cpu_001.json": "2104e64577b15ec90a94d8f68721cf8d97423f28717ff6c3f1888e0e7538bc5b"
+  }
+}

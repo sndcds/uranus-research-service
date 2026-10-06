@@ -1,0 +1,20 @@
+{
+  "container": "kulturbytes-benchmark-v3-8cpu-20261006",
+  "container_cpu_limit": 8,
+  "container_memory_limit_bytes": 6442450944,
+  "container_memory_plus_swap_bytes": 8589934592,
+  "driver_cpu_included": false,
+  "driver_exit_code": 0,
+  "encoder_cpu_percent_one_core_basis": 504.6033131261551,
+  "encoder_cpu_seconds": 4580.7699999999995,
+  "encoder_end_rss_bytes": 3946860544,
+  "encoder_peak_rss_bytes": 3946860544,
+  "encoder_sampled_peak_rss_bytes": 3946860544,
+  "encoder_startup_loaded_rss_bytes": 3431206912,
+  "execution_profile": "8cpu-8threads",
+  "model": "v3",
+  "sample_interval_seconds": 1,
+  "startup_definition": "loaded process before corpus build; not pre-load RSS",
+  "steady_state_definition": "resident set after all queries; includes allocator state",
+  "wall_seconds": 907.7962591289543
+}

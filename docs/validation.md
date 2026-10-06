@@ -1,3 +1,26 @@
+# Phase-2B.2c controlled benchmark — 2026-10-06
+
+Local locked offline suite: **465 passed, 24 skipped**. Skips are the disposable
+service integration tests and optional real-Encoder tests, not claimed as locally
+executed. All 34 controlled-evaluator tests run without model weights and cover
+frozen hashes, comparison identity, event/occurrence eligibility, no-hit exclusions,
+graded metrics, aggregation/ties, gates, threshold curves, report determinism and v3
+response-contract parity. Ruff, format and diff checks pass.
+
+The [CI run for d9d30ac](https://github.com/sndcds/uranus-research-service/actions/runs/37427265384)
+passed both jobs: unit/contracts/offline Docker build and disposable
+PostGIS/Qdrant/pinned Admin differential parity. Runtime and deployment files are
+unchanged. Real model inference is a separate manual isolated benchmark; it is not
+required by CI and does not replace these integration tests. Both real runs completed
+all 611 documents and 120 queries on eight CPUs/eight intra-op threads. Complete
+Qdrant validation passed; a separate offline audit rechecked all 240 case identities,
+rankings, occurrence contexts, frozen byte hashes and deterministic evaluator outputs.
+
+See the [controlled protocol/results](v3-v5-benchmark-report.md) and
+[reproduction guide](controlled-benchmark-reproduction.md). The draft relevance
+labels cannot grant production approval; `semantic_query` remains literal false.
+The phase-specific records below are historical validation evidence.
+
 # Phase-2B.2b ground-truth preparation — 2026-10-05
 
 Final local suite: **404 passed, 2 optional real-Encoder tests skipped (34.13 s)**:

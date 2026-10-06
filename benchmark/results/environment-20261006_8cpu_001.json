@@ -1,0 +1,72 @@
+{
+  "build_id": "20261006_8cpu_001",
+  "caveat": "This benchmark uses a frozen draft relevance dataset containing machine proposals plus manually calibrated scoring policy. It is suitable for provisional comparative evaluation, not final production approval.",
+  "containers": [
+    {
+      "image_id": "sha256:6834c50c52bd7e60f6a6d25772102198dd9638b3dc33859e6bf05df9a67b2c1b",
+      "memory_bytes": 6442450944,
+      "memory_plus_swap_bytes": 8589934592,
+      "name": "kulturbytes-benchmark-v3-8cpu-20261006",
+      "nano_cpus": 8000000000,
+      "oom_killed": false,
+      "ports": {
+        "8080/tcp": [
+          {
+            "HostIp": "127.0.0.1",
+            "HostPort": "16635"
+          }
+        ]
+      },
+      "status": "exited"
+    },
+    {
+      "image_id": "sha256:6834c50c52bd7e60f6a6d25772102198dd9638b3dc33859e6bf05df9a67b2c1b",
+      "memory_bytes": 6442450944,
+      "memory_plus_swap_bytes": 8589934592,
+      "name": "kulturbytes-benchmark-v5-8cpu-20261006",
+      "nano_cpus": 8000000000,
+      "oom_killed": false,
+      "ports": {
+        "8080/tcp": [
+          {
+            "HostIp": "127.0.0.1",
+            "HostPort": "16636"
+          }
+        ]
+      },
+      "status": "exited"
+    },
+    {
+      "image_id": "sha256:0699e7733a6fa7fa7f6b95dcbed84ebb04584110da525cdfdef9f305c4f57738",
+      "memory_bytes": 536870912,
+      "memory_plus_swap_bytes": 536870912,
+      "name": "kulturbytes-benchmark-qdrant-20261006",
+      "nano_cpus": 1000000000,
+      "oom_killed": false,
+      "ports": {
+        "6333/tcp": [
+          {
+            "HostIp": "127.0.0.1",
+            "HostPort": "16633"
+          }
+        ]
+      },
+      "status": "exited"
+    }
+  ],
+  "executed_source_sha256": {
+    "scripts/controlled_resources.py": "404445dddfc74e102a138b871f57c6f1d5708bea3e4e2fa1a9532d64c09d28af",
+    "src/uranus_research_service/controlled_evaluation.py": "eb4325cb9a2a1f0a147af390dca3463c2678f21bdaa624eec86aad8783d9b77c",
+    "src/uranus_research_service/controlled_runner.py": "e9bc21fdcd330ebc524ed16e27dca5baedc86537e656f0a32cc06a9182fffb7d"
+  },
+  "execution_profile": "8cpu-8threads",
+  "host_memory": {
+    "MemAvailable": "9822392 kB",
+    "MemTotal": "16382172 kB",
+    "SwapFree": "2039068 kB",
+    "SwapTotal": "16777212 kB"
+  },
+  "logical_cpus": 8,
+  "observed_at": "2026-10-06T07:51:29.985466+00:00",
+  "scope": "Shared AI host, isolated benchmark containers only. Post-run state; no production capacity or performance claim. v5 base image is only a carrier for read-only exact v5 source and exact runtime mounts; see reproduction guide."
+}

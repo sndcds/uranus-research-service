@@ -1,0 +1,1213 @@
+{
+  "artifact_sha256": {
+    "adapters/retrieval/adapter_config.json": "f37c5d6dd368e2675e54e01b685252d4d44eed042c773a48f56ebe1565cd0320",
+    "adapters/retrieval/adapter_model.safetensors": "2bc6ab71895eb04664e4d995ee29e1620603f3a3fc4dfc573bc2383dfc85bb94",
+    "config.json": "1af1e1269488c83d8b2332e42099f0d2201d687fbe074d1ed096c6201f283546",
+    "model.safetensors": "045fa75ff963a528cda2589fb1ca0a9ad848b53511780ed4f08f6fe10f6167c3",
+    "tokenizer.json": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4",
+    "tokenizer_config.json": "d5d09f07b48c3086c508b30d1c9114bd1189145b74e982a265350c923acd8101"
+  },
+  "canonical_forward_max_difference": {
+    "passage": 0.0,
+    "query": 0.0
+  },
+  "cases": [
+    {
+      "case_id": "historical-q29",
+      "content_variants": [
+        {
+          "characters": 1843,
+          "score": 0.4588317755211484,
+          "text_sha256": "a1ac95b376aa22eb5d0eb6b5213bdbadeeba4f0825c9b5dc8c886fb4531a40cf",
+          "tokens": 634,
+          "variant": "original"
+        },
+        {
+          "characters": 508,
+          "score": 0.2913595973266819,
+          "text_sha256": "167619f40145d1e12b52e6950da2985ab6809e8543f9bf8f002f5d6e26dc9865",
+          "tokens": 175,
+          "variant": "evidence_only"
+        },
+        {
+          "characters": 1843,
+          "score": 0.43592042085639016,
+          "text_sha256": "3faa002c7f686a99ec12ebc5c4fb08d1287fb039af8109e52f46ea1b518fefc0",
+          "tokens": 634,
+          "variant": "evidence_first"
+        },
+        {
+          "characters": 1843,
+          "score": 0.45995064956331555,
+          "text_sha256": "4d5d626a917c4d2198d9a6804495e06573d394f37306f0f7a81ee6f2bd4b6d26",
+          "tokens": 635,
+          "variant": "evidence_middle"
+        },
+        {
+          "characters": 1843,
+          "score": 0.4721052809045187,
+          "text_sha256": "fc7893a0aa01da9993299218a1dc08d3f9a8e92c35d218bc3901127d7832af1d",
+          "tokens": 634,
+          "variant": "evidence_last"
+        }
+      ],
+      "scores": [
+        {
+          "document_variant": "canonical",
+          "event_id": "019da011-1802-7924-8a24-821066242bba",
+          "grade": 1,
+          "point_id": "1e82db3f-4251-57b1-8237-ace1a2665c2c",
+          "query_variant": "canonical",
+          "role": "relevant",
+          "score": 0.4588317755211484,
+          "source_model": "v3",
+          "text_id": "a1ac95b376aa22eb5d0eb6b5213bdbadeeba4f0825c9b5dc8c886fb4531a40cf"
+        },
+        {
+          "document_variant": "no_document_prefix",
+          "event_id": "019da011-1802-7924-8a24-821066242bba",
+          "grade": 1,
+          "point_id": "1e82db3f-4251-57b1-8237-ace1a2665c2c",
+          "query_variant": "canonical",
+          "role": "relevant",
+          "score": 0.4595874468988158,
+          "source_model": "v3",
+          "text_id": "a1ac95b376aa22eb5d0eb6b5213bdbadeeba4f0825c9b5dc8c886fb4531a40cf"
+        },
+        {
+          "document_variant": "canonical",
+          "event_id": "019da011-1802-7924-8a24-821066242bba",
+          "grade": 1,
+          "point_id": "1e82db3f-4251-57b1-8237-ace1a2665c2c",
+          "query_variant": "no_query_prefix",
+          "role": "relevant",
+          "score": 0.4348167557191983,
+          "source_model": "v3",
+          "text_id": "a1ac95b376aa22eb5d0eb6b5213bdbadeeba4f0825c9b5dc8c886fb4531a40cf"
+        },
+        {
+          "document_variant": "no_document_prefix",
+          "event_id": "019da011-1802-7924-8a24-821066242bba",
+          "grade": 1,
+          "point_id": "1e82db3f-4251-57b1-8237-ace1a2665c2c",
+          "query_variant": "no_query_prefix",
+          "role": "relevant",
+          "score": 0.43862299703157304,
+          "source_model": "v3",
+          "text_id": "a1ac95b376aa22eb5d0eb6b5213bdbadeeba4f0825c9b5dc8c886fb4531a40cf"
+        },
+        {
+          "document_variant": "canonical",
+          "event_id": "019da011-1802-7924-8a24-821066242bba",
+          "grade": 1,
+          "point_id": "1e82db3f-4251-57b1-8237-ace1a2665c2c",
+          "query_variant": "german",
+          "role": "relevant",
+          "score": 0.46823123378357256,
+          "source_model": "v3",
+          "text_id": "a1ac95b376aa22eb5d0eb6b5213bdbadeeba4f0825c9b5dc8c886fb4531a40cf"
+        },
+        {
+          "document_variant": "no_document_prefix",
+          "event_id": "019da011-1802-7924-8a24-821066242bba",
+          "grade": 1,
+          "point_id": "1e82db3f-4251-57b1-8237-ace1a2665c2c",
+          "query_variant": "german",
+          "role": "relevant",
+          "score": 0.46560609003347614,
+          "source_model": "v3",
+          "text_id": "a1ac95b376aa22eb5d0eb6b5213bdbadeeba4f0825c9b5dc8c886fb4531a40cf"
+        },
+        {
+          "document_variant": "canonical",
+          "event_id": "019da011-1802-7924-8a24-821066242bba",
+          "grade": 1,
+          "point_id": "5dd1ebcf-a4dd-5a20-b743-815e6ff85017",
+          "query_variant": "canonical",
+          "role": "relevant",
+          "score": 0.4186291287860533,
+          "source_model": "v5",
+          "text_id": "50a5294d9ff142b4d318d9a2fdbf12160c263b280daa947cf6318477bffb28ea"
+        },
+        {
+          "document_variant": "no_document_prefix",
+          "event_id": "019da011-1802-7924-8a24-821066242bba",
+          "grade": 1,
+          "point_id": "5dd1ebcf-a4dd-5a20-b743-815e6ff85017",
+          "query_variant": "canonical",
+          "role": "relevant",
+          "score": 0.4067823748163769,
+          "source_model": "v5",
+          "text_id": "50a5294d9ff142b4d318d9a2fdbf12160c263b280daa947cf6318477bffb28ea"
+        },
+        {
+          "document_variant": "canonical",
+          "event_id": "019da011-1802-7924-8a24-821066242bba",
+          "grade": 1,
+          "point_id": "5dd1ebcf-a4dd-5a20-b743-815e6ff85017",
+          "query_variant": "no_query_prefix",
+          "role": "relevant",
+          "score": 0.3885829577244481,
+          "source_model": "v5",
+          "text_id": "50a5294d9ff142b4d318d9a2fdbf12160c263b280daa947cf6318477bffb28ea"
+        },
+        {
+          "document_variant": "no_document_prefix",
+          "event_id": "019da011-1802-7924-8a24-821066242bba",
+          "grade": 1,
+          "point_id": "5dd1ebcf-a4dd-5a20-b743-815e6ff85017",
+          "query_variant": "no_query_prefix",
+          "role": "relevant",
+          "score": 0.37719657942243334,
+          "source_model": "v5",
+          "text_id": "50a5294d9ff142b4d318d9a2fdbf12160c263b280daa947cf6318477bffb28ea"
+        },
+        {
+          "document_variant": "canonical",
+          "event_id": "019da011-1802-7924-8a24-821066242bba",
+          "grade": 1,
+          "point_id": "5dd1ebcf-a4dd-5a20-b743-815e6ff85017",
+          "query_variant": "german",
+          "role": "relevant",
+          "score": 0.43034486917587333,
+          "source_model": "v5",
+          "text_id": "50a5294d9ff142b4d318d9a2fdbf12160c263b280daa947cf6318477bffb28ea"
+        },
+        {
+          "document_variant": "no_document_prefix",
+          "event_id": "019da011-1802-7924-8a24-821066242bba",
+          "grade": 1,
+          "point_id": "5dd1ebcf-a4dd-5a20-b743-815e6ff85017",
+          "query_variant": "german",
+          "role": "relevant",
+          "score": 0.4181907865885114,
+          "source_model": "v5",
+          "text_id": "50a5294d9ff142b4d318d9a2fdbf12160c263b280daa947cf6318477bffb28ea"
+        },
+        {
+          "document_variant": "canonical",
+          "event_id": "01a0a921-f23e-7e72-be8f-bdf44719f914",
+          "grade": null,
+          "point_id": "14e0f701-6122-51af-a347-fbeb1b0acecc",
+          "query_variant": "canonical",
+          "role": "unjudged_competitor",
+          "score": 0.5633976746414946,
+          "source_model": "v3",
+          "text_id": "979bd62a30aad6eeec8b4a41be6b707f2187483b6a37599fd83d2fcfaf4f78a9"
+        },
+        {
+          "document_variant": "no_document_prefix",
+          "event_id": "01a0a921-f23e-7e72-be8f-bdf44719f914",
+          "grade": null,
+          "point_id": "14e0f701-6122-51af-a347-fbeb1b0acecc",
+          "query_variant": "canonical",
+          "role": "unjudged_competitor",
+          "score": 0.5562089966282165,
+          "source_model": "v3",
+          "text_id": "979bd62a30aad6eeec8b4a41be6b707f2187483b6a37599fd83d2fcfaf4f78a9"
+        },
+        {
+          "document_variant": "canonical",
+          "event_id": "01a0a921-f23e-7e72-be8f-bdf44719f914",
+          "grade": null,
+          "point_id": "14e0f701-6122-51af-a347-fbeb1b0acecc",
+          "query_variant": "no_query_prefix",
+          "role": "unjudged_competitor",
+          "score": 0.536722128668486,
+          "source_model": "v3",
+          "text_id": "979bd62a30aad6eeec8b4a41be6b707f2187483b6a37599fd83d2fcfaf4f78a9"
+        },
+        {
+          "document_variant": "no_document_prefix",
+          "event_id": "01a0a921-f23e-7e72-be8f-bdf44719f914",
+          "grade": null,
+          "point_id": "14e0f701-6122-51af-a347-fbeb1b0acecc",
+          "query_variant": "no_query_prefix",
+          "role": "unjudged_competitor",
+          "score": 0.5284159890245144,
+          "source_model": "v3",
+          "text_id": "979bd62a30aad6eeec8b4a41be6b707f2187483b6a37599fd83d2fcfaf4f78a9"
+        },
+        {
+          "document_variant": "canonical",
+          "event_id": "01a0a921-f23e-7e72-be8f-bdf44719f914",
+          "grade": null,
+          "point_id": "14e0f701-6122-51af-a347-fbeb1b0acecc",
+          "query_variant": "german",
+          "role": "unjudged_competitor",
+          "score": 0.6127631233661027,
+          "source_model": "v3",
+          "text_id": "979bd62a30aad6eeec8b4a41be6b707f2187483b6a37599fd83d2fcfaf4f78a9"
+        },
+        {
+          "document_variant": "no_document_prefix",
+          "event_id": "01a0a921-f23e-7e72-be8f-bdf44719f914",
+          "grade": null,
+          "point_id": "14e0f701-6122-51af-a347-fbeb1b0acecc",
+          "query_variant": "german",
+          "role": "unjudged_competitor",
+          "score": 0.6089001804511835,
+          "source_model": "v3",
+          "text_id": "979bd62a30aad6eeec8b4a41be6b707f2187483b6a37599fd83d2fcfaf4f78a9"
+        },
+        {
+          "document_variant": "canonical",
+          "event_id": "019db91a-89d5-7c5a-90ae-7596e488a1eb",
+          "grade": 0,
+          "point_id": "c213a8db-1d08-5ec8-803d-0d8401424918",
+          "query_variant": "canonical",
+          "role": "known_zero",
+          "score": 0.39444739066734114,
+          "source_model": "v5",
+          "text_id": "c594c16f1543c5474a408e6b8a0a6ee978f861e00a7872fe744302f574b1971e"
+        },
+        {
+          "document_variant": "no_document_prefix",
+          "event_id": "019db91a-89d5-7c5a-90ae-7596e488a1eb",
+          "grade": 0,
+          "point_id": "c213a8db-1d08-5ec8-803d-0d8401424918",
+          "query_variant": "canonical",
+          "role": "known_zero",
+          "score": 0.40123397400247884,
+          "source_model": "v5",
+          "text_id": "c594c16f1543c5474a408e6b8a0a6ee978f861e00a7872fe744302f574b1971e"
+        },
+        {
+          "document_variant": "canonical",
+          "event_id": "019db91a-89d5-7c5a-90ae-7596e488a1eb",
+          "grade": 0,
+          "point_id": "c213a8db-1d08-5ec8-803d-0d8401424918",
+          "query_variant": "no_query_prefix",
+          "role": "known_zero",
+          "score": 0.3731986397426445,
+          "source_model": "v5",
+          "text_id": "c594c16f1543c5474a408e6b8a0a6ee978f861e00a7872fe744302f574b1971e"
+        },
+        {
+          "document_variant": "no_document_prefix",
+          "event_id": "019db91a-89d5-7c5a-90ae-7596e488a1eb",
+          "grade": 0,
+          "point_id": "c213a8db-1d08-5ec8-803d-0d8401424918",
+          "query_variant": "no_query_prefix",
+          "role": "known_zero",
+          "score": 0.37799937723142857,
+          "source_model": "v5",
+          "text_id": "c594c16f1543c5474a408e6b8a0a6ee978f861e00a7872fe744302f574b1971e"
+        },
+        {
+          "document_variant": "canonical",
+          "event_id": "019db91a-89d5-7c5a-90ae-7596e488a1eb",
+          "grade": 0,
+          "point_id": "c213a8db-1d08-5ec8-803d-0d8401424918",
+          "query_variant": "german",
+          "role": "known_zero",
+          "score": 0.40854496927399175,
+          "source_model": "v5",
+          "text_id": "c594c16f1543c5474a408e6b8a0a6ee978f861e00a7872fe744302f574b1971e"
+        },
+        {
+          "document_variant": "no_document_prefix",
+          "event_id": "019db91a-89d5-7c5a-90ae-7596e488a1eb",
+          "grade": 0,
+          "point_id": "c213a8db-1d08-5ec8-803d-0d8401424918",
+          "query_variant": "german",
+          "role": "known_zero",
+          "score": 0.41063798326651646,
+          "source_model": "v5",
+          "text_id": "c594c16f1543c5474a408e6b8a0a6ee978f861e00a7872fe744302f574b1971e"
+        }
+      ]
+    },
+    {
+      "case_id": "wheelchair-da",
+      "content_variants": [
+        {
+          "characters": 343,
+          "score": 0.3747385724303982,
+          "text_sha256": "0b09ad77ad2c1da8262ad328c055eddc95b32f72dbcbf8c7dddac9ddf3d67b72",
+          "tokens": 93,
+          "variant": "original"
+        },
+        {
+          "characters": 214,
+          "score": 0.3833031476186868,
+          "text_sha256": "a307df88f7e6bec4ebc06ad6c46016c7d9924bfb14b994e837c2fa3d8af84903",
+          "tokens": 61,
+          "variant": "evidence_only"
+        },
+        {
+          "characters": 343,
+          "score": 0.39848455593700227,
+          "text_sha256": "096a4da6f394f4cbfb6168d641365cda7154e7c0e44b5502d49550937cf46427",
+          "tokens": 93,
+          "variant": "evidence_first"
+        },
+        {
+          "characters": 343,
+          "score": 0.37357608707404516,
+          "text_sha256": "4529a928988265a7463720d29a95c1d1a437bdc26a548abdabb45736ef52a8d3",
+          "tokens": 94,
+          "variant": "evidence_middle"
+        },
+        {
+          "characters": 343,
+          "score": 0.3786253106957437,
+          "text_sha256": "a1176b8dfd4ecb4b29489ac08b5867933419148f3ec3bff6a58c0d6066526ed7",
+          "tokens": 94,
+          "variant": "evidence_last"
+        }
+      ],
+      "scores": [
+        {
+          "document_variant": "canonical",
+          "event_id": "01a05cc3-f200-72ad-99cf-db5ad55a3a56",
+          "grade": 2,
+          "point_id": "85cc8387-2498-56a0-97a6-9c4213776c16",
+          "query_variant": "canonical",
+          "role": "relevant",
+          "score": 0.3747385724303982,
+          "source_model": "v3",
+          "text_id": "0b09ad77ad2c1da8262ad328c055eddc95b32f72dbcbf8c7dddac9ddf3d67b72"
+        },
+        {
+          "document_variant": "no_document_prefix",
+          "event_id": "01a05cc3-f200-72ad-99cf-db5ad55a3a56",
+          "grade": 2,
+          "point_id": "85cc8387-2498-56a0-97a6-9c4213776c16",
+          "query_variant": "canonical",
+          "role": "relevant",
+          "score": 0.36979153249341934,
+          "source_model": "v3",
+          "text_id": "0b09ad77ad2c1da8262ad328c055eddc95b32f72dbcbf8c7dddac9ddf3d67b72"
+        },
+        {
+          "document_variant": "canonical",
+          "event_id": "01a05cc3-f200-72ad-99cf-db5ad55a3a56",
+          "grade": 2,
+          "point_id": "85cc8387-2498-56a0-97a6-9c4213776c16",
+          "query_variant": "no_query_prefix",
+          "role": "relevant",
+          "score": 0.3555081672203819,
+          "source_model": "v3",
+          "text_id": "0b09ad77ad2c1da8262ad328c055eddc95b32f72dbcbf8c7dddac9ddf3d67b72"
+        },
+        {
+          "document_variant": "no_document_prefix",
+          "event_id": "01a05cc3-f200-72ad-99cf-db5ad55a3a56",
+          "grade": 2,
+          "point_id": "85cc8387-2498-56a0-97a6-9c4213776c16",
+          "query_variant": "no_query_prefix",
+          "role": "relevant",
+          "score": 0.35688080371059644,
+          "source_model": "v3",
+          "text_id": "0b09ad77ad2c1da8262ad328c055eddc95b32f72dbcbf8c7dddac9ddf3d67b72"
+        },
+        {
+          "document_variant": "canonical",
+          "event_id": "01a05cc3-f200-72ad-99cf-db5ad55a3a56",
+          "grade": 2,
+          "point_id": "85cc8387-2498-56a0-97a6-9c4213776c16",
+          "query_variant": "german",
+          "role": "relevant",
+          "score": 0.44855236913101326,
+          "source_model": "v3",
+          "text_id": "0b09ad77ad2c1da8262ad328c055eddc95b32f72dbcbf8c7dddac9ddf3d67b72"
+        },
+        {
+          "document_variant": "no_document_prefix",
+          "event_id": "01a05cc3-f200-72ad-99cf-db5ad55a3a56",
+          "grade": 2,
+          "point_id": "85cc8387-2498-56a0-97a6-9c4213776c16",
+          "query_variant": "german",
+          "role": "relevant",
+          "score": 0.448399013263729,
+          "source_model": "v3",
+          "text_id": "0b09ad77ad2c1da8262ad328c055eddc95b32f72dbcbf8c7dddac9ddf3d67b72"
+        },
+        {
+          "document_variant": "canonical",
+          "event_id": "01a013db-afe2-7c3a-a2c2-dd9c3bdde3ce",
+          "grade": null,
+          "point_id": "a1a4b3d6-a734-58ae-b01d-217b5cce93e5",
+          "query_variant": "canonical",
+          "role": "unjudged_competitor",
+          "score": 0.465642733734792,
+          "source_model": "v5",
+          "text_id": "5c42befb93cbb0f796b6934e50a767244671813b801b140d8231e4c7839a23b7"
+        },
+        {
+          "document_variant": "no_document_prefix",
+          "event_id": "01a013db-afe2-7c3a-a2c2-dd9c3bdde3ce",
+          "grade": null,
+          "point_id": "a1a4b3d6-a734-58ae-b01d-217b5cce93e5",
+          "query_variant": "canonical",
+          "role": "unjudged_competitor",
+          "score": 0.47471023456297834,
+          "source_model": "v5",
+          "text_id": "5c42befb93cbb0f796b6934e50a767244671813b801b140d8231e4c7839a23b7"
+        },
+        {
+          "document_variant": "canonical",
+          "event_id": "01a013db-afe2-7c3a-a2c2-dd9c3bdde3ce",
+          "grade": null,
+          "point_id": "a1a4b3d6-a734-58ae-b01d-217b5cce93e5",
+          "query_variant": "no_query_prefix",
+          "role": "unjudged_competitor",
+          "score": 0.4387521640612304,
+          "source_model": "v5",
+          "text_id": "5c42befb93cbb0f796b6934e50a767244671813b801b140d8231e4c7839a23b7"
+        },
+        {
+          "document_variant": "no_document_prefix",
+          "event_id": "01a013db-afe2-7c3a-a2c2-dd9c3bdde3ce",
+          "grade": null,
+          "point_id": "a1a4b3d6-a734-58ae-b01d-217b5cce93e5",
+          "query_variant": "no_query_prefix",
+          "role": "unjudged_competitor",
+          "score": 0.45524356074708966,
+          "source_model": "v5",
+          "text_id": "5c42befb93cbb0f796b6934e50a767244671813b801b140d8231e4c7839a23b7"
+        },
+        {
+          "document_variant": "canonical",
+          "event_id": "01a013db-afe2-7c3a-a2c2-dd9c3bdde3ce",
+          "grade": null,
+          "point_id": "a1a4b3d6-a734-58ae-b01d-217b5cce93e5",
+          "query_variant": "german",
+          "role": "unjudged_competitor",
+          "score": 0.5114355298062949,
+          "source_model": "v5",
+          "text_id": "5c42befb93cbb0f796b6934e50a767244671813b801b140d8231e4c7839a23b7"
+        },
+        {
+          "document_variant": "no_document_prefix",
+          "event_id": "01a013db-afe2-7c3a-a2c2-dd9c3bdde3ce",
+          "grade": null,
+          "point_id": "a1a4b3d6-a734-58ae-b01d-217b5cce93e5",
+          "query_variant": "german",
+          "role": "unjudged_competitor",
+          "score": 0.5318318030635536,
+          "source_model": "v5",
+          "text_id": "5c42befb93cbb0f796b6934e50a767244671813b801b140d8231e4c7839a23b7"
+        },
+        {
+          "document_variant": "canonical",
+          "event_id": "019da011-1802-7924-8a24-821066242bba",
+          "grade": 0,
+          "point_id": "5b678553-af90-5b30-8843-a9a58411c5e2",
+          "query_variant": "canonical",
+          "role": "known_zero",
+          "score": 0.3976019057491615,
+          "source_model": "v5",
+          "text_id": "ebab2f9732938b6bca0490a00240b03a26ed700c03f64dda8406d5a40005f793"
+        },
+        {
+          "document_variant": "no_document_prefix",
+          "event_id": "019da011-1802-7924-8a24-821066242bba",
+          "grade": 0,
+          "point_id": "5b678553-af90-5b30-8843-a9a58411c5e2",
+          "query_variant": "canonical",
+          "role": "known_zero",
+          "score": 0.3512861793033924,
+          "source_model": "v5",
+          "text_id": "ebab2f9732938b6bca0490a00240b03a26ed700c03f64dda8406d5a40005f793"
+        },
+        {
+          "document_variant": "canonical",
+          "event_id": "019da011-1802-7924-8a24-821066242bba",
+          "grade": 0,
+          "point_id": "5b678553-af90-5b30-8843-a9a58411c5e2",
+          "query_variant": "no_query_prefix",
+          "role": "known_zero",
+          "score": 0.372126518907556,
+          "source_model": "v5",
+          "text_id": "ebab2f9732938b6bca0490a00240b03a26ed700c03f64dda8406d5a40005f793"
+        },
+        {
+          "document_variant": "no_document_prefix",
+          "event_id": "019da011-1802-7924-8a24-821066242bba",
+          "grade": 0,
+          "point_id": "5b678553-af90-5b30-8843-a9a58411c5e2",
+          "query_variant": "no_query_prefix",
+          "role": "known_zero",
+          "score": 0.3390305935307282,
+          "source_model": "v5",
+          "text_id": "ebab2f9732938b6bca0490a00240b03a26ed700c03f64dda8406d5a40005f793"
+        },
+        {
+          "document_variant": "canonical",
+          "event_id": "019da011-1802-7924-8a24-821066242bba",
+          "grade": 0,
+          "point_id": "5b678553-af90-5b30-8843-a9a58411c5e2",
+          "query_variant": "german",
+          "role": "known_zero",
+          "score": 0.3830247882717506,
+          "source_model": "v5",
+          "text_id": "ebab2f9732938b6bca0490a00240b03a26ed700c03f64dda8406d5a40005f793"
+        },
+        {
+          "document_variant": "no_document_prefix",
+          "event_id": "019da011-1802-7924-8a24-821066242bba",
+          "grade": 0,
+          "point_id": "5b678553-af90-5b30-8843-a9a58411c5e2",
+          "query_variant": "german",
+          "role": "known_zero",
+          "score": 0.3263323426757393,
+          "source_model": "v5",
+          "text_id": "ebab2f9732938b6bca0490a00240b03a26ed700c03f64dda8406d5a40005f793"
+        }
+      ]
+    },
+    {
+      "case_id": "dance-en",
+      "content_variants": [
+        {
+          "characters": 1146,
+          "score": 0.42489260244310634,
+          "text_sha256": "92882edb1de4f6cb2648a6217effa5f3993cdf841397780b6abbf29bd796ac31",
+          "tokens": 336,
+          "variant": "original"
+        },
+        {
+          "characters": 160,
+          "score": 0.6282183962706194,
+          "text_sha256": "4334e3c506480f4dda356879a1f2e8c8141a2515ac43706bd5756f996f186838",
+          "tokens": 42,
+          "variant": "evidence_only"
+        },
+        {
+          "characters": 1146,
+          "score": 0.47581535695165883,
+          "text_sha256": "0d01b54d32bc331ccf741c257c8bef28ce52b07c79599990830983b6116f5ce4",
+          "tokens": 336,
+          "variant": "evidence_first"
+        },
+        {
+          "characters": 1146,
+          "score": 0.42405119002918285,
+          "text_sha256": "59c48f7d4f99c51efb0f75af2191ba3a8c2d7a76baf62be39e32d0bf9ed82edd",
+          "tokens": 336,
+          "variant": "evidence_middle"
+        },
+        {
+          "characters": 1146,
+          "score": 0.425161569644979,
+          "text_sha256": "3cc49d4d27d6598ff303d5d5c114a5583614c1c2ae78601d4303f5bd7ece3a12",
+          "tokens": 336,
+          "variant": "evidence_last"
+        }
+      ],
+      "scores": [
+        {
+          "document_variant": "canonical",
+          "event_id": "019e1d20-4160-770d-aacc-0427d867f8cb",
+          "grade": 2,
+          "point_id": "8a0fdb27-5cbe-5f97-997a-9835ec09960a",
+          "query_variant": "canonical",
+          "role": "relevant",
+          "score": 0.42489260244310634,
+          "source_model": "v3",
+          "text_id": "92882edb1de4f6cb2648a6217effa5f3993cdf841397780b6abbf29bd796ac31"
+        },
+        {
+          "document_variant": "no_document_prefix",
+          "event_id": "019e1d20-4160-770d-aacc-0427d867f8cb",
+          "grade": 2,
+          "point_id": "8a0fdb27-5cbe-5f97-997a-9835ec09960a",
+          "query_variant": "canonical",
+          "role": "relevant",
+          "score": 0.41318802140387123,
+          "source_model": "v3",
+          "text_id": "92882edb1de4f6cb2648a6217effa5f3993cdf841397780b6abbf29bd796ac31"
+        },
+        {
+          "document_variant": "canonical",
+          "event_id": "019e1d20-4160-770d-aacc-0427d867f8cb",
+          "grade": 2,
+          "point_id": "8a0fdb27-5cbe-5f97-997a-9835ec09960a",
+          "query_variant": "no_query_prefix",
+          "role": "relevant",
+          "score": 0.4239235653828336,
+          "source_model": "v3",
+          "text_id": "92882edb1de4f6cb2648a6217effa5f3993cdf841397780b6abbf29bd796ac31"
+        },
+        {
+          "document_variant": "no_document_prefix",
+          "event_id": "019e1d20-4160-770d-aacc-0427d867f8cb",
+          "grade": 2,
+          "point_id": "8a0fdb27-5cbe-5f97-997a-9835ec09960a",
+          "query_variant": "no_query_prefix",
+          "role": "relevant",
+          "score": 0.4122370513118544,
+          "source_model": "v3",
+          "text_id": "92882edb1de4f6cb2648a6217effa5f3993cdf841397780b6abbf29bd796ac31"
+        },
+        {
+          "document_variant": "canonical",
+          "event_id": "019e1d20-4160-770d-aacc-0427d867f8cb",
+          "grade": 2,
+          "point_id": "8a0fdb27-5cbe-5f97-997a-9835ec09960a",
+          "query_variant": "german",
+          "role": "relevant",
+          "score": 0.44171630405014944,
+          "source_model": "v3",
+          "text_id": "92882edb1de4f6cb2648a6217effa5f3993cdf841397780b6abbf29bd796ac31"
+        },
+        {
+          "document_variant": "no_document_prefix",
+          "event_id": "019e1d20-4160-770d-aacc-0427d867f8cb",
+          "grade": 2,
+          "point_id": "8a0fdb27-5cbe-5f97-997a-9835ec09960a",
+          "query_variant": "german",
+          "role": "relevant",
+          "score": 0.42955433076313054,
+          "source_model": "v3",
+          "text_id": "92882edb1de4f6cb2648a6217effa5f3993cdf841397780b6abbf29bd796ac31"
+        },
+        {
+          "document_variant": "canonical",
+          "event_id": "01a0cd8c-e45f-75d2-945c-630009ae1d28",
+          "grade": null,
+          "point_id": "962defad-7b84-5135-a435-2ef3e13505eb",
+          "query_variant": "canonical",
+          "role": "unjudged_competitor",
+          "score": 0.5720147662612257,
+          "source_model": "v5",
+          "text_id": "3d2d22e76573946bbf2b3dab318071723a20c42bcdb51a55e0442ba6abc3206b"
+        },
+        {
+          "document_variant": "no_document_prefix",
+          "event_id": "01a0cd8c-e45f-75d2-945c-630009ae1d28",
+          "grade": null,
+          "point_id": "962defad-7b84-5135-a435-2ef3e13505eb",
+          "query_variant": "canonical",
+          "role": "unjudged_competitor",
+          "score": 0.4866990971808483,
+          "source_model": "v5",
+          "text_id": "3d2d22e76573946bbf2b3dab318071723a20c42bcdb51a55e0442ba6abc3206b"
+        },
+        {
+          "document_variant": "canonical",
+          "event_id": "01a0cd8c-e45f-75d2-945c-630009ae1d28",
+          "grade": null,
+          "point_id": "962defad-7b84-5135-a435-2ef3e13505eb",
+          "query_variant": "no_query_prefix",
+          "role": "unjudged_competitor",
+          "score": 0.5664405517151714,
+          "source_model": "v5",
+          "text_id": "3d2d22e76573946bbf2b3dab318071723a20c42bcdb51a55e0442ba6abc3206b"
+        },
+        {
+          "document_variant": "no_document_prefix",
+          "event_id": "01a0cd8c-e45f-75d2-945c-630009ae1d28",
+          "grade": null,
+          "point_id": "962defad-7b84-5135-a435-2ef3e13505eb",
+          "query_variant": "no_query_prefix",
+          "role": "unjudged_competitor",
+          "score": 0.4810011250445682,
+          "source_model": "v5",
+          "text_id": "3d2d22e76573946bbf2b3dab318071723a20c42bcdb51a55e0442ba6abc3206b"
+        },
+        {
+          "document_variant": "canonical",
+          "event_id": "01a0cd8c-e45f-75d2-945c-630009ae1d28",
+          "grade": null,
+          "point_id": "962defad-7b84-5135-a435-2ef3e13505eb",
+          "query_variant": "german",
+          "role": "unjudged_competitor",
+          "score": 0.5795198289648545,
+          "source_model": "v5",
+          "text_id": "3d2d22e76573946bbf2b3dab318071723a20c42bcdb51a55e0442ba6abc3206b"
+        },
+        {
+          "document_variant": "no_document_prefix",
+          "event_id": "01a0cd8c-e45f-75d2-945c-630009ae1d28",
+          "grade": null,
+          "point_id": "962defad-7b84-5135-a435-2ef3e13505eb",
+          "query_variant": "german",
+          "role": "unjudged_competitor",
+          "score": 0.49381104271755233,
+          "source_model": "v5",
+          "text_id": "3d2d22e76573946bbf2b3dab318071723a20c42bcdb51a55e0442ba6abc3206b"
+        },
+        {
+          "document_variant": "canonical",
+          "event_id": "019e1fc9-166f-73bd-92f7-8e9343d9eaf4",
+          "grade": 0,
+          "point_id": "a1b2e024-cc7d-57f1-9127-8b81f9c21165",
+          "query_variant": "canonical",
+          "role": "known_zero",
+          "score": 0.33080897040947904,
+          "source_model": "v5",
+          "text_id": "81bbebf59a60c170d27f1befb6141ab050a593cb24742a8940df5c9fe178330a"
+        },
+        {
+          "document_variant": "no_document_prefix",
+          "event_id": "019e1fc9-166f-73bd-92f7-8e9343d9eaf4",
+          "grade": 0,
+          "point_id": "a1b2e024-cc7d-57f1-9127-8b81f9c21165",
+          "query_variant": "canonical",
+          "role": "known_zero",
+          "score": 0.3241050501833236,
+          "source_model": "v5",
+          "text_id": "81bbebf59a60c170d27f1befb6141ab050a593cb24742a8940df5c9fe178330a"
+        },
+        {
+          "document_variant": "canonical",
+          "event_id": "019e1fc9-166f-73bd-92f7-8e9343d9eaf4",
+          "grade": 0,
+          "point_id": "a1b2e024-cc7d-57f1-9127-8b81f9c21165",
+          "query_variant": "no_query_prefix",
+          "role": "known_zero",
+          "score": 0.3115690261987136,
+          "source_model": "v5",
+          "text_id": "81bbebf59a60c170d27f1befb6141ab050a593cb24742a8940df5c9fe178330a"
+        },
+        {
+          "document_variant": "no_document_prefix",
+          "event_id": "019e1fc9-166f-73bd-92f7-8e9343d9eaf4",
+          "grade": 0,
+          "point_id": "a1b2e024-cc7d-57f1-9127-8b81f9c21165",
+          "query_variant": "no_query_prefix",
+          "role": "known_zero",
+          "score": 0.3081738005573579,
+          "source_model": "v5",
+          "text_id": "81bbebf59a60c170d27f1befb6141ab050a593cb24742a8940df5c9fe178330a"
+        },
+        {
+          "document_variant": "canonical",
+          "event_id": "019e1fc9-166f-73bd-92f7-8e9343d9eaf4",
+          "grade": 0,
+          "point_id": "a1b2e024-cc7d-57f1-9127-8b81f9c21165",
+          "query_variant": "german",
+          "role": "known_zero",
+          "score": 0.30866028505317733,
+          "source_model": "v5",
+          "text_id": "81bbebf59a60c170d27f1befb6141ab050a593cb24742a8940df5c9fe178330a"
+        },
+        {
+          "document_variant": "no_document_prefix",
+          "event_id": "019e1fc9-166f-73bd-92f7-8e9343d9eaf4",
+          "grade": 0,
+          "point_id": "a1b2e024-cc7d-57f1-9127-8b81f9c21165",
+          "query_variant": "german",
+          "role": "known_zero",
+          "score": 0.30186383439195635,
+          "source_model": "v5",
+          "text_id": "81bbebf59a60c170d27f1befb6141ab050a593cb24742a8940df5c9fe178330a"
+        }
+      ]
+    },
+    {
+      "case_id": "concerts-en",
+      "content_variants": [
+        {
+          "characters": 1234,
+          "score": 0.49140346630277887,
+          "text_sha256": "e9b3cea06bc2bd7b238b54e06a9d4fcd25252f63e390e147c95b6b9fa779369d",
+          "tokens": 352,
+          "variant": "original"
+        },
+        {
+          "characters": 359,
+          "score": 0.4508722562877482,
+          "text_sha256": "806e3249a4985a199cf03943353edcb65ca438af5ce606b82214c7aa8734567d",
+          "tokens": 103,
+          "variant": "evidence_only"
+        },
+        {
+          "characters": 1234,
+          "score": 0.5550377105486274,
+          "text_sha256": "9fa45c4824ecab9f1b4a2d9c7858eb3e936908a9734eb83956b7e41c1c88b96e",
+          "tokens": 353,
+          "variant": "evidence_first"
+        },
+        {
+          "characters": 1234,
+          "score": 0.5002590200064821,
+          "text_sha256": "b6b62f86613d89cda605140cff3559f67d7d973d6f54b3aa25d9cc28df6d3863",
+          "tokens": 353,
+          "variant": "evidence_middle"
+        },
+        {
+          "characters": 1234,
+          "score": 0.4601678184474597,
+          "text_sha256": "f6684836eb8034bbaf24d6e24d3b15358dc74546831132c4e36cca12f4f84b9a",
+          "tokens": 352,
+          "variant": "evidence_last"
+        }
+      ],
+      "scores": [
+        {
+          "document_variant": "canonical",
+          "event_id": "019e1d7d-5af9-7490-9c51-33f8d7a051b4",
+          "grade": 1,
+          "point_id": "4c88be7e-89d4-5653-b18d-8c69ebcdbada",
+          "query_variant": "canonical",
+          "role": "relevant",
+          "score": 0.49140346630277887,
+          "source_model": "v3",
+          "text_id": "e9b3cea06bc2bd7b238b54e06a9d4fcd25252f63e390e147c95b6b9fa779369d"
+        },
+        {
+          "document_variant": "no_document_prefix",
+          "event_id": "019e1d7d-5af9-7490-9c51-33f8d7a051b4",
+          "grade": 1,
+          "point_id": "4c88be7e-89d4-5653-b18d-8c69ebcdbada",
+          "query_variant": "canonical",
+          "role": "relevant",
+          "score": 0.5125979031525446,
+          "source_model": "v3",
+          "text_id": "e9b3cea06bc2bd7b238b54e06a9d4fcd25252f63e390e147c95b6b9fa779369d"
+        },
+        {
+          "document_variant": "canonical",
+          "event_id": "019e1d7d-5af9-7490-9c51-33f8d7a051b4",
+          "grade": 1,
+          "point_id": "4c88be7e-89d4-5653-b18d-8c69ebcdbada",
+          "query_variant": "no_query_prefix",
+          "role": "relevant",
+          "score": 0.4439741182877405,
+          "source_model": "v3",
+          "text_id": "e9b3cea06bc2bd7b238b54e06a9d4fcd25252f63e390e147c95b6b9fa779369d"
+        },
+        {
+          "document_variant": "no_document_prefix",
+          "event_id": "019e1d7d-5af9-7490-9c51-33f8d7a051b4",
+          "grade": 1,
+          "point_id": "4c88be7e-89d4-5653-b18d-8c69ebcdbada",
+          "query_variant": "no_query_prefix",
+          "role": "relevant",
+          "score": 0.4595627367492395,
+          "source_model": "v3",
+          "text_id": "e9b3cea06bc2bd7b238b54e06a9d4fcd25252f63e390e147c95b6b9fa779369d"
+        },
+        {
+          "document_variant": "canonical",
+          "event_id": "019e1d7d-5af9-7490-9c51-33f8d7a051b4",
+          "grade": 1,
+          "point_id": "4c88be7e-89d4-5653-b18d-8c69ebcdbada",
+          "query_variant": "german",
+          "role": "relevant",
+          "score": 0.48880773126216553,
+          "source_model": "v3",
+          "text_id": "e9b3cea06bc2bd7b238b54e06a9d4fcd25252f63e390e147c95b6b9fa779369d"
+        },
+        {
+          "document_variant": "no_document_prefix",
+          "event_id": "019e1d7d-5af9-7490-9c51-33f8d7a051b4",
+          "grade": 1,
+          "point_id": "4c88be7e-89d4-5653-b18d-8c69ebcdbada",
+          "query_variant": "german",
+          "role": "relevant",
+          "score": 0.5117766139083778,
+          "source_model": "v3",
+          "text_id": "e9b3cea06bc2bd7b238b54e06a9d4fcd25252f63e390e147c95b6b9fa779369d"
+        },
+        {
+          "document_variant": "canonical",
+          "event_id": "019e4022-4f8d-72c6-9f8f-00ec7cc065dd",
+          "grade": 2,
+          "point_id": "b411814d-8099-5b10-8b84-90a081ac4152",
+          "query_variant": "canonical",
+          "role": "relevant",
+          "score": 0.4816329207034338,
+          "source_model": "v3",
+          "text_id": "c0f939965f3b200f7569be97ae498ee41c54989ec98a37fe52490f25b3799523"
+        },
+        {
+          "document_variant": "no_document_prefix",
+          "event_id": "019e4022-4f8d-72c6-9f8f-00ec7cc065dd",
+          "grade": 2,
+          "point_id": "b411814d-8099-5b10-8b84-90a081ac4152",
+          "query_variant": "canonical",
+          "role": "relevant",
+          "score": 0.44645371521141963,
+          "source_model": "v3",
+          "text_id": "c0f939965f3b200f7569be97ae498ee41c54989ec98a37fe52490f25b3799523"
+        },
+        {
+          "document_variant": "canonical",
+          "event_id": "019e4022-4f8d-72c6-9f8f-00ec7cc065dd",
+          "grade": 2,
+          "point_id": "b411814d-8099-5b10-8b84-90a081ac4152",
+          "query_variant": "no_query_prefix",
+          "role": "relevant",
+          "score": 0.394694386701682,
+          "source_model": "v3",
+          "text_id": "c0f939965f3b200f7569be97ae498ee41c54989ec98a37fe52490f25b3799523"
+        },
+        {
+          "document_variant": "no_document_prefix",
+          "event_id": "019e4022-4f8d-72c6-9f8f-00ec7cc065dd",
+          "grade": 2,
+          "point_id": "b411814d-8099-5b10-8b84-90a081ac4152",
+          "query_variant": "no_query_prefix",
+          "role": "relevant",
+          "score": 0.36958680676953265,
+          "source_model": "v3",
+          "text_id": "c0f939965f3b200f7569be97ae498ee41c54989ec98a37fe52490f25b3799523"
+        },
+        {
+          "document_variant": "canonical",
+          "event_id": "019e4022-4f8d-72c6-9f8f-00ec7cc065dd",
+          "grade": 2,
+          "point_id": "b411814d-8099-5b10-8b84-90a081ac4152",
+          "query_variant": "german",
+          "role": "relevant",
+          "score": 0.5037924691674476,
+          "source_model": "v3",
+          "text_id": "c0f939965f3b200f7569be97ae498ee41c54989ec98a37fe52490f25b3799523"
+        },
+        {
+          "document_variant": "no_document_prefix",
+          "event_id": "019e4022-4f8d-72c6-9f8f-00ec7cc065dd",
+          "grade": 2,
+          "point_id": "b411814d-8099-5b10-8b84-90a081ac4152",
+          "query_variant": "german",
+          "role": "relevant",
+          "score": 0.47148168242492006,
+          "source_model": "v3",
+          "text_id": "c0f939965f3b200f7569be97ae498ee41c54989ec98a37fe52490f25b3799523"
+        },
+        {
+          "document_variant": "canonical",
+          "event_id": "019e4022-4f8d-72c6-9f8f-00ec7cc065dd",
+          "grade": 2,
+          "point_id": "8e131d3e-fe5f-5134-b397-ea5fd5aada81",
+          "query_variant": "canonical",
+          "role": "relevant",
+          "score": 0.4998263981285915,
+          "source_model": "v5",
+          "text_id": "ef93f262994d9334df17225d2357e5fe45cc251a7adefeae22fc70525caa4fbb"
+        },
+        {
+          "document_variant": "no_document_prefix",
+          "event_id": "019e4022-4f8d-72c6-9f8f-00ec7cc065dd",
+          "grade": 2,
+          "point_id": "8e131d3e-fe5f-5134-b397-ea5fd5aada81",
+          "query_variant": "canonical",
+          "role": "relevant",
+          "score": 0.4839815486835019,
+          "source_model": "v5",
+          "text_id": "ef93f262994d9334df17225d2357e5fe45cc251a7adefeae22fc70525caa4fbb"
+        },
+        {
+          "document_variant": "canonical",
+          "event_id": "019e4022-4f8d-72c6-9f8f-00ec7cc065dd",
+          "grade": 2,
+          "point_id": "8e131d3e-fe5f-5134-b397-ea5fd5aada81",
+          "query_variant": "no_query_prefix",
+          "role": "relevant",
+          "score": 0.41992586898473716,
+          "source_model": "v5",
+          "text_id": "ef93f262994d9334df17225d2357e5fe45cc251a7adefeae22fc70525caa4fbb"
+        },
+        {
+          "document_variant": "no_document_prefix",
+          "event_id": "019e4022-4f8d-72c6-9f8f-00ec7cc065dd",
+          "grade": 2,
+          "point_id": "8e131d3e-fe5f-5134-b397-ea5fd5aada81",
+          "query_variant": "no_query_prefix",
+          "role": "relevant",
+          "score": 0.4071403223477301,
+          "source_model": "v5",
+          "text_id": "ef93f262994d9334df17225d2357e5fe45cc251a7adefeae22fc70525caa4fbb"
+        },
+        {
+          "document_variant": "canonical",
+          "event_id": "019e4022-4f8d-72c6-9f8f-00ec7cc065dd",
+          "grade": 2,
+          "point_id": "8e131d3e-fe5f-5134-b397-ea5fd5aada81",
+          "query_variant": "german",
+          "role": "relevant",
+          "score": 0.5204496902602369,
+          "source_model": "v5",
+          "text_id": "ef93f262994d9334df17225d2357e5fe45cc251a7adefeae22fc70525caa4fbb"
+        },
+        {
+          "document_variant": "no_document_prefix",
+          "event_id": "019e4022-4f8d-72c6-9f8f-00ec7cc065dd",
+          "grade": 2,
+          "point_id": "8e131d3e-fe5f-5134-b397-ea5fd5aada81",
+          "query_variant": "german",
+          "role": "relevant",
+          "score": 0.5097351707207649,
+          "source_model": "v5",
+          "text_id": "ef93f262994d9334df17225d2357e5fe45cc251a7adefeae22fc70525caa4fbb"
+        },
+        {
+          "document_variant": "canonical",
+          "event_id": "019fb249-fd92-73b6-ac35-861c5b8b4bdf",
+          "grade": null,
+          "point_id": "cd058e6b-a8ed-5b85-9ff3-506188591848",
+          "query_variant": "canonical",
+          "role": "unjudged_competitor",
+          "score": 0.5744334863348272,
+          "source_model": "v5",
+          "text_id": "7e5e719b563673022e6dc4fd8d2ef773b1db88c32dd96824c7763164b0e1d54e"
+        },
+        {
+          "document_variant": "no_document_prefix",
+          "event_id": "019fb249-fd92-73b6-ac35-861c5b8b4bdf",
+          "grade": null,
+          "point_id": "cd058e6b-a8ed-5b85-9ff3-506188591848",
+          "query_variant": "canonical",
+          "role": "unjudged_competitor",
+          "score": 0.5252663731939232,
+          "source_model": "v5",
+          "text_id": "7e5e719b563673022e6dc4fd8d2ef773b1db88c32dd96824c7763164b0e1d54e"
+        },
+        {
+          "document_variant": "canonical",
+          "event_id": "019fb249-fd92-73b6-ac35-861c5b8b4bdf",
+          "grade": null,
+          "point_id": "cd058e6b-a8ed-5b85-9ff3-506188591848",
+          "query_variant": "no_query_prefix",
+          "role": "unjudged_competitor",
+          "score": 0.4940002525381065,
+          "source_model": "v5",
+          "text_id": "7e5e719b563673022e6dc4fd8d2ef773b1db88c32dd96824c7763164b0e1d54e"
+        },
+        {
+          "document_variant": "no_document_prefix",
+          "event_id": "019fb249-fd92-73b6-ac35-861c5b8b4bdf",
+          "grade": null,
+          "point_id": "cd058e6b-a8ed-5b85-9ff3-506188591848",
+          "query_variant": "no_query_prefix",
+          "role": "unjudged_competitor",
+          "score": 0.4620134194183341,
+          "source_model": "v5",
+          "text_id": "7e5e719b563673022e6dc4fd8d2ef773b1db88c32dd96824c7763164b0e1d54e"
+        },
+        {
+          "document_variant": "canonical",
+          "event_id": "019fb249-fd92-73b6-ac35-861c5b8b4bdf",
+          "grade": null,
+          "point_id": "cd058e6b-a8ed-5b85-9ff3-506188591848",
+          "query_variant": "german",
+          "role": "unjudged_competitor",
+          "score": 0.593484547703096,
+          "source_model": "v5",
+          "text_id": "7e5e719b563673022e6dc4fd8d2ef773b1db88c32dd96824c7763164b0e1d54e"
+        },
+        {
+          "document_variant": "no_document_prefix",
+          "event_id": "019fb249-fd92-73b6-ac35-861c5b8b4bdf",
+          "grade": null,
+          "point_id": "cd058e6b-a8ed-5b85-9ff3-506188591848",
+          "query_variant": "german",
+          "role": "unjudged_competitor",
+          "score": 0.5307784916997382,
+          "source_model": "v5",
+          "text_id": "7e5e719b563673022e6dc4fd8d2ef773b1db88c32dd96824c7763164b0e1d54e"
+        },
+        {
+          "document_variant": "canonical",
+          "event_id": "019fad8e-eb0d-7d27-8674-bc33ffcd3fab",
+          "grade": 0,
+          "point_id": "1e8d1344-d54e-5cb0-963f-8b701770e60d",
+          "query_variant": "canonical",
+          "role": "known_zero",
+          "score": 0.41741064452852294,
+          "source_model": "v3",
+          "text_id": "f4f94d0aefcfe954e3311db199a025b5b1cb606c4437d46db8439a69f0010a32"
+        },
+        {
+          "document_variant": "no_document_prefix",
+          "event_id": "019fad8e-eb0d-7d27-8674-bc33ffcd3fab",
+          "grade": 0,
+          "point_id": "1e8d1344-d54e-5cb0-963f-8b701770e60d",
+          "query_variant": "canonical",
+          "role": "known_zero",
+          "score": 0.4359792431359568,
+          "source_model": "v3",
+          "text_id": "f4f94d0aefcfe954e3311db199a025b5b1cb606c4437d46db8439a69f0010a32"
+        },
+        {
+          "document_variant": "canonical",
+          "event_id": "019fad8e-eb0d-7d27-8674-bc33ffcd3fab",
+          "grade": 0,
+          "point_id": "1e8d1344-d54e-5cb0-963f-8b701770e60d",
+          "query_variant": "no_query_prefix",
+          "role": "known_zero",
+          "score": 0.35387982368767695,
+          "source_model": "v3",
+          "text_id": "f4f94d0aefcfe954e3311db199a025b5b1cb606c4437d46db8439a69f0010a32"
+        },
+        {
+          "document_variant": "no_document_prefix",
+          "event_id": "019fad8e-eb0d-7d27-8674-bc33ffcd3fab",
+          "grade": 0,
+          "point_id": "1e8d1344-d54e-5cb0-963f-8b701770e60d",
+          "query_variant": "no_query_prefix",
+          "role": "known_zero",
+          "score": 0.36963385998261133,
+          "source_model": "v3",
+          "text_id": "f4f94d0aefcfe954e3311db199a025b5b1cb606c4437d46db8439a69f0010a32"
+        },
+        {
+          "document_variant": "canonical",
+          "event_id": "019fad8e-eb0d-7d27-8674-bc33ffcd3fab",
+          "grade": 0,
+          "point_id": "1e8d1344-d54e-5cb0-963f-8b701770e60d",
+          "query_variant": "german",
+          "role": "known_zero",
+          "score": 0.46331004768004214,
+          "source_model": "v3",
+          "text_id": "f4f94d0aefcfe954e3311db199a025b5b1cb606c4437d46db8439a69f0010a32"
+        },
+        {
+          "document_variant": "no_document_prefix",
+          "event_id": "019fad8e-eb0d-7d27-8674-bc33ffcd3fab",
+          "grade": 0,
+          "point_id": "1e8d1344-d54e-5cb0-963f-8b701770e60d",
+          "query_variant": "german",
+          "role": "known_zero",
+          "score": 0.4783391148492953,
+          "source_model": "v3",
+          "text_id": "f4f94d0aefcfe954e3311db199a025b5b1cb606c4437d46db8439a69f0010a32"
+        }
+      ]
+    }
+  ],
+  "encoder_commit": "1938c72caa6102452ae0afa18ef86d9a95ead878",
+  "encoder_source_sha256": {
+    "__init__.py": "9a92af3900758460f2a17039f8ff496861f18a17116dd8cfe0144c7bc240b33b",
+    "__main__.py": "0136c8068c08717afa164fd17763a4d1c04b5ac70c8fc78a2bbd0f7914c9078d",
+    "app.py": "d84e85809717bb9974bb467e84938b114980825244fb2b0437b988d25544a9e4",
+    "auth.py": "50505d0a25a1f8b98cff7bfddf9e5429e0abf20ecde3f086e58867f41c3ef37e",
+    "chunking.py": "f1028af218526843f11761c528123df14d8c9cccf673f035f85f9985cf15b9a7",
+    "config.py": "59519d307cf91e60fb7df5bc02a0acd239b9804fed8eec0bb219fd2b20a88423",
+    "contracts.py": "767eb47a8cb94b4cdaa933e3dfa63d290d397170ef28ade21f1c439d846e3336",
+    "errors.py": "3d240c19f273800a733db6ea4ef804a3d78e42f94fefb6112d9b77e53f8e6190",
+    "merged_artifacts.py": "e19b27f7953f22c9207b6b3118de3ea7685bd1fe76607b611626daca14864f50",
+    "merged_batching.py": "9463f459a8c1f2c8ce1d9b8bdc2cac63de529d227219142eed8b12897177738d",
+    "merged_export.py": "b0c8da9aaf114393588bcb153c77459c2ac6950f4b1e932eaeba56e057dfca55",
+    "merged_onnx_backend.py": "b55d3cc3b81578909fe280562a7ecfec6e324d32e41903960100dccbd66df6d6",
+    "model.py": "84791df7e936f69ea61ccbdd974be8f6ad6e00217acd5969f709ef1cfc6e4ca8",
+    "model_artifacts.py": "72c02b51f0458f8f5a37d03996db261c7de252c39a84d6e6a41821cd3784e1d8",
+    "onnx_backend.py": "e8ca54af280da6032acc1423edfc5396d074c79e845542ab6d23802b23af77e7",
+    "schemas.py": "1d8764267f0875aa6fbe1630f3a7e8bce3f0c6bdeb9c1327f261fc24672a1d47",
+    "version.py": "692f5d786fc0435469b8de4a65773b703212dec441120ed2167e5ad9aa2bb9c8"
+  },
+  "libraries": {
+    "onnxruntime": "1.30.0",
+    "peft": "0.21.1",
+    "torch": "2.11.0+cpu",
+    "transformers": "5.17.0"
+  },
+  "limitations": [
+    "Small selected chunk pools; no corpus ranks or benchmark gates.",
+    "Prefix removal is out of the published model contract.",
+    "German formulations are diagnostic paraphrases, not new labels.",
+    "Relocation changes attention/position too; it cannot isolate pooling causality."
+  ],
+  "mode": "v5",
+  "model_revision": "dd76d535f5447ca3897a9c893fb1e612ead98192",
+  "plan_sha256": "67b4170b0cc735ca961ed83dd4dffd4320b860d3176003b53dc195fc8f63028e",
+  "schema": "isolated-adapter-diagnostic-worker-v1",
+  "scope": "isolated exploratory diagnostics; no benchmark result replacement",
+  "test_code_sha256": "9ff650a7d773cd7c8ed9eefa51e60faae56ab2ecdd27d7b9450e8f04478c6f43",
+  "unique_forward_count": 58
+}
