@@ -29,6 +29,7 @@
     "attention": "eager",
     "backend": "torch",
     "encoder_commit": "1938c72caa6102452ae0afa18ef86d9a95ead878",
+    "encoder_model_source_sha256": "84791df7e936f69ea61ccbdd974be8f6ad6e00217acd5969f709ef1cfc6e4ca8",
     "max_input_tokens": 32768,
     "normalization": "one L2 after pooling",
     "passage_prefix": "Document: ",

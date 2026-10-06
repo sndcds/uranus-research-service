@@ -1,8 +1,8 @@
 # Phase-2B.2c controlled benchmark — 2026-10-06
 
-Local locked offline suite: **462 passed, 24 skipped**. Skips are the disposable
+Local locked offline suite: **465 passed, 24 skipped**. Skips are the disposable
 service integration tests and optional real-Encoder tests, not claimed as locally
-executed. All 31 controlled-evaluator tests run without model weights and cover
+executed. All 34 controlled-evaluator tests run without model weights and cover
 frozen hashes, comparison identity, event/occurrence eligibility, no-hit exclusions,
 graded metrics, aggregation/ties, gates, threshold curves, report determinism and v3
 response-contract parity. Ruff, format and diff checks pass.

@@ -201,3 +201,45 @@ def test_v3_response_contracts_match_reused_response_validators():
             (ROOT / f"benchmark/contracts/encoder-v3/{contract.__name__}.json").read_text()
         )
         assert contract.model_json_schema() == frozen
+
+
+@pytest.mark.parametrize("name", ["ChunkResponse", "EmbedResponse"])
+def test_provider_validation_errors_do_not_echo_bodies(name):
+    import traceback
+
+    from uranus_research_service import encoder_contracts
+    from uranus_research_service.controlled_runner import closed_response
+
+    raw = {"provider_secret": "body-must-not-be-logged"}
+    contract = getattr(encoder_contracts, name)
+    with pytest.raises(ValueError, match="^encoder_response_contract$") as caught:
+        closed_response(contract, raw)
+    assert "body-must-not-be-logged" not in "".join(traceback.format_exception(caught.value))
+    assert caught.value.__suppress_context__ is True
+
+
+def test_thread_profile_probes_and_documented_launcher_are_reproducible():
+    import ast
+    import hashlib
+
+    identity, cases, events = e.inputs(ROOT)
+    path = ROOT / "benchmark/contracts/thread-parity-probes-v1.json"
+    probes = json.loads(path.read_text())
+    assert probes["input_sha256"] == identity["input_sha256"]
+    assert probes["source_snapshot_hash"] == identity["source_snapshot_hash"]
+    assert {p["language"] for p in probes["queries"]} == {"de", "da", "en"}
+    for probe in probes["queries"]:
+        case = next(c for c in cases if c["case_id"] == probe["case_id"])
+        assert (probe["text"], probe["language"]) == (case["query"], case["language"])
+    docs = documents(events)
+    for probe in probes["passages"]:
+        assert hashlib.sha256(probe["text"].encode()).hexdigest() == probe["content_hash"]
+        assert any(probe["text"] in s["text"] for s in docs[probe["event_id"]]["sections"])
+    source = (ROOT / "docs/controlled-benchmark-reproduction.md").read_text()
+    launcher = source.split("```python\n", 1)[1].split("```", 1)[0]
+    ast.parse(launcher)  # Never import the native Encoder into the Research Service.
+    provenance = json.loads((ROOT / "benchmark/contracts/model-provenance.json").read_text())
+    assert (
+        hashlib.sha256(launcher.encode()).hexdigest() == provenance["v5"]["thread_launcher_sha256"]
+    )
+    assert hashlib.sha256(path.read_bytes()).hexdigest() == provenance["v5"]["thread_probe_sha256"]

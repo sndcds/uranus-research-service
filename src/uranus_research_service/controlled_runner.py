@@ -10,7 +10,7 @@ from pathlib import Path
 from types import SimpleNamespace
 from uuid import UUID, uuid5
 
-from pydantic import SecretStr
+from pydantic import SecretStr, ValidationError
 
 from uranus_research_service.clients import InternalClient
 from uranus_research_service.controlled_evaluation import (
@@ -161,8 +161,15 @@ async def embed(client, expected, texts, kind):
     )
     require(raw.get("embedding_version") == expected["embedding_version"], "embedding_mismatch")
     validate_vectors(raw["vectors"], len(texts))
-    response = EmbedResponse.model_validate(raw)
+    response = closed_response(EmbedResponse, raw)
     return response.vectors
+
+
+def closed_response(contract, raw):
+    try:
+        return contract.model_validate(raw)
+    except ValidationError:
+        raise ValueError("encoder_response_contract") from None
 
 
 def validate_chunk(doc, chunk, index):
@@ -263,7 +270,7 @@ async def run(root, model, build):
             raw = await encoder._request(
                 "POST", "/chunks", {"model": expected["model"], "documents": [doc]}
             )
-            result = ChunkResponse.model_validate(raw)
+            result = closed_response(ChunkResponse, raw)
             require(
                 result.embedding_version == expected["embedding_version"]
                 and len(result.documents) == 1
