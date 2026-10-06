@@ -11,8 +11,10 @@ werden zusätzlich durch `Query: ` beziehungsweise `Document: ` unterschieden.
 Untersucht wurde PR #7 am Benchmark-Head
 `24ebec8f391cdc3d14ea90581e7bea9c0acf0c81`, abgeschlossener Build
 `20261006_8cpu_001`. Der frühere Pilot `20261006_001` ist nicht die Vergleichsbasis.
-Dieser Audit verändert weder Ergebnisse noch deren Bewertung. Eine unten erklärte
-Lücke im historischen v3-Graph-Paritätsnachweis bleibt ausdrücklich offen.
+Dieser Audit verändert weder Ergebnisse noch deren Bewertung. Die unten erklärte
+Lücke im historischen v3-Graph-Paritätsnachweis wurde anschließend durch die separat
+autorisierte Stichprobe im Nachtrag geschlossen; der historische Report selbst bleibt
+auf seine anderen Graph-Dateien begrenzt.
 
 This benchmark uses a frozen draft relevance dataset containing machine proposals plus manually calibrated scoring policy. It is suitable for provisional comparative evaluation, not final production approval.
 
@@ -186,8 +188,9 @@ ist **kein numerischer Paritätsnachweis für die exakten Benchmark-Graph-Dateie
 Der Audit erklärt den Graph-Unterschied nicht ohne weitere Evidenz für harmlos.
 Auch das Exportfeld `release_parity` wurde nach Erstellung nicht zu einem solchen
 Nachweis aktualisiert. Für eine weitergehende Aussage über exakte native/ONNX-
-Äquivalenz wäre eine separate Prüfung dieser Graphen nötig. Sie wurde hier nicht
-ausgeführt; Ergebnisse und bestehende Reproduktionsdokumente wurden nicht verändert.
+Äquivalenz war eine separate Prüfung dieser Graphen nötig. Im ursprünglichen Audit
+wurde sie nicht ausgeführt; der unten angefügte neue Nachweis ergänzt sie jetzt.
+Ergebnisse und bestehende Reproduktionsdokumente wurden nicht verändert.
 
 ## v5: tatsächlich geladener PEFT-LoRA
 
@@ -318,6 +321,41 @@ bytegenau überein; alle Resultate sind unverändert.
 Die neuen Dateien sind ausschließlich Audit-Dokumentation, kleine öffentliche
 Config-/Evidenz-Fixtures und Tests. Benchmark-Eingaben, Resultate, Runtime, Labels,
 Gates, Encoder-/Planner-/Admin-Code und `semantic_query` bleiben unverändert.
-Keine Container gestartet, keine Inferenz, keine Modell-Downloads, kein Training,
+Im ursprünglichen Adapter-Audit: keine Container gestartet, keine Inferenz,
+keine Modell-Downloads, kein Training,
 keine DB-/Qdrant-Zugriffe, kein Reindex, kein Deployment, kein Aliaswechsel,
 keine Service-Restarts und kein Merge von PR #7 in diesem Audit.
+
+## Nachtrag: unabhängige Paritätsprüfung der Benchmark-Graphen (2026-10-06)
+
+Die anschließend ausdrücklich autorisierte [Prüfung](../benchmark/results/v3-benchmark-onnx-parity-20261006.json)
+besteht (**PASS**). Sie prüft genau die beiden im Benchmark manifestierten Graphen
+mit SHA256 `8b80f212fd9c37e3291d0ce4edc625d7dcccb00c5ad7eaddd7045593ce74e5c4`
+und deren oben aufgeführten unterschiedlichen `model.onnx.data`-Gewichten.
+Beide nativen Referenzen laden den gepinnten v3-Snapshot plus den jeweiligen
+Jina-Adapter und mergen ausschließlich im Prozessspeicher. Jeweils **147/147**
+Gewichtshashes entsprechen den Benchmark-Merge-Audits; keine Adapterdatei und
+kein Export wurde verändert. Alle Graph-, Gewichts-, Adapter-, Encoder-Source- und
+Testcode-Hashes stehen im neuen Bericht.
+
+Vor Ausführung wurden [13 öffentliche Inputs und Toleranzen](../benchmark/diagnostics/20261006-regression-plan.json)
+festgelegt: DE/DA/EN-Queries inklusive Problemfällen, kurze, mittlere und lange
+Passagen (20 bis 476 v3-Tokens). Alle 13 Inputs wurden in beiden Rollen geprüft:
+26 Vektorpaare, Dimension 1024, jeweils eine L2-Normalisierung.
+Grenzen: maximale Komponentenabweichung ≤ `1e-6`, mittlere Abweichung ≤ `1e-7`,
+Cosinus ≥ `1−1e-10`, Normfehler ≤ `1e-6`, identische vollständige Kandidatenreihenfolge.
+Keine Toleranz wurde nach dem Ergebnis angepasst.
+
+Gemessen: maximale Komponentenabweichung `3.8743019104003906e-7`, maximale mittlere
+Abweichung `6.698610022226603e-8`, minimale Cosinus-Ähnlichkeit
+`0.9999999999963027`. Alle fünf Query-Rankings über acht Kandidaten sind vollständig
+und in Top 3 identisch; Spearman der deterministischen Reihenfolgen jeweils 1.
+Der Bericht enthält beide Vektoren, Normen und Einzelmetriken je Input/Rolle.
+
+Neue netzlose Diagnosecontainer, CPU 8 Threads, read-only Modell-/Source-Mounts;
+keine Produktionsinferenz, kein Qdrant, kein neuer Retrieval-Benchmark. Details und
+Reproduktionsbefehle: [Diagnoseprotokoll](../benchmark/diagnostics/README.md).
+Dies schließt die konkrete Nachweislücke für diese Stichprobe, ist aber kein Beweis
+bitidentischer Ausgaben für alle denkbaren Texte. Die ursprünglichen historischen
+Graph-Hashes bleiben unterschiedlich; der neue Nachweis ersetzt sie nicht.
+Benchmark-Metriken, Gates, Labels und `semantic_query=false` bleiben unverändert.

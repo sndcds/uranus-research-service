@@ -1,0 +1,14 @@
+{
+  "files": {
+    "benchmark/diagnostics/20261006-regression-plan.json": "67b4170b0cc735ca961ed83dd4dffd4320b860d3176003b53dc195fc8f63028e",
+    "benchmark/diagnostics/run-isolated-20261006.sh": "dba192c010533daffcde3952179575bf9e1c407ea46809c32158fa2e50ee4fc3",
+    "benchmark/results/v3-benchmark-onnx-parity-20261006.json": "9e10e7f417c3c2356780af891081d44785a60cb6b00b4bedd3e6adcf553917e9",
+    "benchmark/results/v5-regression-diagnostics-20261006.json": "4283ebc17af27041dc0679c1db8f74d04289249237433870422c927ed1c5f19b",
+    "benchmark/results/v5-regression-reconstruction-20261006.json": "217244f98f0dd63236879c27ecbab0443677ffbc9786d16542e9dec70bcdae93",
+    "scripts/analyze_retrieval_regressions.py": "a669ea675e454dd26758d7080bb4216d44a7b17614e42e5c3cc3055df71859d3",
+    "scripts/isolated_adapter_diagnostics.py": "9ff650a7d773cd7c8ed9eefa51e60faae56ab2ecdd27d7b9450e8f04478c6f43",
+    "scripts/summarize_adapter_diagnostics.py": "ee30ff3883bffcbada165a6d026a5fc61969a29a40def9776fbb892634945611"
+  },
+  "original_benchmark_unchanged": true,
+  "schema": "post-benchmark-diagnostic-sha256-v1"
+}
