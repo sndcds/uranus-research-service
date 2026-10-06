@@ -43,9 +43,12 @@ to certify accessibility of another occurrence.
 
 ## 3. Vier Total-Loss-Fälle
 
-The field “strongest false positive” below means the highest-ranked **frozen grade-0**
-competitor. An unjudged v5 leader is listed separately and is not declared irrelevant.
-Even frozen zeros remain draft proposals, not human-certified truth.
+Terminology throughout this report: **known positive** means frozen grade > 0;
+**frozen grade-0** means a zero under the frozen draft judgments; **unjudged** means
+no relevance judgment exists for that case/event pair. The strongest frozen grade-0
+competitor is listed separately from an unjudged v5 leader. Unjudged results are not
+false positives or established irrelevant results. Neither positive nor zero draft
+grades are human-certified truth.
 
 ### historical-q29
 
@@ -56,7 +59,7 @@ Even frozen zeros remain draft proposals, not human-certified truth.
 | relevante IDs | 019da011-1802-7924-8a24-821066242bba; 019db61e-a230-7e9b-a02a-8d59e4662280; 019f19b5-7503-754a-980c-5feafc43e2af |
 | v3 ranks | 8, 86, 65 |
 | v5 ranks | 20, 148, 109 |
-| stärkster v5 false positive (draft zero) | Digitale Teilhabe – gemeinsam vernetzt — 019db91a-89d5-7c5a-90ae-7596e488a1eb, rank 34 |
+| stärkster v5 frozen grade-0 competitor | Digitale Teilhabe – gemeinsam vernetzt — 019db91a-89d5-7c5a-90ae-7596e488a1eb, rank 34 |
 | v5 leader (unjudged) | Jugendatelier |
 | Hauptdiagnose | A + H: Utopia 8→20; plausible unjudged art-workshop competition. |
 | Sekundärdiagnose | C plausible: changed Danish program boundary; E not isolated. |
@@ -107,7 +110,7 @@ The new leader Jugendatelier explicitly addresses young people aged 11+ drawing 
 painting together; Kinderatelier is second. Neither has a judgment for this case.
 The first frozen zero, Digitale Teilhabe at 34, describes digital learning rather than
 participatory art; it is below Utopia. The metric loss therefore concerns displacement
-by mostly unjudged candidates, not a known irrelevant leader. No label is added.
+by mostly unjudged candidates. The leader has no frozen judgment. No label is added.
 All three positive judgments are only grade 1; no known direct/full match is lost.
 
 ### wheelchair-da
@@ -119,7 +122,7 @@ All three positive judgments are only grade 1; no known direct/full match is los
 | relevante IDs | 01a05cc3-f200-72ad-99cf-db5ad55a3a56; 01a06740-e026-7b1c-bee7-8a7cd4f861b7 |
 | v3 ranks | 9, 12 |
 | v5 ranks | 17, 20 |
-| stärkster v5 false positive (draft zero) | Kulturh(a)us Utopia — 019da011-1802-7924-8a24-821066242bba, rank 4 |
+| stärkster v5 frozen grade-0 competitor | Kulturh(a)us Utopia — 019da011-1802-7924-8a24-821066242bba, rank 4 |
 | v5 leader (unjudged) | Ausstellungseröffnung |
 | Hauptdiagnose | A + H: identical 15-event evidence tie moves from ranks 1–15 to 9–23. |
 | Sekundärdiagnose | UUID tie-break and occurrence-scoped shared text; not a changed chunk. |
@@ -180,8 +183,9 @@ v5's unjudged leader uses “Der Maschinensaal kann barrierearm über den Eingan
 Kulturzentrums erreicht werden” (26 tokens): shorter, positive but incomplete access
 evidence. Its concrete restriction differs from the known positives' inaccessible
 toilet. The frozen zero Utopia at 4 selects an open-participation Danish program
-without wheelchair access evidence. This is a real partial-intent/semantic false
-positive under the frozen label, unlike the nine unjudged Top-10 candidates.
+without wheelchair access evidence. It is a frozen grade-0 competitor under the
+draft judgments; the other nine Top-10 candidates are unjudged. This is not a
+human-certified relevance decision.
 
 ### dance-en
 
@@ -192,7 +196,7 @@ positive under the frozen label, unlike the nine unjudged Top-10 candidates.
 | relevante IDs | 019db61e-a230-7e9b-a02a-8d59e4662280; 019e1d20-4160-770d-aacc-0427d867f8cb |
 | v3 ranks | 124, 7 |
 | v5 ranks | 215, 13 |
-| stärkster v5 false positive (draft zero) | Anja Jacobsen — 019e1fc9-166f-73bd-92f7-8e9343d9eaf4, rank 65 |
+| stärkster v5 frozen grade-0 competitor | Anja Jacobsen — 019e1fc9-166f-73bd-92f7-8e9343d9eaf4, rank 65 |
 | v5 leader (unjudged) | Boogie Woogie Workshop |
 | Hauptdiagnose | A + H: Midsommar 7→13 with identical text; dancing displaces evening intent. |
 | Sekundärdiagnose | D/joint-space effect plausible; a language-only explanation is contradicted by DE loss. |
@@ -253,7 +257,7 @@ not a dance offer, and lies below both the leader and Midsommar.
 | relevante IDs | 019dab26-d79f-789a-8aa4-9b6f40b8b92d; 019e03a7-5221-7c54-b035-1762dc067c16; 019e1d7d-5af9-7490-9c51-33f8d7a051b4; 019e4022-4f8d-72c6-9f8f-00ec7cc065dd; 019e7d8e-e8b2-747c-bda0-133de3170146; 01a0193a-4873-7e68-ab0f-5c3341296424; 01a0af9b-d3a1-71cb-8749-7d28d7fe065f |
 | v3 ranks | 169, 8, 6, 18, 14, 15, 93 |
 | v5 ranks | 88, 37, 22, 15, 66, 83, 18 |
-| stärkster v5 false positive (draft zero) | Django Galore Quartett — 019fad8e-eb0d-7d27-8674-bc33ffcd3fab, rank 97 |
+| stärkster v5 frozen grade-0 competitor | Django Galore Quartett — 019fad8e-eb0d-7d27-8674-bc33ffcd3fab, rank 97 |
 | v5 leader (unjudged) | Colour Haze |
 | Hauptdiagnose | A + H: Strandgut 6→22, Liv Solveig 8→37; broad music competitors. |
 | Sekundärdiagnose | C for some tails, but unchanged Strandgut also loses; not EN-only. |
@@ -462,9 +466,10 @@ Canonical selected-pair comparisons (all scores within v5):
 
 For Utopia the target here is the old complete v3 slice; for the other cases it is
 the unchanged first-known-v3-positive slice. A frozen zero does not outrank the
-selected known positive in three cases. Wheelchair's Utopia false positive does:
-it has broad participatory culture wording without actual wheelchair-access evidence.
-This distinguishes a demonstrated frozen-label false positive from an unjudged leader.
+selected known positive in three cases. Wheelchair's frozen grade-0 competitor Utopia
+does: it has broad participatory culture wording without actual wheelchair-access
+evidence. Its draft zero is distinct from the unjudged leader, whose relevance is
+unknown; neither category constitutes human-certified irrelevance.
 
 ## 7. Prefix-Diagnose
 
@@ -484,7 +489,9 @@ Removing Document especially narrows dance/concert pair gaps, but **none of the
 four pairs reverses** under any prefix-removal combination. Removing Query alone
 has smaller/mixed effects. Prefix sensitivity **F** is measured; a predominant prefix
 cause **R3** is not established. No prefix optimization or production change follows.
-All prefix-free inputs violate the published canonical role-instruction contract.
+All prefix-free inputs are outside the published v5 role-instruction contract.
+These observations do not recommend removing or changing either prefix or changing
+the production Encoder; causal attribution remains unresolved.
 
 ## 8. Chunking-/Pooling-Diagnose
 
@@ -504,8 +511,9 @@ change by one; this deliberately crude diagnostic is not production chunking.
 | concerts-en | 5%–34% | 352 | 0.491403 | 0.450872 | 0.555038 | 0.500259 | 0.460168 |
 
 Midsommar's isolated 42-token evening/dance sentence scores 0.628218, versus 0.424893
-for the 336-token complete text. Context dilutes that intent; this supports **C/D
-representation sensitivity**, even though the original chunk boundary did not change.
+for the 336-token complete text. This is evidence of **C/D representation
+sensitivity** to the changed input, even though the original chunk boundary did not
+change; it does not isolate a pooling cause.
 Putting the same sentence first improves more than putting it last. Strandgut also
 scores highest with the span first; Utopia's highest relocation score is last, while
 its excerpt alone is much weaker. Pilkentafel is short and barely changes.
@@ -517,7 +525,9 @@ property and cannot isolate length or pooling alone.
 These are **not** evidence of a systematic “information early in a long chunk is
 lost by last-token pooling” rule. Last-token pooling aggregates a contextual hidden
 state, not the literal last word alone. Moving/removing text changes attention,
-positions, lexical context and tokenization simultaneously. No matched pooling
+positions, lexical/token context, sequence structure and sometimes length
+simultaneously. v3 uses mean pooling and v5 the last non-padding token, but these
+interventions do not isolate that architectural difference. No matched pooling
 ablation was run, so **G remains a hypothesis**. Likewise ORDRIG's explicit outdoor
 sentence survives its boundary change; the stored rankings alone cannot attribute
 its severe fall to pooling. Controls creative-da and historical-q02 improve with

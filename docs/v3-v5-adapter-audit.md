@@ -70,9 +70,10 @@ Alle verwendeten Modelldatei-Hashes stimmen mit den Benchmark-Manifesten überei
 
 Die Aktivierung ist durch diesen Codeabgleich, den zwingenden Load-/Embed-Pfad und
 den abgeschlossenen erfolgreichen Lauf belegt. Ein damaliger Python-Objektdump von
-`active_adapters` liegt nicht vor. Für diesen Audit wurde kein Modell neu geladen
-und keine Inferenz ausgeführt. Die ONNX-Inspektion las nur Graph-Metadaten ohne
-externe Gewichtsarrays. Das ist kein neuer numerischer Paritätstest.
+`active_adapters` liegt nicht vor. Im ursprünglichen Adapter-Audit wurde kein Modell
+neu geladen und keine Inferenz ausgeführt. Seine ONNX-Inspektion las nur Graph-
+Metadaten ohne externe Gewichtsarrays und war kein numerischer Paritätstest.
+Der separat autorisierte Nachtrag unten dokumentiert die spätere Stichprobenprüfung.
 
 ## Tatsächlich ausgeführte Funktionsketten
 
