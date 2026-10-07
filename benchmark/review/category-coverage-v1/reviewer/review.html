@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="de"><meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; connect-src 'none'; img-src 'none'; form-action 'none'">
+<title>Blinde Relevanzannotation</title>
+<style>
+body{font:17px/1.5 system-ui;max-width:1050px;margin:2rem auto;padding:0 1rem;background:#fafafa;color:#17212b}h1,h2{line-height:1.2}section,fieldset{background:white;border:1px solid #ccc;padding:1rem;margin:1rem 0}button,select,input,textarea{font:inherit;margin:.3rem;padding:.4rem}button{cursor:pointer}pre,.text{white-space:pre-wrap;overflow-wrap:anywhere}label{display:block}textarea{width:90%;min-height:5rem}.hint{color:#475569}#error{color:#a00}details{margin:.7rem 0}nav{position:sticky;bottom:0;background:#eee;padding:.4rem}input[type=checkbox]{margin-right:.7rem}
+</style>
+<h1>Blinde Relevanzannotation</h1>
+<p>Bewerte immer die konkrete Frage anhand der eingefrorenen öffentlichen Evidenz. Keine externen Quellen. Fehlende Information belegt keine positive Eigenschaft. Die Skala ist <strong>0–3</strong>. Unsicherheit bleibt ein eigener Zustand.</p>
+<p>Arbeite unabhängig in einem eigenen Browserprofil. Öffne keine Mapping-, Auswahl-, Ergebnis- oder anderen Reviewer-Dateien. Erst nach Abgabe dürfen Bewertungen verglichen werden. Lokale Speicherung ersetzt keine exportierte Sicherung.</p>
+<section>
+<label>Eigenes Pseudonym <input id="reviewer" pattern="[a-zA-Z0-9_-]{1,80}" placeholder="z. B. aurelius"></label>
+<label>Paket laden: <code>blind-candidates.jsonl</code> und <code>annotation-package.json</code> gemeinsam auswählen <input id="files" type="file" multiple></label>
+<label>Eigene vorherige Antworten fortsetzen <input id="resume" type="file" accept=".json"></label>
+<button id="download">Eigene Antworten exportieren</button>
+<p id="error" role="alert"></p><p id="progress"></p>
+</section>
+<main id="main" hidden>
+<h2 id="query"></h2><p id="language"></p>
+<section><h3>Bewertungsrubrik</h3><p id="rubric"></p><pre id="scale"></pre>
+<p>Accessibility: Zugang, Rollstuhlzugang, Toilette, Assistenz und Einschränkungen getrennt prüfen. Keine Venue-Eigenschaft auf andere Termine übertragen. Bei positiven orts-/terminabhängigen Bewertungen den belegenden Termin unten markieren.</p>
+</section>
+<section><h3>Harte Bedingungen</h3><pre id="eligibility"></pre></section>
+<h2 id="title"></h2><section id="event"></section>
+<section><h3>Termine und öffentlicher Ortskontext</h3><div id="occurrences"></div></section>
+<fieldset><legend>Deine Bewertung</legend>
+<label>Zustand / Relevanz <select id="grade"><option value="pending">Noch offen</option><option value="0">0 – nicht relevant / Eigenschaft nicht belegt</option><option value="1">1 – tatsächlich belegter Teilaspekt</option><option value="2">2 – klar relevant, eingeschränkt</option><option value="3">3 – expliziter Volltreffer</option><option value="uncertain">uncertain – unsicher</option><option value="needs_more_context">needs_more_context – Kontext fehlt</option></select></label>
+<label>Begründung / konkrete Evidenz <textarea id="reason"></textarea></label>
+<p>Bei positiven Bewertungen belegende Felder markieren:</p><div id="support"></div>
+<p class="hint">3 erfordert unmittelbare, explizite Evidenz für die vollständige Suchintention. Weltwissen, Namen und Genre-Stereotype reichen nicht. Die spätere Validierung prüft Pflichtfelder; sie ersetzt keine menschliche Evidenzprüfung.</p>
+</fieldset>
+<nav><button id="prev">← Zurück</button><span id="position"></span><button id="next">Weiter →</button><label>Zu Aufgabe <input id="jump" type="number" min="1" style="width:6rem"></label></nav>
+</main>
+<script>
+'use strict';
+let packet=[],meta=null,answers={},position=0,owner='';
+const el=id=>document.getElementById(id);
+const labels={title:'Titel',subtitle:'Untertitel',summary:'Zusammenfassung',description:'Beschreibung',event_types:'Typen und Genres',tags:'Tags (allein kein Beleg)',languages:'Sprachen',price_type:'Preisart',venue:'Venue',city:'Ort',space:'Raum',venue_accessibility:'Venue-Accessibility',space_accessibility:'Raum-Accessibility',accessibility_info:'Termin-Accessibility',occurrences:'Termine'};
+const blank=id=>({annotation_id:id,state:'pending',grade:null,reason:'',supporting_fields:[],occurrence_ids:[]});
+function error(e){el('error').textContent=e.message||String(e)}
+function key(){return 'blind-review:'+meta.package_sha256+':'+owner}
+function save(){if(!meta)return;try{localStorage.setItem(key(),JSON.stringify({position,answers}))}catch(e){error('Lokale Speicherung nicht verfügbar. Bitte Antworten exportieren.')}}
+function batch(){return {schema_version:'phase2d-human-annotations-v1',package_sha256:meta.package_sha256,annotator:owner,provenance:'human-independent',answers:packet.map(p=>answers[p.annotation_id]||blank(p.annotation_id))}}
+function capture(){if(!packet.length)return;const id=packet[position].annotation_id;const v=el('grade').value;const graded=/^[0-3]$/.test(v);answers[id]={annotation_id:id,state:graded?'graded':v,grade:graded?Number(v):null,reason:el('reason').value,supporting_fields:[...document.querySelectorAll('#support input:checked')].map(x=>x.value),occurrence_ids:[...document.querySelectorAll('#occurrences input:checked')].map(x=>x.value)};save()}
+function check(parent,value,text,selected){const label=document.createElement('label');const box=document.createElement('input');box.type='checkbox';box.value=value;box.checked=selected;box.onchange=capture;label.append(box,document.createTextNode(text));parent.append(label)}
+function render(){const p=packet[position],a=answers[p.annotation_id]||blank(p.annotation_id);el('query').textContent=p.query;el('language').textContent='Sprache: '+p.language;el('rubric').textContent=p.rubric;el('scale').textContent=Object.entries(p.scale).map(([k,v])=>k+': '+v).join('\n');const q=p.eligibility;el('eligibility').textContent=['Referenzzeit: '+p.reference_time,'Von: '+(q.date_from||'keine Einschränkung'),'Bis: '+(q.date_to||'keine Einschränkung'),'Ort: '+(q.city||'keine Einschränkung'),'Venue-Bedingung: '+(q.venue_id?'nur unten als zulässig markierte Termine':'keine Einschränkung'),'Wochentage (1=Mo, 7=So): '+(q.weekdays.join(', ')||'alle')].join('\n');el('title').textContent=p.event.title;
+const event=el('event');event.replaceChildren();for(const field of ['subtitle','summary','description','event_types','tags','languages','price_type']){const v=p.event[field];const h=document.createElement('h3');h.textContent=labels[field];const text=document.createElement('div');text.className='text';text.textContent=field==='event_types'?v.map(t=>t.type_name+' / '+t.genre_name).join('\n'):Array.isArray(v)?v.join(', '):(v||'(keine Angabe)');event.append(h,text)}
+const occurrences=el('occurrences');occurrences.replaceChildren();for(const o of p.event.occurrences){const d=document.createElement('details');const s=document.createElement('summary');const eligible=p.eligible_occurrence_ids.includes(o.id);s.textContent=o.start_date+' '+o.start_time+' — '+o.venue+' / '+o.space+' / '+o.city+(eligible?' — zulässig':' — erfüllt harte Bedingungen nicht');d.append(s);const text=document.createElement('div');text.className='text';text.textContent=['Status: '+o.status,'Enddatum: '+(o.end_date||'keine Angabe'),...['venue_accessibility','space_accessibility','accessibility_info'].map(f=>labels[f]+': '+(o[f]||'keine Angabe'))].join('\n');d.append(text);if(eligible)check(d,o.id,'Dieser Termin belegt die Bewertung',a.occurrence_ids.includes(o.id));occurrences.append(d)}
+const support=el('support');support.replaceChildren();for(const [f,label] of Object.entries(labels))check(support,f,label,a.supporting_fields.includes(f));el('grade').value=a.state==='graded'?String(a.grade):a.state;el('reason').value=a.reason;el('position').textContent=(position+1)+' / '+packet.length;el('jump').value=position+1;el('jump').max=packet.length;el('progress').textContent=Object.values(answers).filter(x=>x.state==='graded').length+' bewertet; '+Object.values(answers).filter(x=>['uncertain','needs_more_context'].includes(x.state)).length+' unsicher/Kontext offen. Dies ist keine Freigabe.';el('main').hidden=false}
+el('files').onchange=async e=>{try{owner=el('reviewer').value.trim();if(!/^[a-zA-Z0-9_-]{1,80}$/.test(owner))throw Error('Zuerst gültiges eigenes Pseudonym eintragen.');const files=Object.fromEntries([...e.target.files].map(f=>[f.name,f]));if(!files['blind-candidates.jsonl']||!files['annotation-package.json'])throw Error('Bitte die beiden genannten Dateien gemeinsam auswählen.');meta=JSON.parse(await files['annotation-package.json'].text());packet=(await files['blind-candidates.jsonl'].text()).trim().split('\n').map(x=>JSON.parse(x));if(packet.length!==meta.count)throw Error('Paketgröße stimmt nicht.');answers={};position=0;try{const saved=JSON.parse(localStorage.getItem(key()));if(saved){answers=saved.answers;position=saved.position}}catch(e){}el('reviewer').disabled=true;el('error').textContent='';render()}catch(e){error(e)}};
+el('resume').onchange=async e=>{try{if(!meta)throw Error('Zuerst Paket laden.');const b=JSON.parse(await e.target.files[0].text());if(b.annotator!==owner||b.package_sha256!==meta.package_sha256||b.provenance!=='human-independent')throw Error('Nur eigene Antworten für dieses Paket öffnen.');const ids=new Set(packet.map(p=>p.annotation_id));if(b.answers.some(a=>!ids.has(a.annotation_id))||new Set(b.answers.map(a=>a.annotation_id)).size!==b.answers.length)throw Error('Unbekannte oder doppelte Aufgaben.');answers=Object.fromEntries(b.answers.map(a=>[a.annotation_id,a]));save();render()}catch(e){error(e)}};
+el('grade').onchange=capture;el('reason').oninput=capture;el('prev').onclick=()=>{capture();position=Math.max(0,position-1);render()};el('next').onclick=()=>{capture();position=Math.min(packet.length-1,position+1);render()};el('jump').onchange=()=>{capture();position=Math.min(packet.length-1,Math.max(0,Number(el('jump').value)-1));render()};
+el('download').onclick=()=>{try{if(!meta)throw Error('Zuerst Paket laden.');capture();const url=URL.createObjectURL(new Blob([JSON.stringify(batch(),null,2)+'\n'],{type:'application/json'}));const link=document.createElement('a');link.href=url;link.download='annotations-'+owner+'.json';link.click();setTimeout(()=>URL.revokeObjectURL(url),1000)}catch(e){error(e)}};
+</script></html>
