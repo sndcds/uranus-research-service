@@ -1,0 +1,87 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "annotation_id": {
+      "pattern": "^[a-f0-9]{32}$",
+      "title": "Annotation Id",
+      "type": "string"
+    },
+    "grade": {
+      "anyOf": [
+        {
+          "maximum": 3,
+          "minimum": 0,
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Grade"
+    },
+    "occurrence_ids": {
+      "items": {
+        "format": "uuid",
+        "type": "string"
+      },
+      "maxItems": 1000,
+      "title": "Occurrence Ids",
+      "type": "array"
+    },
+    "reason": {
+      "maxLength": 1200,
+      "minLength": 1,
+      "title": "Reason",
+      "type": "string"
+    },
+    "state": {
+      "enum": [
+        "graded",
+        "uncertain",
+        "needs_more_context"
+      ],
+      "title": "State",
+      "type": "string"
+    },
+    "supporting_fields": {
+      "items": {
+        "enum": [
+          "accessibility_info",
+          "city",
+          "description",
+          "event_types",
+          "languages",
+          "occurrences",
+          "price_type",
+          "space",
+          "space_accessibility",
+          "subtitle",
+          "summary",
+          "tags",
+          "title",
+          "venue",
+          "venue_accessibility"
+        ],
+        "type": "string"
+      },
+      "maxItems": 30,
+      "title": "Supporting Fields",
+      "type": "array"
+    },
+    "uncertain": {
+      "title": "Uncertain",
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "annotation_id",
+    "state",
+    "grade",
+    "reason",
+    "supporting_fields",
+    "occurrence_ids",
+    "uncertain"
+  ],
+  "title": "MachineAnswer",
+  "type": "object"
+}
