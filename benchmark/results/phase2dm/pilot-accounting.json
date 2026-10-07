@@ -1,0 +1,17 @@
+{
+  "actual_post_requests": 66,
+  "counts": {
+    "diagnostic": 1,
+    "failed": 1,
+    "success": 64
+  },
+  "estimated_standard_price_usd_without_cache": 0.15249374999999998,
+  "excludes": "cache discount and tax; billing invoice not inspected",
+  "full_run_started": false,
+  "measured_usage": {
+    "input_tokens": 135183,
+    "output_tokens": 11357
+  },
+  "pricing_source": "benchmark/annotation/phase2dm/pricing-20261006.json",
+  "schema_version": "phase2dm-pilot-accounting-v1"
+}

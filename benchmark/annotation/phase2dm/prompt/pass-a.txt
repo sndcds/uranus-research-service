@@ -1,0 +1,1 @@
+Fixed independent procedure A: first check hard eligibility, then each central query requirement, then match the evidenced combination to the authoritative rubric. Do not assume another judge exists or infer another answer.
