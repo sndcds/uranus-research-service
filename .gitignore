@@ -12,3 +12,5 @@ wheelhouse/
 
 # Isolated benchmark model caches and transient runtime data
 .benchmark-runtime/
+
+.venv
